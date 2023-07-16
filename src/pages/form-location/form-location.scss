@@ -1,0 +1,59 @@
+page-form-location {
+
+    .scroll-content{
+        background-color: color($colors, lightest);
+    }
+
+    .error-message{
+        color: color($colors, danger);
+        text-align: center;
+        font-size: 0.8em;
+    }
+
+    ion-item{
+        background-color: transparent !important;
+        .item-inner{
+          border-bottom: none !important;
+        }
+  
+        ion-input{
+            height: 45px;
+            padding: 9px;
+            border-radius: 0.45em;
+            background-color: color($colors, grislight);
+            border:1px solid color($colors, grislight);
+        }
+    }
+
+    .country{
+        margin-top:15px;
+        margin-bottom: 7px;
+        border-radius: 0.45em;
+        width: 98%;
+  
+        .item-inner{
+          background-color: color($colors, primary);
+          padding-right: 0 !important;
+        }
+  
+        .input-wrapper{
+          background-color: color($colors, grislight);
+          border: 1px solid color($colors, lightest);
+          padding-left:5px; 
+          .label{
+            margin: 10px 8px 10px 0;
+          }
+        }
+        
+        ion-icon{
+          padding-left: 3px;
+          color: rgba($color: #fff, $alpha: 0.9);
+          background-color: color($colors, primary);
+        }
+  
+        p{
+          color: color($colors, secondary);
+        }
+  
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Vitrine Africaine",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

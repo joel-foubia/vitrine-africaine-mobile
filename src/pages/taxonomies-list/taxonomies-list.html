@@ -1,0 +1,60 @@
+<ion-header class="header_off">
+    <ion-navbar>
+        <ion-title *ngIf="!showSearch" text-left>
+            <span *ngIf="type.type.name=='location'">{{'menu.location' | translate}}</span>  
+            <span *ngIf="type.type.name!='location'">{{'menu.tag' | translate}}</span>  
+        </ion-title>
+        <ion-searchbar *ngIf="showSearch" (ionInput)="setFilteredItems($event)" placeholder="{{ 'message.search' | translate}}" animated="true" showCancelButton="true" (ionCancel)="searchCanceled()"></ion-searchbar>
+        <ion-buttons *ngIf="!showSearch" end>
+            <button ion-button icon-only (click)="displaySearchBar()">
+                <ion-icon name="search"></ion-icon>
+            </button>
+            <button ion-button icon-only (click)="openLeftMenu()">
+                <ion-icon name="md-more"></ion-icon>
+            </button>
+        </ion-buttons>
+
+    </ion-navbar>
+
+
+</ion-header>
+<ion-content text-center parallax-header>
+    <p objSpinner text-center *ngIf="objLoader ">
+        <ion-spinner name="dots "></ion-spinner>
+    </p>
+
+    <ion-grid no-padding class="bloc-category ">
+        <ion-row *ngIf="taxonomy.length!=0 ">
+            <ion-col col-12 col-sm-6 col-md-6 col-lg-3 col-xl-4 *ngFor="let item of taxonomy | slice:0:max " no-padding>
+                <ion-card class="animated fadeIn custom-card" (click)="goToAnounceParent(item)">
+                    <ion-item transparent>
+                        <!-- <ion-icon name="ios-apps" item-start class="top_icon"></ion-icon> -->
+                        <ion-icon *ngIf="type.type.name == 'location'" name="ios-pin" item-start class="top_icon"></ion-icon>
+                        <ion-icon *ngIf="type.type.name != 'location'" name="md-bookmark" item-start class="top_icon"></ion-icon>
+                        <h3 [innerHtml]="item.name"></h3>
+                        <p>{{'message.lbl_annonce' | translate:item}}</p>
+                    </ion-item>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+            <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </ion-grid>
+    <ion-grid>
+        <ion-row *ngIf="taxonomy.length==0">
+            <ion-col>
+                <div bloc-empty text-center padding>
+                    <img id="empty_img" src="assets/imgs/{{type.type.name}}.svg" alt="">
+                    <h3 *ngIf="txtSearch!='' && type.type.name=='location'">{{'message.empty_location' | translate}} : <strong>{{txtSearch}}</strong></h3>
+                    <h3 *ngIf="txtSearch!='' && type.type.name=='tag'">{{'message.empty_tag' | translate}} : <strong>{{txtSearch}}</strong></h3>
+                    <h3 *ngIf="txtSearch==''">{{'taxo.empty' | translate}}</h3>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <!-- <div padding class="header-image">
+
+    </div> -->
+
+</ion-content>

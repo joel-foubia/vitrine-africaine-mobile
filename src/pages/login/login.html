@@ -1,0 +1,40 @@
+<!--Login Page-->
+<ion-header text-center class="header_off">
+    <ion-navbar>
+        <ion-title style="font-weight: lighter">{{'login.login' | translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="close()"><ion-icon name="md-close"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+<ion-content text-center padding>
+    <h1><img src="assets/images/logo2.png" alt="logo" /></h1>
+    <h6>{{'login.desc' | translate}}</h6>
+    <form class="login-form auth-form" [formGroup]="login" (ngSubmit)="wpLogin()">
+        <ion-item>
+            <ion-input type="email" placeholder="{{'login.email' | translate}}" formControlName="email"></ion-input>
+        </ion-item>
+        <!-- <show-hide-container> -->
+        <ion-item>
+            <ion-input type="password" placeholder="{{'login.pwd' | translate}}" formControlName="password"></ion-input>
+        </ion-item>
+        <!-- </show-hide-container> -->
+        <button ion-button outline class="auth-action-button" type="submit" [disabled]="!login.valid">{{'login.login' | translate}}</button>
+    </form>
+    <!-- <ion-row class="alt-options">
+        <ion-col no-padding width-50>
+            <button ion-button block clear class="forgot-button" (click)="goToForgotPassword()">{{'login.forgot_pwd' | translate }}</button>
+        </ion-col>
+        <ion-col no-padding width-50>
+            <button ion-button block clear class="signup-button" (click)="goToSignup()">{{'login.sign_up' | translate}}</button>
+        </ion-col>
+    </ion-row> -->
+    <p class="auth-divider">
+        {{'login.or' | translate}}
+    </p>
+    <button ion-button class="auth-action-button" (click)="goToSignup()">{{'login.sign_up' | translate}}</button>
+    <!-- <button ion-button block class="facebook-auth-button" color="facebook" (click)="doFacebookLogin()">{{'login.fb_login' | translate}}</button> -->
+    <!-- <button ion-button block class="google-auth-button" color="google" (click)="doGoogleLogin()">{{'login.google_login' | translate}}</button> -->
+
+</ion-content>

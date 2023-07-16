@@ -1,0 +1,102 @@
+event-template {
+	
+	
+    ion-card{
+        border-radius: 5px !important;
+        
+        .bloc-image{
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            background-size: cover !important;
+            height: 150px;
+            background-color: rgba($color: #000000, $alpha: 0.5);
+            
+            ion-row{
+                background: linear-gradient(to bottom, rgba(7,7,7,1) 0%,rgba(255,255,255,0) 100%);
+                ion-icon{
+                    color: color($colors, light) !important;
+                }
+            }
+        }
+
+        .schedule-day{
+            position : relative;
+            top: 30%; 
+            padding-left: 10px;
+            text-transform: uppercase;
+            color: color($colors, light);
+            width: 70%;
+            padding: 5px;
+            
+            background-color: color($colors, dark);
+        }
+
+        .schedule-date{
+            border-right: 3px solid color($colors, grislight);
+
+            .date{
+                font-size: 1.0em;
+                color: color($colors, dark);
+            }
+            
+            span{
+                color: color($colors, primary);
+                font-size: 0.9em;
+            }
+        }
+
+        
+    }
+    
+    .schedule-data{
+        
+        h4{
+            color: color($colors, gris);
+            font-size: 1.1em;
+        }
+
+    }
+
+    .price{
+        text-align: right;
+        margin-bottom: 5px;
+        span{
+            border-radius: 1px;
+            background-color: color($colors, primary);
+            color: color($colors, light); 
+            font-size: 0.9em;
+            padding: 4px;
+        }
+
+    }
+	
+	.fav {
+       
+        ion-icon {
+            // font-size: 2em !important;
+            color: black;
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: color($colors, gris);
+        }
+    }
+    
+    .liked {
+        -webkit-text-fill-color: color($colors, likeColor) !important;
+        -webkit-text-stroke-color: color($colors, likeColor) !important;
+    }
+    .disliked {
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.616) !important;
+        -webkit-text-stroke-color: color($colors, gris);
+    }
+
+	// Right Ribbon css
+	.ribbon {
+		background: color($colors, chatBadge);
+		color: color($colors, light);
+		padding: 0.4em;
+        font-size: 0.75em;
+        width: 55%;
+		// transform-origin: top left;
+	}
+	
+}

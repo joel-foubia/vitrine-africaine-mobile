@@ -1,0 +1,19 @@
+page-setting {
+    .scroll-content{
+        background-color: color($colors, lightest);
+    }
+
+    ion-item, ion-item-divider{
+        background-color: transparent !important;
+        
+    }
+
+    ion-item-divider{
+        color: color($colors, primary) !important;
+
+    }
+    ion-select[disabled] {  
+        background-color:color($colors, primary); 
+        /*you can optionally add !important*/
+    }
+}

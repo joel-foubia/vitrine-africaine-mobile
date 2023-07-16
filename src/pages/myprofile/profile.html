@@ -1,0 +1,149 @@
+<ion-header class="header_off">
+    <ion-navbar>
+        <!-- <ion-title>Profile</ion-title> -->
+        <ion-buttons end>
+            <button color="guidepro" (click)="openMenu()" ion-button icon-only>
+        <ion-icon name="more"></ion-icon>
+      </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content parallax-header>
+
+    <div text-center id="profile_pic">
+        <!-- <img *ngIf="currentUSer.sub_result" [src]="currentUSer.sub_result.avatar_urls[96]" alt="">-->
+        <img [src]="profile_image" alt="">
+
+        <!-- <op-lazy-img [source]="profile_image" [defaultImage]="defaultImage"></op-lazy-img> -->
+
+        <div (click)="goToSettings()" text-center class="bloc-settings">
+            <img src="assets/icon/settings.svg" alt="">
+            <h6>Settings</h6>
+        </div>
+        <div (click)="logOut()" class="bloc-logout">
+            <img src="assets/icon/logout.svg" alt="">
+            <h6>Logout</h6>
+        </div>
+    </div>
+    <div text-center id="user_info">
+        <h2 id="disp_name">{{currentUSer?.user_display_name}}</h2>
+        <h6 *ngIf="direction != 'down'">{{currentUSer?.user_email}}</h6> <br>
+        <span *ngIf="direction != 'down'">
+            <h6 id="roles" *ngFor="let role of currentUSer.user.roles">{{role}}</h6>
+        </span>
+    </div>
+    <div text-center id="segment_container" padding>
+        <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="annonce">
+                {{'favorites.mes_annonce' | translate}} <span *ngIf="lazyAnnonce.length <= 9" class="segment_count">{{lazyAnnonce.length}}</span> <span *ngIf="lazyAnnonce.length > 9">9+</span>
+            </ion-segment-button>
+            <ion-segment-button value="favoris">
+                {{'favorites.favorites' | translate}} <span *ngIf="lazyFav.length <= 9" class="segment_count">{{lazyFav.length}}</span> <span *ngIf="lazyFav.length > 9">9+</span>
+            </ion-segment-button>
+            <ion-segment-button value="event">
+                {{'favorites.my_events' | translate}} <span *ngIf="lazyEvent.length <= 9" class="segment_count">{{lazyEvent.length}}</span> <span *ngIf="lazyEvent.length > 9">9+</span>
+            </ion-segment-button>
+            <ion-segment-button value="avis">
+                {{'favorites.avis' | translate}} <span *ngIf="lazyAvis.length <= 9" class="segment_count">{{lazyAvis.length}}</span> <span *ngIf="lazyAvis.length > 9">9+</span>
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+
+
+    <!-- <div padding [style.background]="'url(assets/images/africa.png)'" class="header-image"> -->
+    <div padding [style.background]="'url(' + defaultImage + ')'" class="header-image">
+
+    </div>
+
+
+
+    <div class="main-content">
+        <div id="segment_data" [ngSwitch]="segment">
+            <ion-scroll id="scroller" scrollY="true">
+                <ion-grid *ngSwitchCase="'annonce'" no-padding>
+                    <ion-row *ngIf="lazyAnnonce.length==0">
+                        <ion-col text-center no-padding>
+
+                            <div bloc-empty text-center>
+                                <p><img src="assets/images/icons/search.svg" alt="" width="90px"></p>
+                                <h3>{{'favorites.empty_fav' | translate}} <strong>{{txtSearch}}</strong></h3>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="animated zoomIn" *ngFor="let item of lazyAnnonce | slice:0:maxAnnonce" col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 no-padding>
+                            <annonce [annonce]="item" [events]="events"></annonce>
+                        </ion-col>
+                        <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                            <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+                        </ion-infinite-scroll>
+                    </ion-row>
+                </ion-grid>
+                <ion-grid *ngSwitchCase="'favoris'" no-padding>
+                    <ion-row *ngIf="lazyFav.length==0">
+                        <ion-col text-center no-padding>
+
+                            <div bloc-empty text-center>
+                                <p><img src="assets/images/icons/search.svg" alt="" width="90px"></p>
+                                <h3>{{'favorites.empty_fav' | translate}} <strong>{{txtSearch}}</strong></h3>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="animated zoomIn" *ngFor="let item of lazyFav | slice:0:maxFav" col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 no-padding>
+                            <annonce [annonce]="item" [events]="events"></annonce>
+                        </ion-col>
+                        <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                            <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+                        </ion-infinite-scroll>
+                    </ion-row>
+                </ion-grid>
+                <ion-grid *ngSwitchCase="'event'" no-padding>
+                    <ion-row *ngIf="lazyEvent.length==0">
+                        <ion-col text-center no-padding>
+
+                            <div bloc-empty text-center>
+                                <p><img src="assets/images/icons/calendar-empty-ultrathin-page.svg" alt="" width="90px"></p>
+                                <h3>{{'favorites.empty_fav' | translate}} <strong>{{txtSearch}}</strong></h3>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="animated zoomIn" *ngFor="let item of lazyEvent | slice:0:maxEvent" col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 no-padding>
+                            <!-- <annonce [annonce]="item" [events]="events"></annonce> -->
+                            <event-template [item]="item" [events]="EVentsevents"></event-template>
+
+                        </ion-col>
+                        <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                            <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+                        </ion-infinite-scroll>
+                    </ion-row>
+                </ion-grid>
+                <ion-grid *ngSwitchCase="'avis'" no-padding>
+                    <ion-row *ngIf="lazyAvis.length==0">
+                        <ion-col text-center no-padding>
+
+                            <div bloc-empty text-center>
+                                <p><img src="assets/images/icons/calendar-empty-ultrathin-page.svg" alt="" width="90px"></p>
+                                <h3>{{'favorites.empty_fav' | translate}} <strong>{{txtSearch}}</strong></h3>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="animated zoomIn" *ngFor="let item of lazyAvis | slice:0:maxAvis" col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 no-padding>
+                            <!-- <annonce [annonce]="item" [events]="events"></annonce> -->
+                        </ion-col>
+                        <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                            <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+                        </ion-infinite-scroll>
+                    </ion-row>
+                </ion-grid>
+            </ion-scroll>
+        </div>
+    </div>
+
+    <ion-fab bottom right>
+        <button (click)="onAdd()" ion-fab><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+</ion-content>

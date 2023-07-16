@@ -1,0 +1,168 @@
+page-sidemenu {
+    ion-menu {
+        ion-content {
+            background-color: color($colors, dark) !important; //opacity: 0.1;
+        }
+    }
+    #displayName {
+        color: color($colors, light) !important;
+        text-transform: capitalize !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .synchronize {
+        background-color: transparent;
+        color: color($colors, light);
+        h5 {
+            font-size: 0.7em;
+        }
+        ion-icon {
+            font-size: 3.2em;
+        }
+    }
+    //EMPTY bloc
+    [bloc-empty] {
+        padding: 10px;
+        text-align: center;
+        color: color($colors, light);
+    }
+    // Settings Style Main Meni
+    .header-background-image {
+        margin: 7px;
+        height: 127px;
+        border-top: 1px solid rgba($color: #fff, $alpha: 0.2);
+        ion-thumbnail {
+            padding-top: 10px;
+            text-align: center;
+            img {
+                margin: 0 auto;
+                position: relative;
+                z-index: 9;
+                max-width: 75px;
+                width: 75px;
+                height: 75px;
+            }
+            ion-icon {
+                font-size: 3em;
+                color: color($colors, light);
+                img {
+                    width: 35px;
+                }
+            }
+            #prof_image {
+                object-fit: cover;
+                border-radius: 100%;
+            }
+        }
+        p {
+            margin-top: 3px;
+            color: color($colors, primary);
+            text-align: center;
+        }
+        [item-title] {
+            position: relative;
+            z-index: 9;
+        }
+        [user] {
+            background-color: rgba(255, 255, 255, 0.4);
+            color: color($colors, light);
+            h2 {
+                font-size: 1.10em !important;
+                margin-top: 5px;
+            }
+            ion-icon,
+            p {
+                color: color($colors, light);
+            }
+            ion-avatar {
+                img {
+                    width: 50px;
+                    height: 50px;
+                }
+            }
+        }
+    }
+    // Settings Main  Menu
+    [main-menu] {
+        background-color: transparent !important;
+        font-size: 1.05em !important;
+        color: white;
+        ion-avatar img {
+            width: 25px;
+            height: 25px;
+            border-radius: 0;
+        }
+        ion-icon {
+            font-size: 1.4em;
+        }
+        .item-inner {
+            border-bottom-color: rgba(255, 255, 255, 0.0) !important;
+        }
+        ion-label {
+            margin-top: 2px;
+        }
+        .divider {
+            background-color: color($colors, noir) !important;
+            border-bottom: none !important;
+            padding-left: 10px;
+            text-transform: uppercase;
+            color: color($colors, light);
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+    }
+    .divider {
+        padding-left: 1.1em;
+        color: color($colors, secondary);
+    }
+    // Settings Submenu
+    [submenu] {
+        ion-label {
+            padding-left: 30px !important;
+        }
+    }
+    [header-button] {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        padding: 0 10px;
+    }
+    [item-left-bcg] {
+        background-color: color($colors, dark) !important;
+        .divider {
+            padding-left: 10px;
+            text-transform: uppercase;
+            font-size: 0.7em;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        ion-item-divider {
+            color: white;
+            background-color: color($colors, noir) !important;
+            border-bottom: none !important;
+            margin-bottom: 8px;
+        }
+        ion-list .item:last-child {
+            border-bottom: none !important;
+        }
+        .bloc-offers {
+            margin-bottom: 10px;
+            ion-col {
+                img {
+                    width: 42px;
+                }
+                span {
+                    color: color($colors, light);
+                }
+            }
+        }
+    }
+    #userPic {
+        border-radius: 100% !important;
+    }
+    .menus-list {
+        margin-top: 70px !important
+    }
+}

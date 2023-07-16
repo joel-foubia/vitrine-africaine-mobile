@@ -1,0 +1,62 @@
+
+<ion-header no-border>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon  name="md-menu"></ion-icon>
+    </button>
+        <ion-title text-center></ion-title>
+        <ion-buttons *ngIf="user" end>
+            
+            <button (click)="goToParams()" ion-button icon-only>
+                <ion-icon id="notifs_icon" name="md-person"></ion-icon>
+            </button>
+            <button (click)="deconnexion()" ion-button icon-only>
+                <ion-icon name="md-log-out"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<!--Fist Screen Content-->
+
+<ion-content class="bg">
+    
+    <div class="animated fadeIn bloc-user">
+        <ion-row>
+            <ion-col col-12>
+                <h3>Vitrine Africaine</h3>
+                <p>{{'subtitle' | translate}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            
+            <ion-col col-12 class="bg_form">
+                <ion-item transparent>
+                    <ion-searchbar aria-label="Recherche" (click)="recherche()" placeholder="{{'pop.to_search' | translate}}" readonly></ion-searchbar>
+                    <button ion-button icon-only (click)="searchText()" color="primary" item-end>
+                        <ion-icon name="mic"></ion-icon>
+                    </button>
+                </ion-item>
+    
+            </ion-col>
+        
+        </ion-row>
+    </div>
+    
+    
+    <ion-grid text-center no-padding>
+         
+        <p class="animated fadeIn infinite arrow_icon" text-center><img src="assets/images/icons/down.svg" alt="arrow-down" /></p>
+        <ion-row *ngIf="main_categories.length!=0" class="animated zoomIn details-menu">
+            <ion-col col-3 text-center *ngFor="let obj of main_categories" (click)="onTapCategory(obj)">
+                <div class="custom-col">
+                    <img [src]="obj.icon" alt="{{obj?.title.fr}}" /><br>
+                    <span *ngIf="current_lang=='fr'">{{obj?.title.fr}}</span>
+                    <span *ngIf="current_lang=='en'">{{obj?.title.en}}</span>
+                </div>
+            </ion-col>
+            
+        </ion-row>
+        <h5 text-center class="no_cat" *ngIf="!display && main_categories.length==0">{{'populaire' | translate}}</h5>
+    </ion-grid>
+
+</ion-content>

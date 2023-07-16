@@ -1,0 +1,61 @@
+page-about {
+	.content {
+		background-color: color($colors, grislight);
+	}
+
+	.photo{
+		
+    img{
+			height: 200px;
+      width:100%;
+      object-fit: cover;
+    }
+
+  }
+	
+	ion-card{
+		ion-card-header{
+		  font-weight: bold;
+		}
+	}
+	
+	.img{
+		 width: 80px;
+		 margin: auto;
+	}
+		 
+	.copyright, .website{
+		color: color($colors, primary);
+	}
+		
+	.card{
+		padding-top: 10px;
+	}
+		
+	.social img {
+		width: 40px;
+		height: 40px;
+	}
+
+	.social ion-col {
+		text-align: center;
+	}
+	  
+	ion-fab{
+    -webkit-animation: pulse 1.5s infinite;
+  }
+
+  @-webkit-keyframes pulse {
+    0% {
+      @include transform(scale(.9));
+    }
+    70% {
+      @include transform(scale(1));
+      box-shadow: 0 0 0 50px rgba(#d4b91d, 0);
+    }
+      100% {
+      @include transform(scale(.9));
+      box-shadow: 0 0 0 0 rgba(#d4b91d, 0);
+    }
+  }
+}

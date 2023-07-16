@@ -1,0 +1,135 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{'events.title' | translate}}</ion-title>
+    <ion-buttons end>
+      <!-- <button ion-button icon-only (click)="synchronizing()"><ion-icon name="ios-person-add-outline"></ion-icon></button> -->
+      <!-- <button ion-button icon-only (click)="onListViews()"><ion-icon name="ios-person-add-outline"></ion-icon></button> -->
+      <!-- <button ion-button icon-only (click)="onFilter($event)"><ion-icon name="ios-search"></ion-icon></button> -->
+      <button ion-button icon-only (click)="openLeftMenu()"> <ion-icon name="more"></ion-icon> </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-navbar class="header-calendar">
+  	<ion-title text-uppercase>{{viewTitle}} </ion-title> 
+    <ion-buttons end>
+        <!-- <button ion-button icon-only (click)="onListViews()"><ion-icon name="md-list"></ion-icon></button> -->
+        <button ion-button>
+            <!-- <ion-icon *ngIf="!objLoader" name="ios-refresh"></ion-icon> -->
+            <ion-spinner *ngIf="objLoader" name="bubbles"></ion-spinner>
+          </button>
+        <button ion-button [disabled]="isToday" (click)="today()">{{'events.jourj' | translate}}</button>
+        <button ion-button icon-only (click)="openMode($event)"> <ion-icon name="ios-calendar-outline"></ion-icon> </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+ 
+<ion-content>
+	
+	<ng-template #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
+		<ion-list class="event-detail-container mois" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false" padding>
+            <button ion-item *ngFor="let event of selectedDate?.events" (click)="eventSelected($event, event)" class="animated fadeIn">
+              <ion-avatar item-start>
+                <!-- <img [src]="event.agenda.image.sizes.medium.url" /> -->
+                <op-lazy-img [source]="event.agenda.image.sizes.medium.url" [defaultImage]="defaultImg"></op-lazy-img>
+              </ion-avatar>  
+              <h3 [innerHTML]="event.title"></h3>
+              
+                <p>
+                  <span *ngIf="!event.allDay" class="monthview-eventdetail">
+                    <i class="icon icon-clock"></i>  
+                    {{event.startTime|date: 'HH:mm':'':current_lang}} - {{event.endTime|date: 'HH:mm':'':current_lang}}
+                  </span>
+                  <span *ngIf="event.allDay" class="monthview-eventdetail">
+                    {{txtAllDay}}
+                  </span>
+                  <span class="person"> 
+                  |  {{event.agenda.venue.address}}, {{event.agenda.venue.city}}
+                  </span>
+                </p>
+                <ion-icon name="ios-arrow-forward-outline" item-end></ion-icon>
+            </button>
+            <ion-item class="animated fadeIn no_events" transparent *ngIf="selectedDate?.events.length==0">
+                <div class="no-events-label">{{noEventsLabel}}</div>
+            </ion-item>
+    </ion-list>
+  </ng-template>
+    <!-- end template month -->
+
+    <ng-template #alldayweek let-displayEvent="displayEvent">
+        <div class="calendar-event-inner weekAllday" (click)="eventSelected($event, displayEvent.event)">
+              <h3>{{displayEvent.event.title}}</h3>
+              <p>{{displayEvent.event.agenda.venue.address}}, {{displayEvent.event.agenda.venue.city}}</p>
+              <span class="person"> {{displayEvent.event.agenda.cost_details.values[0] | currency:'EUR':'symbol':'':current_lang}}</span>
+        </div>
+    </ng-template>
+    <!-- end template weekview all day -->
+
+    <ng-template #weekviewevent let-displayEvent="displayEvent">
+        <div class="calendar-event-inner jrStandart" (click)="eventSelected($event, displayEvent.event)" >
+          <h4>{{displayEvent.event.title}}</h4>
+          <span class="person"> 
+              <ion-icon name="ios-pin"></ion-icon> 
+              {{displayEvent.event.agenda.venue.address}}
+          </span>
+        </div>
+    </ng-template>
+	<!-- end template weekview normal event -->
+
+	  <ng-template #dayAlldayEvent let-displayEvent="displayEvent">
+        <div class="calendar-event-inner jrAllday" (click)="eventSelected($event, displayEvent.event)">
+          <ion-item>
+                <h4>{{displayEvent.event.title}}</h4>
+                <p>{{displayEvent.event.agenda.venue.address}}, {{displayEvent.event.agenda.venue.city}}</p>
+          </ion-item>
+        </div>
+    </ng-template>
+    <!-- end template dayallevent event -->
+
+    <ng-template #dayView let-displayEvent="displayEvent">
+        <div class="calendar-event-inner jrStandart" (click)="eventSelected($event, displayEvent.event)">
+            <ion-item>
+                <ion-avatar item-start>
+                    <!-- <img [src]="displayEvent.event.agenda.image.sizes.medium.url" /> -->
+                    <op-lazy-img [source]="displayEvent.event.agenda.image.sizes.medium.url" [defaultImage]="defaultImg"></op-lazy-img>
+                  </ion-avatar>  
+                  <h4>{{displayEvent.event.title}}</h4>
+                  <p>{{displayEvent.event.agenda.venue.address}}, {{displayEvent.event.agenda.venue.city}}</p>
+            </ion-item>
+        </div> 
+    </ng-template>
+    <!-- end template day normal event -->
+
+    
+    <!-- end of section week -->
+
+	<calendar 
+			  [eventSource]="eventSource"
+			        [noEventsLabel]="txtNoEvents"
+              [allDayLabel]="txtAllDay"
+              [calendarMode]="calendar.mode"
+              [currentDate]="calendar.currentDate"
+              [locale]="calendar.locale"
+              (onEventSelected)="onEventSelected($event)"
+              (onTitleChanged)="onViewTitleChanged($event)"
+              (onTimeSelected)="onTimeSelected($event)"
+              [monthviewEventDetailTemplate]="template"
+              [weekviewAllDayEventTemplate]="alldayweek"
+              [weekviewNormalEventTemplate]="weekviewevent"
+              [dayviewAllDayEventTemplate]="dayAlldayEvent"
+              [dayviewNormalEventTemplate]="dayView"
+              [weekviewAllDayEventSectionTemplate]="sectionweekallday"
+              [weekviewNormalEventSectionTemplate]="sectionweek"
+              step="30"
+              class="calendar">
+    </calendar>
+</ion-content>
+<ion-footer class="custom-footer">
+  
+  
+</ion-footer>
+<!-- <ion-fab #fab bottom right>
+  <button button-ion-fab ion-fab (click)="onAdd($event)">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-fab>  -->

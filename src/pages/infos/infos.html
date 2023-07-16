@@ -1,0 +1,43 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{'menu.infos' | translate}}</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="openLeftMenu()">
+          <ion-icon name="md-more"></ion-icon>
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    
+    <ion-row>
+      <ion-col col-12 col-sm-6 col-md-6 col-lg-6 (click)="goToNews()">
+        <ion-card text-center class="custom-card actu">
+            <!-- <img src="assets/images/submenu/news.jpg" alt="Actualite" /> -->
+            <ion-card-content>
+
+              <h3>{{'menu.news' | translate}}</h3>
+              <p>{{'btns.news' | translate}} </p>
+              <p text-right><button color="primary" ion-button icon-only><ion-icon name="md-arrow-round-forward"></ion-icon></button></p>
+            </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-12 col-sm-6 col-md-6 col-lg-6 (click)="goToWebTV()">
+        <ion-card text-center class="custom-card tv">
+          <!-- <img src="assets/images/submenu/webtv.jpg" alt="Webtv" /> -->
+          <ion-card-content>
+            <h3>{{'menu.tv' | translate}}</h3>
+            <p>{{'btns.tv' | translate}}</p>
+            <p text-right><button ion-button icon-only color="primary"><ion-icon name="md-arrow-round-forward"></ion-icon></button></p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

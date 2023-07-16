@@ -1,0 +1,106 @@
+
+<ion-header class="header_off">
+    <ion-toolbar>
+        <ion-buttons left>
+            <button ion-button icon-only (click)="showMain()"><ion-icon name="md-arrow-back"></ion-icon></button>
+        </ion-buttons>
+        <ion-title>{{'menu.about' | translate}}</ion-title>
+            <button ion-button menuToggle end>
+                <ion-icon name="md-more"></ion-icon>
+            </button>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content has-header >
+   
+    <ion-row class="photo">
+        <ion-col *ngIf="about" no-padding col-12>
+
+            <op-lazy-img [source]="about.image_url" [defaultImage]="defaultImage" ></op-lazy-img>
+          <ion-fab class="map-fab" bottom right edge>
+            <button (click)="doEvaluate()" ion-fab color="primary"><ion-icon name="star"></ion-icon></button>
+            <!-- <button ion-fab color="secondary"><ion-icon name="star"></ion-icon></button> -->
+          </ion-fab>
+        </ion-col>
+      </ion-row>
+
+      <ion-card>
+        <img src="assets/images/logo.png" alt="vitrine africaine" class="img" />
+      <ion-card-content text-center>
+        <ion-card-title>
+          <!-- <img src="{{aboutData?.logo}}"/> -->
+          <!-- <div class="card-title">{{test.product}}</div> -->
+          </ion-card-title>
+        <div class="card-subtitle"> <p>{{about?.productDescription}}</p></div>
+        <div class="card-subtitle"> <p>Version : {{about?.version}}</p></div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card> 
+        
+
+        <ion-card-header>{{'message.find_us' | translate}}</ion-card-header>
+
+        <ion-grid class="social">
+            <ion-row>
+                <ion-col>
+                    <ion-icon (click)="facebook()">
+                        <img src="assets/social_network/fb.png" alt="facebook" />
+                    </ion-icon>
+                </ion-col>
+                <ion-col>
+                    <ion-icon (click)="twitter()">
+                        <img src="assets/social_network/twitter.png" alt="twitter.png" />
+                    </ion-icon>
+                </ion-col>
+                <ion-col>
+                    <ion-icon >
+                        <img src="assets/social_network/linkedin.png" alt="linkedin" />
+                    </ion-icon>
+                </ion-col>
+                <ion-col>
+                    <ion-icon (click)="instagram()">
+                        <img src="assets/social_network/instagram.png" alt="instagram" />
+                    </ion-icon>
+                </ion-col>
+                <ion-col>
+                    <ion-icon>
+                        <img src="assets/social_network/googleplus.png" alt="googleplus" />
+                    </ion-icon>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+      </ion-card>
+
+      <ion-card> 
+        <ion-card-header>{{about?.name}}</ion-card-header>
+        <ion-card-content> 
+          <p>{{about?.address}}, {{about?.city}} </p> <br />
+          <p>{{about?.compagnyDescription}} </p>
+        </ion-card-content>
+        </ion-card>
+
+        <ion-card class="card">
+            <ion-card-header>Contacts</ion-card-header>
+            <ion-card-content> 
+              <p description>
+                  <ion-icon icon-small><i class="icon icon-email-outline"></i></ion-icon> 
+                  {{about?.email}}
+              </p> 
+            </ion-card-content>    
+        </ion-card> 
+
+          <ion-card>
+            <ion-card-header>{{'message.licence' | translate}}</ion-card-header>
+            <ion-card-content *ngIf="about">
+                <p class="website" (click)="conditions(about.conditions_utilisation)">{{'message.conditions' | translate}}</p> 
+                <p class="website" (click)="conditions(about.confidentialite)">{{'message.confidentiel' | translate}}</p> 
+                <p class="website" (click)="conditions(about.mentionlegal)">{{'message.legal' | translate}}</p> 
+                <p class="website" (click)="conditions(about.rgpd)">{{'message.rgpd' | translate}}</p> 
+                <p class="website" (click)="conditions(about.desistement)">{{'message.desist' | translate}}</p> 
+            </ion-card-content>
+          </ion-card>
+
+          <p text-center class="copyright">&copy; {{about?.copyright}}</p>
+</ion-content>

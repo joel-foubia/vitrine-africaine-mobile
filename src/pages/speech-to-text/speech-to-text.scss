@@ -1,0 +1,15 @@
+page-speech-to-text {
+	.scroll-content{
+		// padding-top: 50px !important;
+		text-align: center;
+	}
+
+	[speak]{
+		border-radius: 50%;
+		width: 90px;
+		height: 90px;
+		ion-icon{
+			font-size: 2.5em;
+		}
+	}
+}

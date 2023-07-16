@@ -1,0 +1,67 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>{{'events.title' | translate}}</ion-title>
+        <ion-buttons end>
+            <button class="count_btn" ion-button *ngIf="list_events.length<=999" icon-only>{{list_events.length}}</button>
+            <button class="count_btn" ion-button *ngIf="list_events.length>999" icon-only>999+</button>
+            <button ion-button icon-only (click)="onFilter($event)"><ion-icon name="md-funnel"></ion-icon></button>
+            <!-- <button ion-button icon-only *ngIf="!isSearchbarOpened" (click)="isSearchbarOpened=true"><ion-icon name="search"></ion-icon></button> -->
+            <button ion-button icon-only (click)="showCalendar()"><ion-icon name="ios-calendar-outline"></ion-icon></button>
+            <!-- <button ion-button icon-only (click)="showOnMap()"><ion-icon name="ios-map-outline"></ion-icon></button> -->
+            <button ion-button icon-only (click)="openLeftMenu()">
+              <ion-icon name="md-more"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-navbar  class="filter">
+        <ion-searchbar (ionInput)="setFilteredItems($event)" placeholder="{{'message.search' | translate}}" animated="true"></ion-searchbar>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content >
+        
+    <p *ngIf="objLoader" text-center obj-loader><ion-spinner name="dots"></ion-spinner></p>
+    <ion-slides *ngIf="featured.length > 0" pager="true" [slidesPerView]="vuesToDisplay" autoplay="3000" speed="700" class="horizontal-categories">
+        <ion-slide class="categories-row" *ngFor="let feat of featured | slice:0:maxFeatured">
+            <ion-col col-1></ion-col>
+            <ion-col col-10 class="horizontal-item animated fadeIn">
+                <feat-event [item]="feat" [events]="events"></feat-event>
+            </ion-col>
+            <ion-col col-1></ion-col>
+        </ion-slide>
+    </ion-slides>
+    <ion-grid no-padding *ngIf="!objLoader" class="schedule-list">
+        <ion-row *ngIf="list_events.length!=0">
+            <ion-col col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 no-padding *ngFor="let obj of list_events | slice:0:max" class="animated fadeIn custom-card">
+               <event-template [item]="obj" [events]="events"></event-template>
+			</ion-col>
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </ion-row>
+
+        <!-- Aucun Evènements enregistré -->
+        <ion-row *ngIf="list_events.length==0">
+            <ion-col col-12>
+                <div bloc-empty>
+                    <img src="assets/images/icons/calendar-empty-ultrathin-page.svg" alt="calendar" />
+                    <h3>{{'events.rdv' | translate}} </h3>
+                    <!-- <button *ngIf="txtFiltre.length==0" ion-button color="light" outline (click)="synchronizing()">
+              Synchronize
+              <ion-spinner *ngIf="display" name="bubbles"></ion-spinner>
+            </button>
+                    <p *ngIf="display" style="text-align: center;">{{'module.events.sunc_process' | translate}}</p> -->
+                </div>
+            </ion-col>
+        </ion-row>
+        <!-- fin vide -->
+    </ion-grid>
+
+    <ion-fab #fab bottom right>
+       <button button-ion-fab ion-fab (click)="onAdd($event)">
+         <ion-icon name="add"></ion-icon>
+       </button>
+    </ion-fab> 
+</ion-content>

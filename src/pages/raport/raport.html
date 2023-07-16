@@ -1,0 +1,48 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{type.title}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="closeRecharge()"><ion-icon name="close"></ion-icon></button>
+   </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="type.label=='Report'" class="bloc-form">
+      <ion-item transparent>
+	        <ion-label stacked>{{'parameters.observation' | translate}}</ion-label>
+        	<ion-textarea autosize [(ngModel)]="message.report" name="report" placeholder="{{'parameters.txt_observation' | translate}}"></ion-textarea>
+        </ion-item>
+        <p text-center>
+          <button round ion-button color="primary" (click)="sendMessage()">{{'parameters.btn_observation' | translate}}</button> 
+        </p>
+    </div>
+  <div *ngIf="type.label=='assistance'" class="bloc-form">
+    <h3 text-center>{{'parameters.objet' | translate}}</h3>
+    <h5 text-center>{{'parameters.txt_assistance' | translate}}</h5>
+    <p></p>
+    <ion-list>
+        <ion-item transparent>
+	        <ion-label floating>{{'form.nom' | translate}}</ion-label>
+        	<ion-input type="text" [(ngModel)]="aide.name" name="name"></ion-input>
+        </ion-item>
+        <ion-item transparent>
+	        <ion-label floating>{{'parameters.company' | translate}}</ion-label>
+        	<ion-input type="text" [(ngModel)]="aide.company" name="company"></ion-input>
+        </ion-item>
+        <ion-item transparent>
+	        <ion-label floating>{{'parameters.tel' | translate}}</ion-label>
+        	<ion-input type="tel" [(ngModel)]="aide.phonenumber" name="phonenumber"></ion-input>
+        </ion-item>
+        <ion-item transparent>
+	        <ion-label stacked>{{'parameters.message' | translate}}</ion-label>
+        	<ion-textarea autosize [(ngModel)]="aide.message" name="message" placeholder="{{'parameters.txt_aide' | translate}}"></ion-textarea>
+        </ion-item>
+      </ion-list>
+        <p text-center>
+          <button ion-button round color="primary" (click)="sendReport()">{{'parameters.btn_aide' | translate}}</button> 
+        </p>
+    </div>
+</ion-content>

@@ -1,0 +1,161 @@
+<!-- <div class="bloc-header"  [style.background]="'url(' + objEvent.agenda.image.url + ')'"> -->
+<div class="bloc-header" bg-lazy-img [bground]="objEvent.agenda.image.url" [defaultImage]="defaultImage">
+    
+</div>
+<ion-header no-border>
+
+  <ion-navbar>
+    <ion-title></ion-title>
+    <ion-buttons end>
+        <!-- <button ion-button icon-only > <ion-icon name="md-share"></ion-icon> </button> -->
+        <button ion-button icon-only (click)="openLeftMenu()"> <ion-icon name="more"></ion-icon> </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <h3 class="titre" innerHTML="objEvent.title"></h3>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col col-12 col-md-12 col-sm-12 col-lg-6 col-xl-6>
+        <!-- date and price -->
+        <ion-card>
+          <ion-row text-center class="animated fadeIn bloc-time">
+            <ion-col col-9>
+              <ion-row>
+                <ion-col col-3>
+                    {{'events.debut' | translate}}
+                </ion-col>
+                <ion-col col-9>
+                    {{objEvent.startTime | date:'medium':'':lang}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col col-3>
+                    {{'events.fin' | translate}}
+                </ion-col>
+                <ion-col col-9>
+                    {{objEvent.endTime | date:'medium':'':lang}}
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col class="price" col-3 >
+              <span [innerHTML]="objEvent.agenda.cost"></span>
+            </ion-col>    
+          </ion-row>
+        </ion-card>
+        <!-- end date and price -->
+        
+        <!-- event details -->
+        <ion-row>
+          <ion-col no-padding col-12 col-sm-12 col-md-12 col-lg-6>
+            <ion-card class="bloc-details">
+              <ion-item text-wrap>
+                <ion-icon name="ios-information-circle-outline" item-start></ion-icon>
+                <p [innerHTML]="objEvent.agenda.description"></p>
+              </ion-item>
+              <ion-row class="bloc-tag">
+                <ion-col col-6 text-left>
+                  <h4>{{'menu.category' | translate}}</h4>
+                  <span *ngFor="let obj of objEvent.agenda.categories; let i = index">{{obj.name}} <i *ngIf="i!=objEvent.agenda.categories.length-1">,</i> </span>  
+                </ion-col>
+                <ion-col col-6 text-right>
+                  <h4>{{'pop.tag' | translate}}</h4>
+                  <span *ngFor="let obj of objEvent.agenda.tags">{{obj.name}}<i *ngIf="i!=objEvent.agenda.tags.length-1">,</i> </span>  
+                </ion-col>
+              </ion-row>
+            </ion-card>
+          </ion-col>
+          <ion-col no-padding col-12 col-sm-12 col-md-12 col-lg-6>
+            <ion-card class="bloc-organizer">
+              <div *ngFor="let obj of objEvent.agenda.organizer">
+                <ion-item>
+                  <ion-avatar item-end>
+                      <!-- <img src="{{obj.image.sizes.woocommerce_gallery_thumbnail.url}}"> -->
+                      <op-lazy-img *ngIf="obj.image" [source]="obj.image.sizes.woocommerce_gallery_thumbnail.url" [defaultImage]="defaultImg"></op-lazy-img>
+                      <op-lazy-img *ngIf="!obj.image" [source]="defaultImg" [defaultImage]="defaultImg"></op-lazy-img>
+                  </ion-avatar>
+                  <h3>{{obj.organizer}}</h3>
+                  <p>{{obj.phone}}</p>
+                  <p>{{obj.website}}</p>
+                  <p>{{obj.email}}</p>
+                </ion-item>
+                <ion-row class="bloc-actions" text-center>
+                  <ion-col *ngIf="obj.phone">
+                    <button ion-button clear icon-only (click)="appeler(obj.phone)">
+                      <ion-icon name="ios-call"></ion-icon>
+                    </button>
+                  </ion-col>
+                  <ion-col *ngIf="obj.email">
+                    <button ion-button clear icon-only (click)="sendMail(obj.email)">
+                      <ion-icon name="ios-mail"></ion-icon>
+                    </button>
+                  </ion-col>
+                  <ion-col *ngIf="obj.website">
+                    <button ion-button clear icon-only (click)="openBrowser(obj.website)">
+                      <ion-icon name="ios-globe"></ion-icon>
+                    </button>
+                  </ion-col>
+                </ion-row>
+            </div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <!-- end event detail -->
+
+        <!-- ticket -->
+        <ion-row>
+          <ion-col col-12>
+            <ion-card class="bloc-billet">
+              <ion-card-header>{{'events.tickets' | translate}}</ion-card-header>
+              <ion-card-content>
+                <p text-center *ngIf="objLoader"><ion-spinner name="bubbles"></ion-spinner></p>
+                <ion-list *ngIf="ticket.length!=0" class="counter-list">
+                  <ion-item *ngFor="let obj of ticket">
+                    <h4>{{obj?.title}}</h4>
+                    <p><span class="prix">{{obj?.cost_details.values[0] | currency:'EUR':'symbol':'':lang}}</span>, 
+                        <span class="sous-titre" *ngIf="obj.capacity!=''"> {{'events.dispo' | translate:obj.capacity_details}} </span>
+                        <span class="sous-titre" *ngIf="obj.capacity==''">{{'events.unlimited' | translate}} </span>
+                    </p>
+                    
+                    <ion-row>
+                      <ion-col col-12>
+                        <ion-item (click)="totalAmount()" class="counter-item">
+                          <span class="counter-value">{{obj?.qtyTicket}}</span>
+                          <counter-input [(ngModel)]="obj.qtyTicket" basic></counter-input>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                  </ion-item>
+                  <button ion-button color="primary" (click)="commander()">{{'btns.purchase' | translate}}</button>
+                  <button class="total" ion-button outline color="light">{{totalProduits | currency:'EUR':'symbol':'':lang}}</button>
+                </ion-list>
+                <h3 *ngIf="ticket.length==0 && !objLoader">{{'events.fail_ticket' | translate}}</h3>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <!-- end ticket -->
+
+      </ion-col>
+      <ion-col padding class="bloc-map" col-12 col-md-12 col-sm-12 col-lg-12 col-xl-6>
+          <p padding text-center>{{objEvent.agenda.venue.address}}, {{objEvent.agenda.venue.city}} - {{objEvent.agenda.venue.country}}</p>
+          <button *ngIf="objEvent.agenda.venue.geo_lat!==undefined" ion-button clear text-uppercase block color="primary" (click)="getToLocation()">{{'events.location' | translate}}</button>
+          
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab *ngIf="user!==undefined && user_id == objEvent.agenda.author" #fab top right>
+    <button button-ion-fab color="primary" ion-fab><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button (click)="showAttendees()" ion-fab><ion-icon name="ios-people"></ion-icon></button>
+      <button (click)="checkTickets()" ion-fab><ion-icon name="md-qr-scanner"></ion-icon></button>
+      <button (click)="edit()" ion-fab><ion-icon name="ios-create"></ion-icon></button>
+    </ion-fab-list>
+ </ion-fab>
+  <ion-fab #fab bottom right>
+    <button (click)="goToShare()" button-ion-fab color="primary" ion-fab><ion-icon name="md-share"></ion-icon></button>
+ </ion-fab>
+</ion-content>

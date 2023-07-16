@@ -1,0 +1,45 @@
+page-confirm-payconiq {
+
+    .toolbar{
+        .bar-button, .back-button-icon, .toolbar-title{
+            color: color($colors, light) !important;
+        }
+    }
+
+    .toolbar .toolbar-background{
+        background: none !important;
+        background-color: color($colors, dark) !important;
+    }
+
+    .bloc-image{
+        height: 180px;
+        text-align: center;
+        img{
+            object-fit: cover;
+            height: 150px;
+        }
+    }
+
+    h3{
+        font-size: 1.1em;
+        text-align: center;
+        strong{
+            color: color($colors, primary);
+        }
+    }
+
+    .top-header, .bloc-total{
+        background-color: color($colors, grislight);
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    .lines{
+        font-size: 1.1em;
+    }
+
+    .bloc-total{
+        margin-top:10px;
+        text-transform: uppercase;
+    }
+}

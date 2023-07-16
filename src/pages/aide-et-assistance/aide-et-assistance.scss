@@ -1,0 +1,19 @@
+page-aide-et-assistance {
+    .scroll-content{
+        background-color: color($colors, lightest);
+    }
+
+    [ion-item]{
+        ion-icon{
+            color: color($colors, primary);
+        }
+    }
+
+    ion-card{
+        border-radius: 0.50em;
+    }
+    .text{
+        font-size: 18px;
+        font-weight: lighter;
+    }
+}

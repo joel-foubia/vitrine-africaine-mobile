@@ -1,0 +1,80 @@
+<!--
+  Generated template for the FormAnnonceModalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>{{model}}</ion-title>
+        <ion-buttons end>
+            <button (click)="close()" ion-button icon-only>
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <div class="animated fadeIn" *ngIf="subcategories.length > 0">
+        <ion-item-divider class="animated fadeIn" *ngIf="subcategories.length > 0" text-left>Sub-categories</ion-item-divider>
+        <!--  <form class="animated fadeIn" *ngIf="subcategories.length > 0" [formGroup]="checkboxSubCatsForm">
+            <ion-list class="checkbox-tags rounded-tags">
+                <ion-item *ngFor="let item of subcategories" class="checkbox-tag">
+                    <ion-label [innerHTML]="item.name"></ion-label>
+                    <ion-checkbox formControlName="{{item.id}}"></ion-checkbox>
+                </ion-item>
+            </ion-list>
+        </form> -->
+        <form class="animated fadeIn" *ngIf="subcategories.length > 0" [formGroup]="radioSubCat">
+            <ion-list class="checkbox-tags rounded-tags" formControlName="selected_subcat" radio-group>
+                <ion-item *ngFor="let item of subcategories" class="checkbox-tag">
+                    <ion-label [innerHTML]="item.name"></ion-label>
+                    <ion-radio value="{{item.id}}"></ion-radio>
+                </ion-item>
+            </ion-list>
+        </form>
+    </div>
+
+    <div class="animated fadeIn" *ngIf="categories.length > 0">
+        <ion-item-divider text-left>Categories</ion-item-divider>
+        <!-- <form *ngIf="categories.length > 0" [formGroup]="checkboxTagsForm">
+            <ion-list class="checkbox-tags rounded-tags">
+                <ion-item *ngFor="let item of categories" class="checkbox-tag">
+                    <ion-label [innerHTML]="item.name"></ion-label>
+                    <ion-checkbox formControlName="{{item.id}}"></ion-checkbox>
+                </ion-item>
+            </ion-list>
+        </form> -->
+        <form class="animated fadeIn" *ngIf="categories.length > 0" [formGroup]="radioCategForm">
+            <ion-list class="checkbox-tags rounded-tags" formControlName="selected_catego" radio-group>
+                <ion-item *ngFor="let item of categories" class="checkbox-tag">
+                    <ion-label [innerHTML]="item.name"></ion-label>
+                    <ion-radio value="{{item.id}}"></ion-radio>
+
+                </ion-item>
+            </ion-list>
+        </form>
+    </div>
+
+    <div class="animated fadeIn" *ngIf="feautures.length > 0">
+        <ion-item-divider text-left>Features</ion-item-divider>
+        <form *ngIf="feautures.length > 0" [formGroup]="checkboxFeaturesForm">
+            <ion-list class="checkbox-tags rounded-tags">
+                <ion-item *ngFor="let item of feautures" class="checkbox-tag">
+                    <ion-label [innerHTML]="item.name"></ion-label>
+                    <ion-checkbox formControlName="{{item.id}}"></ion-checkbox>
+                </ion-item>
+            </ion-list>
+        </form>
+
+    </div>
+
+</ion-content>
+
+<ion-footer>
+    <button (click)="finish()" ion-button block>Done</button>
+</ion-footer>

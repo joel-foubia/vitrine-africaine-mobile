@@ -1,0 +1,158 @@
+page-mainmenu {
+
+	.content {
+		background-image: url("../assets/images/welcome.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+		background-position: center;
+		@media (max-width: 420px) {
+			// background: color($colors, light);
+			background-image: url("../assets/images/welcome_screen.jpg");
+		}
+	}
+
+	.scroll-content{
+		margin-top: 15px !important;
+	}
+
+	.toolbar {
+		.toolbar-background {
+			background: none;
+			box-shadow: none !important;
+			color: white;
+		}
+
+		.bar-button{
+			color: color($colors, light);
+			// font-size: 4vh;
+		}
+
+		.toolbar-title{
+			font-size: 1.0em;
+			font-family: 'Open-Sans';
+			color: color($colors, light) !important;
+		}
+
+	}
+
+	.titre{
+		color: color($colors, light);
+		// padding-bottom: 10px;
+	}
+	
+	.bg_form{
+		// background-color: rgba($color: #fff, $alpha: 0.4);
+
+		ion-item{
+			background-color: transparent;
+			.searchbar{
+				padding-right:0 !important;
+			}
+
+			ion-label{
+				margin-right: 0 !important;
+			}
+
+			button{
+				padding:10px !important;
+				margin-top:0 !important;
+				margin-bottom:0 !important;
+			}
+
+			.item-button{
+				height: 42px !important;
+			}
+		}
+
+		ion-input{
+			padding: 1px;
+			background-color: rgba($color: #fff, $alpha: 1);
+			margin-top:15px;
+		}
+
+		.searchbar-input{
+			background-color: rgba($color: #fff, $alpha: 1) !important;
+		}
+		
+		.item-input:last-child, .item-inner{
+			border-bottom: none !important;
+		}
+		
+		.bloc-range{
+			h4{
+				margin-bottom:0;
+			}
+		}
+	}
+
+	.bloc-user{
+		margin-bottom: 10px;
+		margin-top: 50px;
+
+		[col-12]{
+			padding:10px;
+			h3, p{
+				text-align: center;
+				color: color($colors, light);
+			}
+
+			h3{
+				font-size: 1.9em;
+			}
+
+			p{
+				margin: auto;
+				width: 90%;
+				font-size: 1.1em;
+			}
+
+		}
+
+	}
+
+	.details-menu{
+		
+		ion-col{
+			// padding-bottom: 30px;
+			margin-bottom:5px;
+			.custom-col{
+				background-color: rgba($color: #000, $alpha: 0.7);
+				margin:auto;
+				padding-top: 14px;
+				width: 85px;
+				height: 80px;
+			}
+
+			img{
+				width: 37px;
+			}
+
+			span{
+				font-size: 0.7em;
+				color: color($colors, light);
+			}
+
+		}
+	}
+
+	.sub-titre{
+		color: color($colors, light);
+		font-family:"Open-Sans";
+		margin-bottom:0;
+	}
+
+	.arrow_icon{
+		margin-top:0;
+		margin-bottom:0;
+		img{
+			width: 20px;
+		}
+	}
+
+	.no_cat{
+		color: color($colors, light);
+		font-size: 0.9em;
+	}
+		
+
+}

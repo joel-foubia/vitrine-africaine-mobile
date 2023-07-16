@@ -1,0 +1,19 @@
+page-helper {
+	.scroll-content{
+		background-color: color($colors, lightest);
+	}
+
+	h3{
+		color:color($colors, dark);
+		font-size: 1.15em;
+	}
+
+	.item{
+		background-color: transparent;
+	}
+
+	ion-item h2{
+		color: color($colors, gris);
+	}
+
+}

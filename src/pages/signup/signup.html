@@ -1,0 +1,57 @@
+<!--
+  Generated template for the SignupPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<!--SignUp Page with slides-->
+<ion-header text-center no-border>
+    <ion-navbar>
+        <ion-title style="font-weight: lighter">{{'signup.signup' | translate}}</ion-title>
+        <ion-buttons end>
+
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content text-center class="signup-content" padding>
+    <h1><img src="assets/images/logo2.png" alt="logo" /></h1>
+    <h6 class="auth-title">{{'signup.create_account' | translate}}</h6>
+    <form class="signup-form auth-form" [formGroup]="signup" (ngSubmit)="doSignup()">
+        <ion-item>
+            <ion-input type="text" placeholder="{{'signup.username' | translate}}" formControlName="username"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input type="email" placeholder="{{'signup.email' | translate}}" formControlName="email"></ion-input>
+        </ion-item>
+        <!-- <show-hide-container> -->
+        <ion-item>
+            <ion-input type="password" placeholder="{{'signup.pwd' | translate}}" formControlName="password" show-hide-input></ion-input>
+        </ion-item>
+        <!-- </show-hide-container> -->
+        <!-- <show-hide-container> -->
+        <ion-item>
+            <ion-input type="password" placeholder="{{'signup.conf_pwd' | translate}}" formControlName="confirm_password" show-hide-input></ion-input>
+        </ion-item>
+        <!-- </show-hide-container> -->
+        <button ion-button block class="auth-action-button signup-button" type="submit" [disabled]="!signup.valid">{{'signup.signup' | translate}}</button>
+    </form>
+    <!--  <p class="auth-divider">
+        {{'signup.or' | translate}}
+    </p> -->
+    <!-- <button ion-button block class="facebook-auth-button" color="facebook" (click)="doFacebookSignup()">{{'signup.facebook' | translate}}</button> -->
+    <!-- <button ion-button block class="google-auth-button" color="google" (click)="doGoogleSignup()">{{'signup.google' | translate}}</button> -->
+
+    <!-- <ion-item class="legal-stuff" transparent no-lines>
+        <ion-label>{{'signup.agreement_text' | translate}} <a class="legal-action " (click)="showTermsModal() ">{{'signup.terms_of_use' | translate}}</a>
+        </ion-label>
+        <ion-checkbox color="primary"></ion-checkbox>
+    </ion-item> -->
+    <span id="legal">
+        <ion-checkbox color="primary"></ion-checkbox>  {{'signup.agreement_text' | translate}} <a class="legal-action" (click)="showTermsModal()">{{'signup.terms_of_use' | translate}}</a>
+    </span>
+    <!--  <p class="legal-stuff">
+        <ion-label>{{'signup.agreement_text' | translate}} <a class="legal-action " (click)="showTermsModal() ">{{'signup.terms_of_use' | translate}}</a>
+    </ion-label>
+    </p> -->
+</ion-content>

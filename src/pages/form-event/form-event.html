@@ -1,0 +1,251 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title *ngIf="!modif">{{'events.t_event' | translate}}</ion-title>
+    <ion-title *ngIf="modif">{{objEvent?.title}}</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="annuler()"> <ion-icon name="md-close"></ion-icon> </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-navbar class="bloc-section">
+      <ion-segment class="forms-examples-segment" [(ngModel)]="section" >
+          <ion-segment-button value="post">{{'events.infos' | translate}}</ion-segment-button>
+          <ion-segment-button value="event">{{'events.contact' | translate}}</ion-segment-button>
+          <ion-segment-button value="others">{{'events.others' | translate}}</ion-segment-button>
+          <ion-segment-button value="ticket">{{'events.ticket' | translate}}</ion-segment-button>
+      </ion-segment>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <div [ngSwitch]="section" class="forms-wrapper" padding>
+        <div *ngSwitchCase="'post'" class="post-example-view">
+            <form [formGroup]="postForm">
+                <ion-list>
+                   <ion-item>
+                     <ion-label stacked>{{'events.f_titre' | translate}} *</ion-label>
+                     <ion-input type="text" formControlName="title"></ion-input>
+                   </ion-item>
+                   <div class="validation-errors">
+                     <ng-container *ngFor="let validation of validation_messages.title">
+                       <div class="error-message" *ngIf="postForm.get('title').hasError(validation.type) && (postForm.get('title').dirty || postForm.get('title').touched)">
+                         {{ validation.message }}
+                       </div>
+                     </ng-container>
+                   </div>
+                   <ion-item>
+                       <ion-label stacked>{{'events.f_description' | translate}} *</ion-label>
+                       <ion-textarea formControlName="description"></ion-textarea>
+                   </ion-item>
+                   <div class="validation-errors">
+                     <ng-container *ngFor="let validation of validation_messages.description">
+                       <div class="error-message" *ngIf="postForm.get('description').hasError(validation.type) && (postForm.get('description').dirty || postForm.get('description').touched)">
+                         {{ validation.message }}
+                       </div>
+                     </ng-container>
+                   </div>
+                   <ion-row class="bloc-date">
+                     <ion-col>
+                        <ion-item>
+                            <ion-label stacked>{{'events.f_debut' | translate}} *</ion-label>
+                            <ion-input formControlName="start_date" type="datetime-local"></ion-input>
+                        </ion-item>
+                        <div class="validation-errors">
+                          <ng-container *ngFor="let validation of validation_messages.ladate">
+                            <div class="error-message" *ngIf="postForm.get('start_date').hasError(validation.type) && (postForm.get('start_date').dirty || postForm.get('start_date').touched)">
+                              {{ validation.message }}
+                            </div>
+                          </ng-container>
+                        </div>
+                     </ion-col>
+                     <ion-col>
+                        <ion-item>
+                            <ion-label stacked>{{'events.f_fin' | translate}} *</ion-label>
+                            <ion-input formControlName="end_date" type="datetime-local"></ion-input>
+                        </ion-item>
+                        <div class="validation-errors">
+                            <ng-container *ngFor="let validation of validation_messages.ladate">
+                              <div class="error-message" *ngIf="postForm.get('end_date').hasError(validation.type) && (postForm.get('end_date').dirty || postForm.get('end_date').touched)">
+                                {{ validation.message }}
+                              </div>
+                            </ng-container>
+                          </div>
+                     </ion-col>
+                     <ion-col col-12>
+                        <ion-item transparent>
+                            <ion-label>{{'events.allday' | translate}}</ion-label>
+                            <ion-checkbox (ionChange)="onChange($event.checked)" value="all_day" item-right></ion-checkbox>
+                        </ion-item>
+                     </ion-col>
+                   </ion-row>   
+                </ion-list>
+            </form>  
+        </div>
+        <!-- end of post -->
+        
+        <!-- start location -->
+        <div *ngSwitchCase="'event'" class="post-example-view">
+            <form [formGroup]="locationForm">
+                <ion-list>
+                    <ion-item class="country" (click)="selectPartner('venues')">
+                        <p color="primary">{{'events.f_lieu' | translate}} *</p>
+                        <h3>{{location?.venue}}</h3>
+                        <ion-icon name="ios-arrow-down-outline" item-end></ion-icon>
+                    </ion-item>
+                    <div class="validation-errors">
+                        <div class="error-message" *ngIf="location.id===undefined">
+                            {{'events.lieu' | translate}}
+                        </div>
+                    </div>
+
+                    <!-- Organisateurs -->
+                    <ion-item-divider class="bloc-item">{{'events.f_organisateur' | translate}}</ion-item-divider>
+                    <div class="tag organizer">
+                        <div *ngFor="let obj of orgs; let i = index" class="animated fadeIn">
+                            <span>{{obj?.organizer}}</span>
+                            <ion-icon name="close" (click)="removeObj(obj, i, 'organizers')"></ion-icon>
+                        </div>
+                        <div class="add-tag" (click)="selectPartner('organizers')">{{'events.f_btn_organizer' | translate}}
+                            <ion-icon name="add"></ion-icon>
+                        </div>
+                    </div>
+                    <!-- end of organisateurs -->
+                    
+                    <section class="form-section">
+                        <button *ngIf="!selected_image" ion-button block large class="upload-image-button" (click)="openImagePicker()">
+                          <ion-icon name="camera"></ion-icon>
+                          <h3 class="button-title">{{'events.upload' | translate}}</h3>
+                          <p class="sub-title" text-wrap>{{'events.upload_info' | translate}}</p>
+                        </button>
+                        <div class="animated fadeIn bloc-image" *ngIf="selected_image">
+                            <img [src]="selected_image" alt="this is the image" />
+                        </div>
+                    </section>
+                  
+                </ion-list>
+            </form>  
+        </div>
+        <!-- end of location -->
+
+        <!-- start others -->
+        <div *ngSwitchCase="'others'" class="post-example-view">
+            <form [formGroup]="othersForm"> 
+                
+                <ion-item-divider>{{'pop.category' | translate}}</ion-item-divider>
+                <div class="tag categories">
+                    <div *ngFor="let obj of categories; let i = index">
+                        <span>{{obj?.name}}</span>
+                        <ion-icon name="close" (click)="removeObj(obj, i, 'categories')"></ion-icon>
+                    </div>
+                    <div class="add-tag" (click)="addObjetFromPop($event,'categories')">{{'events.f_add_rappel' | translate}}
+                        <ion-icon name="add"></ion-icon>
+                    </div>
+                </div>
+
+                <!-- Zone tag -->
+                <ion-item-divider>{{'events.f_tag' | translate}}</ion-item-divider>
+                <div class="tag">
+                    <div *ngFor="let tag of tags; let i = index">
+                        <span>{{tag?.name}}</span>
+                        <ion-icon name="close" (click)="removeObj(tag, i, 'tags')"></ion-icon>
+                    </div>
+                    <div class="add-tag" (click)="addObjetFromPop($event, 'tags')">{{'events.f_add_tag' | translate}}
+                        <ion-icon name="add"></ion-icon>
+                    </div>
+                </div>
+                <!-- fin tag -->
+
+                <ion-item>
+                    <ion-label stacked>{{'events.f_link' | translate}}</ion-label>
+                    <ion-input formControlName="website" type="url"></ion-input>
+                </ion-item>
+                <!-- <ion-item>
+                    <ion-label stacked>{{'events.f_price' | translate}}</ion-label>
+                    <ion-input formControlName="cost" type="number"></ion-input>
+                </ion-item> -->
+
+            </form>
+            
+        </div>
+        <!-- end of others -->
+
+        <!-- start tickets -->
+        <div *ngSwitchCase="'ticket'" class="post-example-view">
+            <form [formGroup]="ticketForm">
+                <ion-grid>
+                    <ion-row no-padding>
+                        <ion-col no-padding>
+                            <ion-item>
+                                <ion-label stacked>{{'ticket.f_titre' | translate}} *</ion-label>
+                                <ion-input type="text" formControlName="title"></ion-input>
+                            </ion-item>
+                            <div class="validation-errors">
+                            <ng-container *ngFor="let validation of validation_messages.type">
+                                <div class="error-message" *ngIf="ticketForm.get('title').hasError(validation.type) && (ticketForm.get('title').dirty || ticketForm.get('title').touched)">
+                                {{ validation.message }}
+                                </div>
+                            </ng-container>
+                            </div>
+                        </ion-col>
+                        <ion-col no-padding>
+                            <ion-item>
+                                <ion-label stacked>{{'ticket.f_cost' | translate}} *</ion-label>
+                                <ion-input type="text" formControlName="cost"></ion-input>
+                            </ion-item>
+                            <div class="validation-errors">
+                                <ng-container *ngFor="let validation of validation_messages.cost">
+                                    <div class="error-message" *ngIf="ticketForm.get('cost').hasError(validation.type) && (ticketForm.get('cost').dirty || ticketForm.get('cost').touched)">
+                                    {{ validation.message }}
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+
+                </ion-grid>
+                <!-- Capacity -->
+                <ion-grid class="bloc-ticket">
+                    <h5>{{'ticket.capacity' | translate}}</h5>
+                    
+                    <ion-row>
+                        <ion-col>
+                            <button [class]="!selectedLimited ? 'capacity-button addSelected' : 'capacity-button'" ion-button block large (click)="selectCapacity()">
+                            <ion-icon name="ios-infinite-outline"></ion-icon>
+                            <h3 class="button-title">{{'ticket.unlimited' | translate}}</h3>
+                            </button>
+                        </ion-col>
+                        <ion-col>
+                            <button [class]="selectedLimited ? 'capacity-button addSelected' : 'capacity-button'" ion-button block large (click)="selectCapacity()">
+                            <ion-icon name="ios-people"></ion-icon>
+                            <h3 class="button-title">{{'ticket.limited' | translate}}</h3>
+                            </button>
+                            
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>    
+                <ion-item class="bloc-place" *ngIf="selectedLimited">
+                    <!-- <ion-label stacked>{{'ticket.f_place' | translate}} </ion-label> -->
+                    <ion-input type="number" placeholder="{{'ticket.f_place' | translate}}" formControlName="places"></ion-input>
+                </ion-item>
+            </form>  
+        </div>
+        <!-- end of tickets -->
+
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-grid>
+        <ion-row>
+            <ion-col text-left>
+                <button *ngIf="section=='post'" color="dark" ion-button clear icon-only (click)="annuler()"> <ion-icon name="md-close"></ion-icon> </button>
+                <button *ngIf="section!='post'" color="dark" ion-button clear icon-only (click)="previous()"> <ion-icon name="md-arrow-back"></ion-icon> </button>
+            </ion-col>
+            <ion-col text-right>
+                <button *ngIf="section!='ticket'" color="dark" ion-button clear icon-only (click)="next()"> <ion-icon name="md-arrow-forward"></ion-icon> </button>
+                <button *ngIf="section=='ticket'" color="dark" ion-button clear icon-only (click)="valider()"> <ion-icon name="md-checkmark"></ion-icon> </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

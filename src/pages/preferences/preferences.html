@@ -1,0 +1,44 @@
+<!--
+  Generated template for the PreferencesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header text-center no-border class="header_off">
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title style="font-weight: lighter">{{'Preferences' | translate}}</ion-title>
+    <ion-buttons end>
+
+      <!-- <button ion-button icon-only (click)="goToNotifications()">
+        <img src="assets/bell.svg">
+        <ion-badge>{{notifications}}</ion-badge>
+      </button> -->
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content text-center padding>
+  <ion-item no-lines>
+    <ion-label floating>{{'lang' | translate}}</ion-label>
+    <ion-select interface="action-sheet" [(ngModel)]="language">
+      <ion-option selected value="fr">{{'french' | translate}}</ion-option>
+      <ion-option value="en">{{'english' | translate}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item id="input" no-lines>
+      <ion-label stacked>{{'SearchRadius' | translate}} (KM)</ion-label>
+      <ion-input placeholder="{{'radius' | translate}} (Km) EX: 10" type="number" [(ngModel)]="distance"></ion-input>
+  </ion-item>
+
+  <ion-item no-lines>
+    <ion-checkbox [(ngModel)]="autosync" (ionChange)="autoSyncUpdate()" color="dark" item-end></ion-checkbox>
+    <ion-label style="color: white !important">{{'Auto Synchronization' | translate}}</ion-label>
+  </ion-item>
+
+  <button ion-button (click)="savePreferences()" outline block color="guidepro">{{'save settings' | translate}}</button>
+</ion-content>

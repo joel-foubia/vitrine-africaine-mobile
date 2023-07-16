@@ -1,0 +1,38 @@
+<!--
+  Generated template for the LesExpertsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{'parole.title' | translate}}</ion-title>
+    <button ion-button menuToggle end>
+      <ion-icon name="md-more"></ion-icon>
+      </button>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+
+    <p objSpinner text-center *ngIf="objLoader">
+        <ion-spinner name="dots"></ion-spinner>
+    </p>
+        <ion-grid *ngIf="finalObject.length!=0">
+          <ion-row class="animated zoomIn details-menu">
+            <ion-col col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 *ngFor="let art of finalObject">
+              <ion-item (click)="details(art)">
+                <ion-thumbnail item-end>
+                  <img *ngIf="art.better_featured_image != null" [src]="art.better_featured_image.source_url">
+                  <img *ngIf="art.better_featured_image == null" src="assets/images/logo.png">
+                </ion-thumbnail>
+                <h2 text-wrap class="animated fadeIn delay-1s" [innerHtml]="art.title.rendered |slice : 0 :43"></h2>
+                <p>{{art.date | date:'mediumDate':'':current_lang}}</p>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+</ion-content>

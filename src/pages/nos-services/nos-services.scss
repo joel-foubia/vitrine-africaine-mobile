@@ -1,0 +1,46 @@
+page-nos-services {
+    ion-item {
+        margin-bottom: 20px !important;
+        border-radius: 10px !important;
+        background-color: rgba(255, 255, 255, 0.376) !important;
+    }
+    .content {
+      background-color: color($colors, lightest);
+      color: color($colors, dark);
+      font-weight: lighter !important;
+    }
+        ion-input{
+            font-weight: lighter;
+            border: 1px solid #fff;
+            margin: auto!important;
+            width: 95%!important;
+            background-color: #fff;
+            margin-bottom: 25px!important;
+            border-radius: 10px;
+          }
+          .text-input:-ms-input-placeholder {
+            color: rgba($color: #000000, $alpha: 0.7)!important;
+          }
+          
+          .text-input::-webkit-input-placeholder {
+            color: rgba($color: #000000, $alpha: 0.7)!important;
+          }
+          ion-label{
+            color: rgba($color: #000000, $alpha: 0.9)!important;
+        }
+        .custom-toolbar {
+          .toolbar-background {
+              background-image: none !important;
+              background-color: color($colors, dark);
+          }
+          
+      }
+    
+
+    ion-textarea {
+      border: 1px solid !important;
+      height: 175px !important;
+      margin-top: 40px !important;
+      border-radius: 10px !important;
+    }
+}

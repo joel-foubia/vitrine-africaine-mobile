@@ -1,0 +1,30 @@
+page-plus {
+
+	// .toolbar-background-md{
+    //     background-color: lighten(color($colors,gris),6%) !important;
+    // }
+
+	[item-bcg]{
+		
+	        background-color: color($colors, dark);
+        [ion-item]{
+	  		background-color: color($colors,dark);
+	  		color: color($colors,light);
+			
+			.item-inner{  
+				border-bottom: 1px solid color($colors,primary) !important;
+			}
+			
+	  		img{
+	  			width: 30px;
+				  height: 30px;
+				  border-radius: 0;
+	  		}
+
+	  		ion-avatar{
+	  			padding-top: 8px;
+	  		}
+	  	}
+	    
+	}
+}

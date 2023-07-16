@@ -1,0 +1,219 @@
+<ion-header>
+
+    <ion-navbar>
+
+        <ion-buttons end>
+
+            <button class="navBtn" (click)="addComment()" ion-button icon-only>
+                
+                <ion-icon id="chat" name="ios-chatbubbles"></ion-icon>
+                   
+                <span *ngIf="annonce.annonce.comments && annonce.annonce.comments.length < 9" id="chatNum">
+                    {{annonce.annonce.comments.length}}
+                </span>
+                <span *ngIf="!annonce.annonce.comments" id="chatNum">0</span>
+                <span *ngIf="annonce.annonce.comments && annonce.annonce.comments.length > 9" id="chatNum">9+</span>
+            </button>
+            <!-- <button class="navBtn" c ion-button icon-only>
+                <ion-icon name="md-calendar"></ion-icon>
+            </button> -->
+            <button class="navBtn" (click)="goToArticle()" ion-button icon-only>
+                <ion-icon name="ios-navigate-outline"></ion-icon>
+            </button>
+            <button class="navBtn" (click)="addToFav(annonce.annonce)" ion-button icon-only>
+                <ion-icon [ngClass]="{'animated jello':annonce.annonce.like == true}" *ngIf="annonce.annonce.like && annonce.annonce.like == true" name="ios-heart"></ion-icon>
+                <ion-icon *ngIf="!annonce.annonce.like || annonce.annonce.like == false" name="ios-heart-outline"></ion-icon>
+            </button>
+            <button ion-button (click)="openMenu()" icon-only>
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content parallax-header>
+
+    <div [ngClass]="{'h1GoDown':direction == 'down', 'h1GoUp':direction == 'up'}" class="title">
+        <ion-row>
+            <ion-col col-12>
+                <h1 [innerHTML]="annonce.annonce.title.rendered"> </h1>
+                <p id="location">{{annonce.annonce.webbupointfinder_items_address}}
+                    <br><span class="visit"><ion-icon name="eye"></ion-icon> {{annonce.annonce.webbupointfinder_page_itemvisitcount}}</span>
+                </p>
+                <img *ngIf="annonce.annonce.webbupointfinder_item_verified!=''" src="assets/verified_icons/9.svg" id="verif">
+            </ion-col>
+
+        </ion-row>
+    </div>
+
+    <div padding bg-lazy-img [bground]="annonce.annonce._embedded['wp:featuredmedia'][0].source_url" [defaultImage]="defaultImage" class="header-image"></div>
+    <!-- <div padding bg-lazy-img *ngIf="!annonce.annonce.img" [bground]="annonce.annonce._embedded['wp:featuredmedia'][0].source_url" [defaultImage]="defaultImage" class="header-image"></div> -->
+
+    <div class="main-content">
+
+        <p id="arrow_icon_container" text-center><img id="arrow_icon" [src]="icon" alt="" [ngClass]="{'fadeOutDown':direction == 'down', 'fadeOutUp':direction == 'up'}" class="animated infiniteCount"></p>
+
+        <ion-scroll id="scroller" padding scrollY="true">
+            <ion-item-divider>{{'pop.available' | translate}}</ion-item-divider>
+
+            <ion-grid no-padding class="bloc-dispo">
+                <ion-row text-center>
+                    <ion-col>
+                        <button [ngClass]="{'state':available == 'closed'}" ion-button outline>{{available}}</button>
+                    </ion-col>
+                    <!-- <ion-col>
+                        <button ion-button icon-left (click)="reserver()">
+                            <ion-icon name="md-calendar"></ion-icon>
+                            {{'pop.reserv' | translate}}
+                        </button>
+                    </ion-col> -->
+                    <ion-col>
+                        <button (click)="seeHours()" ion-button clear>{{'pop.hours' | translate}}</button>
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+
+
+
+            <div id="auth_details" text-center>
+
+                <ion-card *ngIf="authorDetails != undefined || authorDetails != null">
+                    <!-- <ion-card-header>
+                        {{'pop.auth_contacts' | translate}}
+                    </ion-card-header> -->
+                    <ion-card-content *ngIf="authorDetails.userData!=undefined">
+                        <ion-list text-left no-lines>
+                            <ion-item *ngIf="authorDetails.name != ''">
+                                <ion-icon name="ios-contact" item-start></ion-icon>
+                                {{authorDetails.name}}
+                            </ion-item>
+                            <ion-item *ngIf="authorDetails.userData.user_address != ''">
+                                <ion-icon name="ios-pin" item-start></ion-icon>
+                                {{authorDetails.userData.user_address}}
+                            </ion-item>
+                            <ion-item (click)="sendMail()" *ngIf="authorDetails.userData.user_email != ''">
+                                <ion-icon name="ios-mail" item-start></ion-icon>
+                                {{authorDetails.userData.user_email}}
+                            </ion-item>
+                            <ion-item (click)="call()" *ngIf="authorDetails.userData.user_phone != ''">
+                                <ion-icon name="ios-call" item-start></ion-icon>
+                                {{authorDetails.userData.user_phone}}
+                            </ion-item>
+                            <ion-item (click)="whatsapp()" *ngIf="authorDetails.userData.user_phone != ''">
+                                <ion-icon name="logo-whatsapp" item-start></ion-icon>
+                                {{authorDetails.userData.user_phone}}
+                            </ion-item>
+                            <ion-item (click)="sendSms()" *ngIf="authorDetails.userData.user_phone != ''">
+                                <ion-icon name="ios-chatboxes" item-start></ion-icon>
+                                {{authorDetails.userData.user_phone}}
+                            </ion-item>
+                        </ion-list>
+                    </ion-card-content>
+                </ion-card>
+                <!-- <button color="dark" ion-button icon-left (click)="reserver()">
+                        <ion-icon name="md-calendar"></ion-icon>
+                        {{'pop.reserv' | translate}}
+                    </button> -->
+            </div>
+
+
+
+            <ion-item-divider>Description</ion-item-divider>
+
+            <div text-left>
+                <p [innerHTML]="mediumDesc" class="animated fadeIn bloc-desc"> </p> <button *ngIf="annonce.annonce.content.rendered.length > 250" id="more_desc_btn" color="primary" (click)="viewAllDesc()" ion-button clear>{{'pop.more' | translate}}</button>
+            </div>
+
+            <p text-right class="price" *ngIf="annonce.annonce.webbupointfinder_item_field_priceforsale!=''"> {{'events.f_prix' | translate}} | {{annonce.annonce.webbupointfinder_item_field_priceforsale | currency:'EUR':'symbol':'':lang}}</p>
+
+            <ion-item-divider *ngIf="features.length!=0" class="animated fadeIn">{{'pop.features' | translate}}</ion-item-divider>
+            <button class="feats" ion-button round outline *ngFor="let feat of features">{{feat?.name}}</button>
+
+            <!-- <ion-item-divider class="animated fadeIn">{{'pop.images' | translate}} </ion-item-divider> -->
+
+            <div *ngIf="annonce.annonce.webbupointfinder_item_images.length!=0" class="more_img">
+                <span *ngFor="let img of annonce.annonce.webbupointfinder_item_images | slice:0:3"><op-lazy-img [source]="img" [defaultImage]="defaultImage"></op-lazy-img></span>
+                <span (click)="viewAllImgs()">
+                    <span><img [src]="imgMore" /></span>
+                </span>
+            </div>
+
+
+            <ion-item-divider class="animated fadeIn">
+                {{'message.comments' | translate}}
+                <span *ngIf="annonce.annonce.comments">
+                    <button *ngIf="annonce.annonce.comments.length>5" ion-button clear (click)="viewAllComments()" color="primary" item-end>{{'pop.more' | translate}}</button>
+                </span>
+            </ion-item-divider>
+            <ion-list no-lines class="bloc-comment">
+                <div *ngIf="annonce.annonce.comments">
+                    <ion-item *ngFor="let item of annonce.annonce.comments | slice:0:maxComments">
+                        <ion-avatar item-start>
+                            <op-lazy-img class="img" *ngIf="item._embedded.author[0].userData.Profil_image && item._embedded.author[0].userData.Profil_image != ''" [source]="item._embedded.author[0].userData.Profil_image" [defaultImage]="defaultImage"></op-lazy-img>
+                            <img *ngIf=" !item._embedded.author[0].userData.Profil_image || item._embedded.author[0].userData.Profil_image == ''" src="assets/images/icons/boy.svg">
+                            <!-- <img src="assets/images/icons/boy.svg"> -->
+                        </ion-avatar>
+                        <h2 id="user_name">{{item?.author_name}}</h2>
+                        <p id="comm_date">{{item?.date}}</p>
+                        <h6 [innerHTML]="item.content.rendered"></h6>
+
+                        <ion-icon *ngIf="conn_user != undefined && item.author == conn_user.user_id" (click)="showDeleteConfirm(item)" item-end name="trash"></ion-icon>
+                    </ion-item>
+                </div>
+                <h5 *ngIf="!annonce.annonce.comments || annonce.annonce.comments.length == 0">{{'message.err_chat' | translate}}</h5>
+                <ion-item no-lines class="bloc-sent">
+                    <ion-avatar item-left>
+                        <img src="assets/images/icons/boy.svg">
+                    </ion-avatar>
+                    <ion-textarea [(ngModel)]="commentObj.comment" placeholder="{{'message.lbl_comment' | translate}}"></ion-textarea>
+                    <button (click)="submitComment()" ion-button clear icon-only item-right><ion-icon color="orlight" name="md-send"></ion-icon></button>
+                </ion-item>
+            </ion-list>
+
+
+            <ion-item-divider class="animated fadeIn">
+                {{'message.reviews' | translate}}
+                <span *ngIf="annonce.annonce.reviews">
+                    <button *ngIf="annonce.annonce.reviews.length>5" ion-button clear (click)="viewAllReviews()" color="primary" item-end>{{'pop.more' | translate}}</button>
+                </span>
+            </ion-item-divider>
+            <ion-list no-lines class="bloc-comment">
+                <div *ngIf="annonce.annonce.reviews">
+                    <ion-item *ngFor="let item of annonce.annonce.reviews | slice:0:maxComments">
+                        <ion-avatar item-start>
+                            <op-lazy-img class="img" *ngIf="item._embedded.author[0].userData.Profil_image && item._embedded.author[0].userData.Profil_image != ''" [source]="item._embedded.author[0].userData.Profil_image" [defaultImage]="defaultImage"></op-lazy-img>
+                            <img *ngIf=" !item._embedded.author[0].userData.Profil_image || item._embedded.author[0].userData.Profil_image == ''" src="assets/images/icons/boy.svg">
+                            <!-- <img src="assets/images/icons/boy.svg"> -->
+                        </ion-avatar>
+                        <h2 id="user_name">{{item?.author_name}}</h2>
+                        <p id="comm_date">{{item?.date}}</p>
+                        <h6 [innerHTML]="item.content.rendered"></h6>
+
+                        <ion-icon *ngIf="conn_user != undefined && item.author == conn_user.user_id" (click)="showDeleteConfirm(item)" item-end name="trash"></ion-icon>
+                    </ion-item>
+                </div>
+                <h5 *ngIf="!annonce.annonce.reviews || annonce.annonce.reviews.length == 0">{{'message.err_revs' | translate}}</h5>
+                <ion-item no-lines class="bloc-sent">
+                    <ion-avatar item-left>
+                        <img src="assets/images/icons/boy.svg">
+                    </ion-avatar>
+                    <ion-textarea [(ngModel)]="avis_txt" placeholder="{{'message.lbl_avis' | translate}}"></ion-textarea>
+                    <button (click)="submitAvis()" ion-button clear icon-only item-right><ion-icon color="orlight" name="md-send"></ion-icon></button>
+                </ion-item>
+            </ion-list>
+
+        </ion-scroll>
+
+    </div>
+
+    <ion-fab bottom center>
+        <button (click)="goToShare()" ion-fab><ion-icon name="md-share"></ion-icon></button>
+    </ion-fab>
+</ion-content>
+<ion-footer text-center>
+
+    <button *ngIf="annonce.annonce.bookable || annonce.annonce.reserv" (click)="reserver()" ion-button outline color="noir">{{'pop.rdv' | translate}}</button>
+</ion-footer>

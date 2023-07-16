@@ -1,0 +1,76 @@
+page-report {
+    .scroll-content{
+        background-color : color($colors, lightest);
+    }
+    .content {
+        background-color: color($colors, lightest);
+        color: color($colors, dark);
+        font-weight: lighter !important;
+    }
+    ion-item {
+        margin-bottom: 20px !important;
+        border-radius: 10px !important;
+        background-color: rgba(255, 255, 255, 0.376) !important;
+    }
+    .text-input::-moz-placeholder {
+        color: color($colors, dark) !important;
+        font-weight: 800 !important
+    }
+    .text-input:-ms-input-placeholder {
+        color: color($colors, dark) !important;
+        font-weight: 800 !important
+    }
+    .text-input::-webkit-input-placeholder {
+        text-indent: 0 !important;
+        color: color($colors, dark) !important;
+        font-weight: 800 !important
+    }
+
+    .custom-toolbar {
+        .toolbar-background {
+            background-image: none !important;
+            // background-color: transparent !important;
+            // box-shadow: none !important;
+            background-color: color($colors, dark);
+        }
+        // ion-segment {
+        //     display: block;
+        //     white-space: nowrap;
+        //     font-size: 0;
+        //     overflow: auto;
+        //     &::-webkit-scrollbar {
+        //         width: 0;
+        //         height: 0;
+        //         display: none;
+        //     }
+        //     ion-segment-button.segment-button {
+        //         display: inline-block;
+        //         min-width: 130px;
+        //         width: auto;
+        //     }
+        // }
+    }
+    ion-label {
+        color: color($colors, dark) !important;
+    }
+    ion-toolbar{
+        color: color($colors, dark) !important;
+    }
+    
+    // ion-segment-button.segment-button.segment-activated {
+    //     font-size: 13px !important;
+    // }
+    ion-textarea {
+        border: 1px solid !important;
+        height: 175px !important;
+        margin-top: 40px !important;
+        border-radius: 10px !important;
+    }
+    ion-list {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    ion-list.checkbox-tags.rounded-tags.list.list-md {
+        margin-top: 0px !important;
+    }
+}

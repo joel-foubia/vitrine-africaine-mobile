@@ -1,0 +1,21 @@
+page-attendees {
+
+    .scroll-content{
+        background-color: color($colors, lightest);
+    }
+
+    .bloc-section{
+        .toolbar-background{
+            background: none !important;
+            background-color: color($colors, dark) !important;
+        }
+    }
+
+    .bloc-attendees{
+        margin-top: 80px;
+        ion-item{
+            background-color: transparent;
+            font-size: 1.15em;
+        }
+    }
+}

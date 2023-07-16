@@ -1,0 +1,10 @@
+<ion-content *ngIf="banner">
+
+  <ion-list>
+    <ion-item *ngFor="let b of banner">
+      <ion-label>{{b}}</ion-label>
+      <ion-checkbox (ionChange)="onChange(b, $event.checked)" value="b" checked="false"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <button ion-button type="submit" block (click)="submit()">Envoyer</button>
+</ion-content>

@@ -1,0 +1,89 @@
+<!--
+  Generated template for the NearBySearchPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header #header class="animated fadeIn" *ngIf="showHeader">
+
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+        <ion-title *ngIf="display_search != true">{{'nearby.title' | translate}}</ion-title>
+        <ion-searchbar *ngIf="display_search == true && radius != undefined" class="animated zoomIn" debounce="500" [showCancelButton]=true (ionCancel)="onCancel($event)" (ionClear)="onClear($event)" id="offerSearch" (ionInput)="launchSearch($event)" [(ngModel)]="search_term"
+            placeholder="{{'nearby.search_text1' | translate}} {{radius}}km {{'nearby.search_text2' | translate}}"></ion-searchbar>
+        <ion-searchbar *ngIf="display_search == true && radius == undefined" class="animated zoomIn" debounce="500" [showCancelButton]=true (ionCancel)="onCancel($event)" (ionClear)="onClear($event)" id="offerSearch" (ionInput)="launchSearch($event)" [(ngModel)]="search_term"
+            placeholder="{{'favorites.search_text' | translate}}"></ion-searchbar>
+        <ion-buttons end>
+
+            <button *ngIf="display_search == true" ion-button icon-only (click)="onCancel($event)">
+                        <ion-icon name="close"></ion-icon>
+                      </button>
+            <button ion-button icon-only (click)="displaySearch()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar id="search_toolbar">
+
+
+        <h6 text-center *ngIf="radius == undefined">{{'nearby.range_text' | translate}}</h6>
+        <h6 text-center *ngIf="radius != undefined">{{'nearby.slided_text1' | translate}} {{radius}}km {{'nearby.slided_text2' | translate}}</h6>
+        <ion-range min="0" (ionChange)="getPlacesAround($event)" max="{{max_distance}}" debounce="500" [(ngModel)]="radius" pin="true" step="1" color="primary">
+            <ion-label color="primary" range-left>0 km</ion-label>
+            <ion-label color="primary" range-right>{{max_distance}} km</ion-label>
+        </ion-range>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+    <div bloc-empty *ngIf="annoncesList.length==0 && radius == undefined" padding>
+        <p><img src="assets/images/empty-tray.png"></p>
+        <h3>{{'favorites.empty_fav' | translate}}</h3>
+    </div>
+
+    <div bloc-empty *ngIf="objLoader == true">
+        <h3>Synchronizing with server</h3>
+        <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+
+    <ion-row no-padding class="map-row">
+        <ion-col no-padding class="map-col">
+            <div (click)="onMapClick()" class="map-container">
+                <agm-map [styles]="mapStyles" [zoom]="14" *ngIf="currentPosition != undefined" [latitude]="currentPosition.latitude" [longitude]="currentPosition.longitude">
+                    <agm-direction *ngIf="dir" [renderOptions]="options" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
+                    <agm-marker [animation]="anime" [ngClass]="{'animated bounceIn': isInfoWindowOpen(data.id)}" (markerClick)="openWindow(data.id,data)" *ngFor="let data of annoncesList | slice:0:20; let i = index" [iconUrl]="'assets/icon/pos.png'" [latitude]="data?.lat"
+                        [longitude]="data?.lng">
+                        <agm-info-window [isOpen]="isInfoWindowOpen(data.id)" [latitude]="data?.lat" [longitude]="data?.lng">{{data?.title?.rendered}}</agm-info-window>
+                    </agm-marker>
+                    <agm-marker [animation]="anime" (markerClick)="showMe()" [iconUrl]="'assets/icon/humans.png'" [latitude]="currentPosition.latitude" [longitude]="currentPosition.longitude">
+                        <agm-info-window [isOpen]="describeMe" [latitude]="currentPosition.latitude" [longitude]="currentPosition.longitude">Me</agm-info-window>
+                    </agm-marker>
+                </agm-map>
+                <agm-map [styles]="mapStyles" [zoom]="14" *ngIf="currentPosition == undefined && dumpData.length> 0" [latitude]="noLocationCoords.latitude" [longitude]="noLocationCoords.longitude">
+                    <agm-direction *ngIf="dir" [renderOptions]="options" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
+                    <agm-marker [animation]="anime" [ngClass]="{'animated bounceIn': isInfoWindowOpen(data.id)}" (markerClick)="openWindow(data.id,data)" *ngFor="let data of annoncesList | slice:0:20; let i = index" [iconUrl]="'assets/icon/pos.png'" [latitude]="data?.lat"
+                        [longitude]="data?.lng">
+                        <agm-info-window [isOpen]="isInfoWindowOpen(data.id)" [latitude]="data?.lat" [longitude]="data?.lng">{{data?.title?.rendered}}</agm-info-window>
+                    </agm-marker>
+                </agm-map>
+            </div>
+            <ion-scroll [hidden]="annoncesList.length == 0" scrollX="true" class="nearby-places-container">
+                <ion-row class="nearby-places-row">
+                    <span *ngFor="let place of annoncesList | slice:0:20">
+                    <ion-col class="place-item-outer"  [ngClass]="{'selected-place': isInfoWindowOpen(place.id)}">
+                          <mapannonce [annonce]="place" [events]="events"></mapannonce>
+                        </ion-col>
+                    </span>
+                </ion-row>
+                <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                    <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+            </ion-scroll>
+        </ion-col>
+    </ion-row>
+</ion-content>

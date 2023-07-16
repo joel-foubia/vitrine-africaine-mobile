@@ -1,0 +1,6 @@
+
+<ion-list *ngIf="agenda">
+	<ion-item *ngFor="let current of actions" (click)="onSelect(current)">
+		{{current.nom}}
+	</ion-item>
+</ion-list>

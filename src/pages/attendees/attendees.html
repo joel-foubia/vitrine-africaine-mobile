@@ -1,0 +1,53 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{'events.attendee' | translate}}</ion-title>
+  </ion-navbar>
+  <ion-toolbar class="bloc-section" *ngIf="tickets.length!=0" no-border-top>
+      <ion-segment [(ngModel)]="roleType">
+          <ion-segment-button *ngFor="let obj of tickets" value="{{obj.id}}" (click)="segmentChanged(obj, $event)">
+              {{obj?.title}} ({{obj?.attendees.length}})
+          </ion-segment-button>
+      </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <p *ngIf="objLoader" obj-loader><ion-spinner name="dots"></ion-spinner></p>
+
+  <div *ngIf="!objLoader && tickets.length!=0" [ngSwitch]="roleType">
+
+    <div *ngFor="let obj of tickets">
+
+        <ion-grid *ngSwitchCase="obj.id" no-padding class="bloc-attendees">
+            <ion-row>
+                <ion-col *ngFor="let item of obj.attendees | slice:0:max" col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4>
+                  <ion-item>
+                    <!-- <ion-icon name="ios-person" item-start></ion-icon> -->
+                    <h3>{{item.title}}</h3>
+                    <button *ngIf="item.checked_in" ion-button clear color="vert" (click)="checkIn(item)" item-end>{{'ticket.unchecked_in' | translate}}</button>
+                    <button *ngIf="!item.checked_in" ion-button clear color="danger" (click)="checkIn(item)" item-end>{{'ticket.checked_in' | translate}}</button>
+                  </ion-item>
+
+                </ion-col>
+                <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+            </ion-row>
+            <div text-center bloc-empty *ngIf="obj.attendees.length==0">
+              <img src="assets/icon/attendees.svg">
+              <h3>{{'events.no_attendees' | translate}}</h3>
+            </div>
+        </ion-grid>
+
+    </div>
+    
+</div>
+  <div *ngIf="!objLoader && tickets.length==0" text-center bloc-empty>
+    <img src="assets/icon/attendees.svg">
+    <h3>{{'events.no_attendees' | translate}}</h3>
+  </div>
+
+</ion-content>

@@ -1,0 +1,25 @@
+page-pop-event {
+    h3{
+        font-size: 1.2em;
+    }
+
+    h5{
+        font-size: 1.0em;
+        color: color($colors, primary);
+        text-align: center;
+    }
+
+    .address{
+        background-color: color($colors, grislight);
+        padding: 5px;
+        border-left: 3px solid color($colors, dark);
+
+        .prix{
+            color: color($colors, gris);
+        }
+    }
+
+    .bloc-footer{
+        margin-bottom: 0;
+    }
+}

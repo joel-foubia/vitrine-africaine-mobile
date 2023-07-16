@@ -1,0 +1,50 @@
+<!--
+  Generated template for the CompanyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>{{'company.title' | translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="openMenu()">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="card-background-page" text-center padding>
+
+    <ion-card (click)="openEvent()">
+        <img src="assets/images/compayImages/siteweb.jpg" />
+        <div class="card-title">{{'company.pub' | translate}}</div>
+    </ion-card>
+
+    <ion-grid no-padding>
+        <ion-row>
+            <ion-col col-6>
+                <ion-card (click)="openPaper()">
+                    <img src="assets/images/compayImages/papier.jpg" />
+                    <div class="card-title">{{'company.annonce_paper' | translate}}</div>
+                </ion-card>
+
+            </ion-col>
+            <ion-col col-6>
+                <ion-card (click)="openServices()">
+                    <img src="assets/images/compayImages/woman.jpg" />
+                    <div class="card-title">{{'company.our_service' | translate}}</div>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-card (click)="addAnnonce()">
+        <img src="assets/images/compayImages/event.jpg" />
+        <div class="card-title">{{'pub_form.title_2' | translate}}</div>
+    </ion-card>
+
+</ion-content>

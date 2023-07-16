@@ -1,0 +1,87 @@
+page-taxonomies-list {
+    .scroll-content {
+        background-color: color($colors, lightest);
+    }
+    // $number-of-colors: length($couleurs);
+    $key: random(length($couleurs));
+    $nth: nth($couleurs, $key);
+    $main-color: $nth !default;
+    @mixin background_cat($c, $y) {
+        @for $i from 1 through $y {
+            ion-card:nth-child(#{length($couleurs)}n+#{$i}) {
+                background: darken(nth($couleurs, random(length($couleurs))), 20%);
+            }
+        }
+    }
+    @mixin color($c, $y) {
+        // background: $c;
+        @for $i from 1 through $y {
+            ion-col:nth-child(#{length($couleurs)}n+#{$i}) ion-icon {
+                color: lighten(nth($couleurs, random(length($couleurs))), 20%);
+            }
+        }
+    }
+    ion-item {
+        background-color: rgba($color: #fff, $alpha: 0.7);
+    }
+    .bloc-category {
+        @include color($main-color, 11);
+    }
+    .custom-card {
+        background-image: url("../assets/images/bg_card.jpg");
+        background-repeat: no-repeat;
+        background-position: right top;
+        ion-item {
+            background-color: rgba($color: #fff, $alpha: 0.7);
+        }
+    }
+    .details-affaire {
+        display: block;
+        white-space: nowrap;
+        overflow: auto;
+        background-color: rgba(230, 230, 230, 0.8);
+        @include background_cat($main-color,
+        11);
+        &::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+        .h1 {
+            font-family: "Pacifico", cursive !important;
+            font-size: 30px !important;
+        }
+        ion-card img {
+            display: inline !important;
+        }
+        ion-card {
+            display: inline-block;
+            border-radius: 5px !important;
+            width: 120px;
+            padding-top: 15px;
+            text-align: center;
+            border-radius: 0.4em;
+            height: 120px;
+            img {
+                width: 60px;
+            }
+            p {
+                font-size: 1.0em;
+                color: color($colors, light);
+                padding-left: 5px;
+                padding-right: 5px;
+                margin-bottom: 0.2em;
+            }
+        }
+    }
+    #empty_img {
+        width: 200px !important;
+        margin-top: 20px !important;
+    }
+    .bloc-empty {
+        display: block !important;
+    }
+    h2 {
+        color: black !important
+    }
+}

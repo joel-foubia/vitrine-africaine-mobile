@@ -1,0 +1,28 @@
+<ion-header>
+
+		<ion-navbar>
+			<ion-title></ion-title>
+			<ion-searchbar (ionInput)="setFilteredItems($event)" placeholder="{{'message.search' | translate}}" animated="true"></ion-searchbar>
+		</ion-navbar>
+	
+</ion-header>
+<ion-content padding>
+	<ion-spinner *ngIf="objSpinner" name="dots" obj-spinner></ion-spinner>
+	
+	<ion-list *ngIf="list_tags.length!=0">
+	  <ion-item-divider>{{message}}</ion-item-divider>
+	  <ion-item *ngFor="let tag of list_tags">
+	    <ion-label>{{tag.name}}</ion-label>
+	    <ion-checkbox (ionChange)="onChange(tag, $event.checked)" value="tag.id"></ion-checkbox>
+	  </ion-item>
+	  
+	  <!-- <ion-item *ngIf="!remind">
+	  	<ion-input [(ngModel)]="new_tag" type="text" placeholder="{{'module.agenda.f_txt_tag' | translate }}"></ion-input>
+	  	<button ion-button icon-only clear item-end (click)="onAddTag()">
+	  		<ion-icon name="add"></ion-icon>
+	  	</button>
+		</ion-item> -->
+			
+		<button ion-button block outlined (click)="onFinish()"> {{'btns.finish' | translate}} </button>
+	</ion-list>
+</ion-content>

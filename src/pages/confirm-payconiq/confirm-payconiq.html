@@ -1,0 +1,40 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{'payconiq.titre' | translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="close()"> <ion-icon name="md-close"></ion-icon> </button>
+    </ion-buttons>
+  </ion-navbar>
+  
+</ion-header>
+<ion-content padding>
+  <div class="bloc-image">
+    <img src="{{objOrder.objet.image}}">
+  </div>
+  <h3 [innerHTML]="'payconiq.details' | translate:objOrder.objet"></h3>
+  <!-- <p>{{objOrder.objet.description}}</p> -->
+  <ion-grid class="bloc-payment">
+    <ion-row class="top-header">
+      <ion-col col-8>{{'payconiq.description' | translate}} </ion-col>
+      <ion-col text-right col-4>{{'payconiq.amount' | translate}}</ion-col>
+    </ion-row>
+    <ion-row class="lines" *ngFor="let obj of commande">
+      <ion-col col-8>{{obj.title}} <span>(x{{obj.quantity}})</span></ion-col>
+      <ion-col text-right col-4>{{obj.cost*obj.quantity | currency:objOrder.currency:'symbol':'':lang}}</ion-col>
+    </ion-row>
+    <ion-row class="bloc-total">
+      <ion-col col-8>{{'payconiq.total' | translate}}</ion-col>
+      <ion-col text-right col-4>{{total | currency:objOrder.currency:'symbol':'':lang}}</ion-col>
+    </ion-row>
+    
+    <p text-center>
+      <button ion-button color="primary" text-uppercase (click)="validPayment()">
+          <a *ngIf="objOrder.env" href="{{urlTransaction}}">{{'payconiq.btn_valid' | translate}}</a>
+          <span *ngIf="!objOrder.env">{{'payconiq.btn_valid' | translate}}</span>
+      </button>
+    </p>
+  </ion-grid>
+
+</ion-content>

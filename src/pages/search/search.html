@@ -1,0 +1,145 @@
+<ion-header no-border>
+    <ion-navbar>
+        <ion-searchbar [(ngModel)]="wordToSearch" (ionInput)="setFilteredItems($event)" placeholder="{{'message.search' | translate}}" autocomplete="true" animated="true"></ion-searchbar>
+        <!-- <ion-title style="font-weight: lighter">{{'message.title' | translate}}</ion-title> -->
+        <ion-buttons end>
+            <button ion-button icon-only (click)="onFilter($event)"><ion-icon name="md-funnel"></ion-icon></button>
+            <button ion-button icon-only (click)="openLeftMenu()"><ion-icon name="md-more"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar class="custom-toolbar" no-border-top>
+        <ion-segment [(ngModel)]="roleType" color="primary">
+            <ion-segment-button value="annonces">
+                {{'pop.annonce' | translate}} 
+                <span *ngIf="posts.length<=999">({{posts.length}})</span>
+                <span *ngIf="posts.length>999">(+999)</span>
+            </ion-segment-button>
+            <ion-segment-button value="category">
+                {{'pop.category' | translate}} <span>({{categories.length}})</span>
+            </ion-segment-button>
+            <!-- <ion-segment-button value="location">
+                {{'pop.location' | translate}} <span>({{locations.length}})</span>
+            </ion-segment-button> -->
+            <!-- <ion-segment-button value="tag">
+                {{'pop.tag' | translate}} <span>({{tags.length}})</span>
+            </ion-segment-button> -->
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <p *ngIf="!objLoader" text-center>
+        <ion-spinner name="dots"></ion-spinner>
+    </p>
+    <!-- <ion-card *ngIf="isSearch" class="bloc-suggest">
+		<ion-item text-wrap *ngFor="let item of selectedItems" (click)="selectResult(item)">
+            {{ item.name }}
+        </ion-item>
+    </ion-card> -->
+
+    <div *ngIf="objLoader" [ngSwitch]="roleType">
+
+        <ion-grid *ngSwitchCase="'annonces'" no-padding>
+
+            <!-- <ion-item-divider class="txtFeatured" *ngIf="featured.length > 0">
+                {{'message.featured' | translate}}
+                <button *ngIf="featured.length>10" ion-buton clear (click)="showMoreFeatures()" item-end> {{'pop.more' | translate}}</button>
+            </ion-item-divider>
+
+            <ion-slides text-left *ngIf="featured.length > 0" pager="true" [slidesPerView]="vuesToDisplay" autoplay="3000" speed="700" class="horizontal-categories">
+                <ion-slide class="categories-row" *ngFor="let feat of featured | slice:0:maxFeatured">
+                    <ion-col col-1></ion-col>
+                    <ion-col col-10 class="horizontal-item animated zoomIn">
+                        <annonce [annonce]="feat" [events]="events"></annonce>
+                    </ion-col>
+                    <ion-col col-1></ion-col>
+                </ion-slide>
+            </ion-slides> -->
+
+            <!-- <h6 *ngIf="isSearch">{{'message.annonce_search' | translate}}</h6> -->
+            <ion-row *ngIf="posts.length!=0">
+                <ion-col *ngFor="let item of posts | slice:0:max" col-12 col-sm-12 col-md-6 col-lg-3 no-padding>
+                    <annonce [annonce]="item" [events]="events"></annonce>
+                </ion-col>
+                <ion-infinite-scroll (ionInfinite)="loadMoreOffs($event)">
+                    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+            </ion-row>
+            <ion-row *ngIf="posts.length==0 && txtSearch!==undefined">
+                <div bloc-empty text-center padding>
+                    <p><img src="assets/images/icons/search.svg" alt="calendar" /></p>
+                    <h3>{{'message.empty_annonce' | translate}} <strong>{{txtSearch}}</strong></h3>
+                </div>
+            </ion-row>
+        </ion-grid>
+        <ion-grid *ngSwitchCase="'category'" class="bloc-categories" no-padding>
+            <!-- <h6 *ngIf="isCategory">{{'message.category_search' | translate}}</h6> -->
+            <ion-row *ngIf="categories.length!=0">
+                <ion-col col-12 col-sm-6 col-md-6 col-lg-3 col-xl-4 *ngFor="let item of categories | slice:0:maxCat" no-padding>
+                    <ion-card class="animated fadeIn custom-card" (click)="showAnnonces(item,'category')">
+                        <ion-item transparent>
+                            <ion-icon name="ios-apps" item-start></ion-icon>
+                            <h3 text-wrap [innerHTML]="item.name"></h3>
+                            <p>{{'message.lbl_annonce' | translate:item}}</p>
+                        </ion-item>
+                    </ion-card>
+                </ion-col>
+                <ion-infinite-scroll (ionInfinite)="loadMoreCategories($event)">
+                    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+            </ion-row>
+            <ion-row *ngIf="categories.length==0 && txtSearch!==undefined">
+                <div bloc-empty text-center padding>
+                    <p><img src="assets/images/icons/search.svg" alt="calendar" /></p>
+                    <h3>{{'message.empty_category' | translate}} <strong>{{txtSearch}}</strong></h3>
+                </div>
+            </ion-row>
+        </ion-grid>
+        <!-- <ion-grid *ngSwitchCase="'location'" no-padding>
+            <ion-row *ngIf="locations.length!=0">
+                <ion-col col-12 col-sm-6 col-md-6 col-lg-3 col-xl-4 *ngFor="let item of locations | slice:0:maxLieu" no-padding>
+                    <ion-card class="card-location" (click)="showAnnonces(item,'location')">
+                        <ion-item transparent>
+                            <ion-icon name="ios-pin" item-start></ion-icon>
+                            <h3 text-wrap>{{item.name}}</h3>
+                            <p>{{'message.lbl_location' | translate:item}}</p>
+                        </ion-item>
+                    </ion-card> 
+                </ion-col>
+                <ion-infinite-scroll (ionInfinite)="loadMoreLocations($event)">
+                    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+            </ion-row>
+            <ion-row *ngIf="locations.length==0 && txtSearch!==undefined">
+                <div bloc-empty text-center padding>
+                    <p><img src="assets/images/empty-tray.png" ></p>
+                    <h3>{{'message.empty_location' | translate}} <strong>{{txtSearch}}</strong></h3>
+                </div>
+            </ion-row>            
+        </ion-grid>
+        <ion-grid *ngSwitchCase="'tag'" no-padding>
+            <ion-row *ngIf="tags.length!=0">
+                <ion-col col-12 col-sm-6 col-md-6 col-lg-3 col-xl-4 *ngFor="let item of tags | slice:0:maxTag" no-padding>
+                    <ion-card class="card-location" (click)="showAnnonces(item,'tag')">
+                        <ion-item transparent>
+                            <ion-icon name="md-bookmark" item-start></ion-icon>
+                            <h3 text-wrap>{{item.name}}</h3>
+                            <p>{{'message.lbl_tag' | translate:item}}</p>
+                        </ion-item>
+                    </ion-card> 
+                </ion-col>
+                <ion-infinite-scroll (ionInfinite)="loadMoreTags($event)">
+                    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+            </ion-row>
+            <ion-row *ngIf="tags.length==0 && txtSearch!==undefined">
+                <div bloc-empty text-center padding>
+                    <p><img src="assets/images/empty-tray.png" ></p>
+                    <h3>{{'message.empty_tag' | translate}} <strong>{{txtSearch}}</strong></h3>
+                </div>
+            </ion-row>
+        </ion-grid> -->
+
+    </div>
+
+</ion-content>

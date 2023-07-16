@@ -1,0 +1,30 @@
+<ion-card bg-lazy-img [bground]="item.image.sizes.shop_catalog.url" [defaultImage]="defaultImg">
+  
+  <ion-row class="data-item">
+    <ion-col no-padding col-9>
+      <ion-item (click)="onEvent('onTapItem', item)" class="schedule-item">
+          <div class="item-content">
+              <h2 class="schedule-day">{{item?.title}}</h2>
+              <p><ion-icon name="ios-calendar-outline"></ion-icon> {{item?.start_date | date:'medium':'':current_lang}}</p>
+              <span class="schedule-time">{{item?.venue.address}}, {{item?.venue.city}} - {{item?.venue.country}}</span>
+          </div>
+        </ion-item>
+          
+        <p class="price"><span [innerHTML]="item?.cost"></span></p>
+          
+    </ion-col>
+    <ion-col no-padding text-left col-3>
+          
+          <h4 *ngIf="item.featured" class="ribbon">{{'events.feat' | translate}}</h4>
+          <button ion-button clear icon-only color="light" (click)="onEvent('showMap', item.venue)">
+            <ion-icon name="md-navigate"></ion-icon>
+          </button><br>
+          <button ion-button clear icon-only (click)="onEvent('onAddToFav', item)" class="fav">
+            <ion-icon [ngClass]="{'liked animated jello':item.like == true,'disliked':item.like == false,'disliked':!item.like}" name="heart"></ion-icon>
+          </button>       
+          
+        </ion-col>
+        
+      </ion-row>
+    
+</ion-card>

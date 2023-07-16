@@ -1,0 +1,23 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title></ion-title>
+    <ion-buttons end>
+      <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding item-bcg>
+	<ion-list>
+      <button ion-item *ngFor="let p of otherMenus" (click)="showPageItem(p)">
+          <ion-avatar item-start> <img [src]="p.image" ></ion-avatar>
+          {{ p.title }}
+      </button>
+    </ion-list>
+</ion-content>

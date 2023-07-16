@@ -1,0 +1,26 @@
+page-form-annonce-modal {
+    .toolbar .toolbar-title {
+        text-transform: capitalize
+    }
+    @include checkbox-tags-styles(color($colors, secondary), color($colors, light), color($colors, primary), color($colors, light));
+    .rounded-tags {
+        background-color: $white;
+        padding: 15px;
+        // @include element-shadow();
+        .checkbox-tag {
+            .item-inner {
+                border-radius: 2.2rem;
+                background-color: color($colors, secondary);
+                color: $white;
+            }
+        }
+    }
+    ion-footer {
+        button {
+            // margin-bottom: 10px !important;
+        }
+        &.footer-md::before {
+            background-image: none;
+        }
+    }
+}

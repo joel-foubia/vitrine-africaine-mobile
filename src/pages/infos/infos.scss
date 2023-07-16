@@ -1,0 +1,42 @@
+page-infos {
+
+    .scroll-content{
+        background-color: color($colors, lightest);
+    }
+
+    .custom-card{
+        height: 160px;
+        border-radius: 5px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+
+        ion-card-content{
+            position: relative;
+            top: 50px;
+        }
+
+        h3{
+            font-size: 1.5em;
+            color: color($colors, light);
+            font-weight: bold;
+        }
+
+        p{
+            color: color($colors, light);
+        }
+
+        button{
+            background-color: transparent;
+        }
+    }
+
+    .actu{
+        background-image: url("../assets/images/submenu/news.jpg");
+    }
+    
+    .tv{
+        background-image: url("../assets/images/submenu/webtv.jpg");
+    }
+
+}

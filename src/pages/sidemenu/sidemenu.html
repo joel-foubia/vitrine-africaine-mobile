@@ -1,0 +1,90 @@
+<ion-split-pane>
+    <ion-menu [content]="content" type="reveal">
+        <ion-header no-border>
+            <ion-item transparent no-lines class="synchronize">
+                <h5 *ngIf="!isSync" text-wrap>{{'menu.last_sync' | translate}} {{last_update | date:'short':'':current_lang}}</h5>
+                <h5 *ngIf="isSync" text-uppercase> {{'menu.sync_pending' | translate}}</h5>
+                <button *ngIf="!isSync" ion-button icon-only clear color="light" (click)="refreshData()" item-end>
+                    <ion-icon name="ios-refresh"></ion-icon>
+                </button>
+            </ion-item>
+        </ion-header>
+        <!-- Menu Main List -->
+        <ion-content item-left-bcg>
+            <ion-grid class="header-background-image" *ngIf="user">
+                <ion-row>
+                    <ion-col col-2>
+                        <button ion-button menuClose icon-only clear (click)="showProfile(user)">
+                            <ion-icon name="md-settings"></ion-icon>
+                        </button>
+                    </ion-col>
+                    <ion-col menuClose (click)="showProfile(user)" col-8 text-center>
+                        <ion-thumbnail>
+
+                            <img id="prof_image" [src]="profile_image" alt="">
+                            <!-- <img *ngIf="user.sub_result" [src]="user.sub_result.avatar_urls[96]" alt=""> -->
+                            <!-- <op-lazy-img id="userPic" *ngIf="user.sub_result" [source]="user.sub_result.avatar_urls[96]" [defaultImage]="defaultImg"></op-lazy-img> -->
+
+                        </ion-thumbnail>
+                        <h2 id="displayName" menuClose>{{user.user_display_name}}</h2>
+                        <p>{{user.user_email}}</p>
+                    </ion-col>
+                    <ion-col col-2>
+                        <button menuClose ion-button icon-only clear (click)="logOff()">
+                            <ion-icon name="log-out"></ion-icon>
+                        </button>
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+            <ion-grid class="header-background-image" *ngIf="!user">
+                <ion-row>
+                    <ion-col menuClose col-9 (click)="logIn()">
+                        <ion-thumbnail>
+                            <!-- <ion-icon name="ios-lock-outline"></ion-icon> -->
+                            <ion-icon><img src="assets/images/icons/writer.svg" alt="writer" /></ion-icon>
+                        </ion-thumbnail>
+                        <p>{{'publish' | translate}}</p>
+                    </ion-col>
+                    <ion-col col-3>
+                        <button menuClose ion-button icon-only clear (click)="logIn()">
+                            <ion-icon name="md-log-in"></ion-icon>
+                        </button>
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+            <ion-list class="menus-list" no-margin no-padding>
+                <!-- <ion-item-divider></ion-item-divider> -->
+                <button menuClose ion-item no-padding main-menu *ngFor="let p of pages" (click)="openPage(p)">
+                    <ion-avatar *ngIf="!p.slug" item-start padding-left>
+                        <img src="{{p.image}}" />
+                    </ion-avatar>
+                    <span [class]="p?.slug==='divider' ? 'divider':'aucun'">{{p.title}}</span>
+                </button>
+
+                <ion-item-divider>{{'menu.offers' | translate}}</ion-item-divider>
+                <ion-grid no-margin class="bloc-offers">
+                    <ion-row>
+                        <ion-col menuClose col-6 text-center *ngFor="let p of offers" (click)="openPage(p)">
+                            <img src="{{p?.image}}" /><br>
+                            <span>{{p?.title}}</span>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-list>
+            <ion-list no-margin>
+                <ion-item-divider>{{'menu.t_help' | translate}}</ion-item-divider>
+                <button menuClose ion-item no-padding main-menu *ngFor="let p of sections" (click)="openPage(p)">
+                    <ion-icon *ngIf="p?.icon!=''" padding-left name="{{p?.icon}}"></ion-icon>
+                    <span [class]="p?.slug==='divider' ? 'divider':'aucun'">{{p?.title}}</span>
+                </button>
+            </ion-list>
+        </ion-content>
+        <ion-footer>
+            <img src="assets/images/logo2.png" alt="logo" />
+        </ion-footer>
+    </ion-menu>
+
+    <ion-nav #content [root]="rootPage" main swipeBackEnabled="false"></ion-nav>
+</ion-split-pane>

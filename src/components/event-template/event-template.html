@@ -1,0 +1,30 @@
+<ion-card no-padding>
+	<div class="bloc-image" bg-lazy-img [bground]="item.image.sizes.shop_catalog.url" [defaultImage]="defaultImg">
+		<ion-row>
+			<ion-col col-7><h4 *ngIf="item.featured" class="ribbon">{{'events.feat' | translate}}</h4></ion-col>
+			
+			<ion-col col-5 text-right>
+				<button color="light" (click)="onEvent('showMap', item.venue)" ion-button icon-only clear>
+					<ion-icon name="ios-navigate"></ion-icon>
+				</button>
+				<button ion-button clear icon-only (click)="onEvent('onAddToFav', item)" class="fav">
+					<ion-icon [ngClass]="{'liked animated jello':item.like == true,'disliked':item.like == false,'disliked':!item.like}" name="heart"></ion-icon>
+				</button>
+			</ion-col>
+		</ion-row>
+		<h2 (click)="onEvent('onTapItem', item)" class="schedule-day" [innerHTML]="item?.title"></h2>
+	</div>
+	
+		<ion-row>
+			<ion-col (click)="onEvent('onTapItem', item)" col-3 class="schedule-date" text-wrap text-center>
+				<h2 class="date">{{item?.start_date | date:'mediumDate':'':current_lang}}</h2>
+				<span>{{item?.start_date | date:'shortTime':'':current_lang}}</span>
+			</ion-col>
+			<ion-col (click)="onEvent('onTapItem', item)" col-9 class="schedule-data" text-wrap>
+				<h4 class="schedule-time">{{item?.venue.address}}, {{item?.venue.city}} - {{item?.venue.country}}</h4>
+			</ion-col>
+		</ion-row>
+			
+		<p class="price"> <span [innerHTML]="item?.cost"></span></p>
+		
+	</ion-card>

@@ -1,0 +1,18 @@
+<!-- Generated template for the RdvComponent component -->
+<div>
+
+    <ion-card [ngClass]="{'passed':rdv.state === 'passed','almost':rdv.state === 'almost','tocome':rdv.state === 'tocome'}">
+        <ion-card-header>
+            <h2 [innerHTML]="rdv.annonce_data.title.rendered"></h2>
+            <!-- <div [ngClass]="{'passedflag':rdv.state === 'passed','almostflag':rdv.state === 'almost','tocomeflag':rdv.state === 'tocome'}"></div> -->
+        </ion-card-header>
+        <ion-card-content>
+            <h3>
+                {{rdv.description}}
+            </h3>
+            <p>
+                <ion-icon name="ios-clock-outline"></ion-icon> {{ rdv.date | date:'medium' }}
+            </p>
+        </ion-card-content>
+    </ion-card>
+</div>

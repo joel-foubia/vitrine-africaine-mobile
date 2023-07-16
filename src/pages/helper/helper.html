@@ -1,0 +1,42 @@
+<ion-header>
+	
+  <ion-toolbar>
+    <ion-title ></ion-title>
+    
+      <ion-buttons end>
+        <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>
+      </ion-buttons>
+    </ion-toolbar>
+
+</ion-header>
+<ion-content padding>
+	<h3 text-center>{{'events.f_search' | translate}} 
+    <strong *ngIf="type_partner=='venues'">{{'events.f_location' | translate}}</strong>
+    <strong *ngIf="type_partner=='organizers'">{{'events.f_organizer' | translate}}</strong>
+  </h3>
+
+	<ion-searchbar showCancelButton="true" (ionInput)="getItems($event)" (ionCancel)="clearItems($event)" [(ngModel)]="currentName" placeholder="Rechercher"></ion-searchbar>
+	<p *ngIf="objLoader" text-center><ion-spinner name="dots"></ion-spinner></p>
+    <ion-list>
+      <ion-card *ngFor="let item of partners" (click)="selectedItem(item)">
+        <ion-item transparent>
+          <ion-icon *ngIf="type_partner=='venues'" name="md-navigate" item-start></ion-icon>
+          <ion-icon *ngIf="type_partner=='organizers'" name="ios-people" item-start></ion-icon>
+          <h2 *ngIf="type_partner=='venues'" text-uppercase text-wrap>{{item.venue}}</h2>
+          <h2 *ngIf="type_partner=='organizers'" text-uppercase text-wrap>{{item.organizer}}</h2>
+        </ion-item>
+      </ion-card>
+        <ion-item *ngIf="partners.length==0 && currentName!==undefined" transparent>
+          <h2> {{currentName}} {{'events.f_exist' | translate}}</h2>
+        </ion-item>
+      </ion-list>
+      <div *ngIf="partners.length==0 && currentName!==undefined" text-center>
+        <p>{{'pop.ou' | translate}}</p>
+        <button *ngIf="type_partner=='venues'" ion-button color="noir" (click)="addLocation()" >
+          {{'events.f_btn_lieu' | translate}} {{currentName}}
+        </button>
+        <button *ngIf="type_partner=='organizers'" ion-button color="noir" (click)="addOrganizeer()" >
+          {{'events.f_btn_organizer' | translate}} {{currentName}}
+        </button>
+      </div>
+</ion-content>

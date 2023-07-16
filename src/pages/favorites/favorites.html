@@ -1,0 +1,112 @@
+<ion-header text-center no-border class="header_off">
+    <ion-navbar>
+        <!--  <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+        <ion-title text-left style="font-weight: lighter">{{'favorites.favorites' | translate}}</ion-title>
+        <ion-buttons end>
+            <button *ngIf="display_search == true" ion-button icon-only (click)="clearSearch($event)">
+                Clear
+                      </button>
+            <button *ngIf="display_search == true" ion-button icon-only (click)="onCancel($event)">
+                        <ion-icon name="close"></ion-icon>
+                      </button>
+            <button ion-button icon-only (click)="onFilter($event)"><ion-icon name="md-funnel"></ion-icon></button>
+            <button ion-button icon-only (click)="showOnMap()"><ion-icon name="ios-map-outline"></ion-icon></button>
+
+            <button ion-button icon-only (click)="searchItems()">
+                        <ion-icon name="search"></ion-icon>
+                      </button>
+            <button (click)="openMenu()" ion-button icon-only>
+                          <ion-icon name="more"></ion-icon>
+                      </button>
+
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar id="search_toolbar">
+        <ion-searchbar *ngIf="display_search == true" class="animated zoomIn" debounce="500" [showCancelButton]=true (ionCancel)="onCancel($event)" (ionClear)="onClear($event)" id="offerSearch" (ionInput)="launchSearch($event)" [(ngModel)]="search_term" placeholder="{{'favorites.search_text' | translate}}"></ion-searchbar>
+        <!-- <div *ngIf="display_search != true" padding> -->
+        <div padding>
+            <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+                <ion-segment-button value="annonce">
+                    {{'favorites.annonce' | translate}}
+                </ion-segment-button>
+                <ion-segment-button value="actu">
+                    {{'favorites.actualités' | translate}}
+                </ion-segment-button>
+                <ion-segment-button value="event">
+                    {{'favorites.evenements' | translate}}
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div [ngClass]="{'goDown':display_search == true}" [ngSwitch]="segment">
+        <ion-grid *ngSwitchCase="'annonce'" no-padding>
+
+            <div text-center bloc-empty *ngIf="lazyAnnonce.length==0" padding>
+                <p><img src="assets/images/icons/search.svg" alt="empty" /></p>
+                <h3>{{'favorites.empty_annonce' | translate}} <strong>{{txtSearch}}</strong></h3>
+            </div>
+
+
+            <ion-row>
+                <ion-col class="animated zoomIn" *ngFor="let item of allAnnonce | slice:0:maxAnnonce" col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 no-padding>
+                    <annonce [annonce]="item" [events]="events"></annonce>
+                </ion-col>
+            </ion-row>
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </ion-grid>
+        <ion-grid *ngSwitchCase="'actu'" no-padding>
+
+            <div *ngIf="allArticle.length==0" bloc-empty text-center padding>
+                <p><img src="assets/images/icons/search.svg" alt="calendar" /></p>
+                <h3>{{'favorites.empty_actu' | translate}} <strong>{{txtSearch}}</strong></h3>
+
+                <button ion-button block text-wrap clear (click)="goToPage('ActualitePage')">{{'favorites.consult_actu' | translate}}</button>
+            </div>
+
+            <ion-row class="bloc-article" *ngIf="allArticle">
+                <ion-col class="animated zoomIn" *ngFor="let art of allArticle | slice:0:maxArticles" col-12 col-sm-6 col-md-6 col-xl-3 no-padding>
+                    <!-- <annonce [annonce]="item" [events]="events"></annonce> -->
+                    <ion-item (click)="details(art)">
+                        <ion-thumbnail item-end>
+                            <img *ngIf="art.better_featured_image != null" [lazyLoad]="art.better_featured_image.source_url">
+                            <img *ngIf="art.better_featured_image == null" src="assets/images/logo.png">
+                        </ion-thumbnail>
+                        <h2 text-wrap class="animated fadeIn delay-1s" [innerHtml]="art.title.rendered |slice : 0 :23"></h2>
+                        <p>{{art.date | date:'mediumDate':'':current_lang}}</p>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </ion-grid>
+        <ion-grid *ngSwitchCase="'event'" no-padding>
+
+            <div *ngIf="allEvents.length==0" bloc-empty text-center padding>
+                <p><img src="assets/images/icons/search.svg" alt="calendar" /></p>
+                <h3>{{'favorites.empty_events' | translate}} <strong>{{txtSearch}}</strong></h3>
+
+                <button ion-button block text-wrap clear (click)="goToPage('ListEventsPage')"> {{'favorites.consult_event' | translate}} </button>
+                <h6>OU</h6>
+                <button ion-button block text-wrap clear (click)="goToPage('FormEventPage')"> {{'favorites.create_event' | translate}} </button>
+
+            </div>
+
+            <ion-row>
+                <ion-col class="animated zoomIn" *ngFor="let item of allEvents | slice:0:maxEvents" col-12 col-sm-6 col-md-6 col-xl-3 no-padding>
+                    <event-template [item]="item" [events]="EVentsevents"></event-template>
+                </ion-col>
+            </ion-row>
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </ion-grid>
+    </div>
+
+</ion-content>

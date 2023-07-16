@@ -1,0 +1,51 @@
+
+<ion-header>
+
+  <ion-toolbar>
+        <ion-buttons left>
+            <button ion-button icon-only (click)="showMain()"><ion-icon name="md-arrow-back"></ion-icon></button>
+        </ion-buttons>
+        <ion-title>{{'form.params' | translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="openLeftMenu()"> <ion-icon name="more"></ion-icon> </button>
+        </ion-buttons>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+      <!-- Description du footer -->
+      <ion-item-divider text-uppercase>{{'form.preference' | translate}}</ion-item-divider>
+      <ion-list no-lines class="preference">
+          <ion-item transparent>
+              <ion-label text-wrap>{{'form.maj' | translate}}</ion-label>
+              <ion-toggle [(ngModel)]="update" (ionChange)="notify()"></ion-toggle>
+          </ion-item>
+          <ion-item transparent>
+              <ion-label stacked>{{'form.lang' | translate}}</ion-label>
+              <ion-select [(ngModel)]="current_lang" (ionChange)="changeValue($event,'lang')">
+                  <ion-option value="fr">{{'form.tab_lang.fr' | translate}}</ion-option>
+                  <ion-option value="en">{{'form.tab_lang.us' | translate}}</ion-option>
+              </ion-select>
+          </ion-item>
+          <ion-item transparent>
+              <ion-label stacked>{{'form.top_range' | translate}}</ion-label>
+              <ion-select [(ngModel)]="current_distance" (ionChange)="changeValue($event,'dist')">
+                <ion-option value="5">5 (Km)</ion-option>
+                <ion-option value="10">10 (Km)</ion-option>
+                <ion-option value="15">15 (Km)</ion-option>
+                <ion-option value="20">20 (Km)</ion-option>
+                <ion-option value="25">25 (Km)</ion-option>
+            </ion-select>
+          </ion-item>
+          <!-- <ion-item>
+                <ion-label stacked>Catégories</ion-label>
+                <ion-select [(ngModel)]="categories.cat" (ionChange)="onSelectChange($event)">
+                  <ion-option *ngFor="let cat of allcategories" [value]="cat">{{cat.name}}</ion-option>
+                </ion-select>
+          </ion-item> -->
+      </ion-list>
+
+      <!-- Fin Description du footer -->
+</ion-content>

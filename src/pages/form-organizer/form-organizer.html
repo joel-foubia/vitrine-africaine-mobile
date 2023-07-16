@@ -1,0 +1,64 @@
+
+<ion-header>
+
+    <ion-navbar>
+      <ion-title>Ajouter un organisateur</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="close()"> <ion-icon name="md-close"></ion-icon> </button>
+      </ion-buttons>
+    </ion-navbar>
+    
+  </ion-header>
+  
+  <ion-content padding>
+      <form class="sample-form post-form" [formGroup]="organizer_form" (ngSubmit)="createPost(organizer_form.value)">
+          <section class="form-section">
+            <ion-item>
+              <ion-label floating>{{'events.f_lblorg' | translate}} *</ion-label>
+              <ion-input type="text" formControlName="organizer"></ion-input>
+            </ion-item>
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validation_messages.organizer">
+                <div class="error-message" *ngIf="organizer_form.get('organizer').hasError(validation.type) && (organizer_form.get('organizer').dirty || organizer_form.get('organizer').touched)">
+                  {{ validation.message }}
+                </div>
+              </ng-container> 
+            </div>
+
+            <ion-item>
+                <ion-label floating>{{'login.email' | translate}}*</ion-label>
+                <ion-input type="email" formControlName="email"></ion-input>
+            </ion-item>
+            <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.email">
+                  <div class="error-message" *ngIf="organizer_form.get('email').hasError(validation.type) && (organizer_form.get('email').dirty || organizer_form.get('email').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+            </div>
+  
+            <ion-item>
+              <ion-label floating>{{'events.f_phone' | translate}}</ion-label>
+              <ion-input type="tel" formControlName="phone"></ion-input>
+            </ion-item>
+            <!-- <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.phone">
+                  <div class="error-message" *ngIf="organizer_form.get('phone').hasError(validation.type) && (organizer_form.get('phone').dirty || organizer_form.get('phone').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+            </div> -->
+            <ion-item>
+                <ion-label floating>{{'events.f_website' | translate}}</ion-label>
+                <ion-input type="url" formControlName="website"></ion-input>
+            </ion-item>
+            
+  
+          </section>
+  
+          <p text-right class="form-button">
+            <button ion-button class="form-action-button create-post-button" type="submit" [disabled]="!organizer_form.valid">{{'btns.save' | translate}}</button>
+          </p>
+        </form>
+  </ion-content>
+  

@@ -1,0 +1,69 @@
+<!-- New Component -->
+
+<ion-card>
+
+    <h4 *ngIf="annonce.webbupointfinder_item_featuredmarker == '1'" class="ribbon">{{'annonce.feat' | translate}}</h4>
+
+    <div (click)="onEvent('onAddToFav', annonce)" id="fav">
+        <ion-icon [ngClass]="{'liked animated jello':annonce.like == true,'disliked':annonce.like == false,'disliked':!annonce.like}" name="heart"></ion-icon>
+    </div>
+    <div (click)="onEvent('onClick', annonce)" id="chat">
+        <ion-icon name="ios-chatbubbles"></ion-icon>
+        <span *ngIf="annonce._embedded.replies && annonce._embedded.replies[0].length < 9" id="chatNum">
+            {{annonce?._embedded?.replies[0]?.length}}
+        </span>
+        <span *ngIf="!annonce._embedded.replies" id="chatNum">0</span>
+        <span *ngIf="annonce._embedded.replies && annonce._embedded.replies[0].length > 9" id="chatNum">9+</span>
+    </div>
+    <div (click)="onEvent('onAddAvis', annonce)" id="avis">
+        <img src="assets/icon/blogging.svg" alt="">
+
+    </div>
+    <div id="reserve" *ngIf="annonce.reserv || annonce.bookable">
+        <ion-icon (click)="onEvent('onReserve', annonce)" name="ios-calendar-outline"></ion-icon>
+    </div>
+
+    <ion-card-content>
+        <div id="title" (click)="onEvent('onClick', annonce)">
+
+            <h1>
+                <span id="state" [class]="annonce.ping_status == 'open' ? 'add_vert' : 'add_rouge'">
+                        <ion-icon *ngIf="annonce.ping_status == 'open'" name="ios-unlock"></ion-icon>
+                        <ion-icon *ngIf="annonce.ping_status == 'closed'" name="ios-lock"></ion-icon>
+                </span> <span [innerHTML]="annonce?.title?.rendered"></span> <img *ngIf="annonce.webbupointfinder_item_verified != ''" id="v_icon" src="assets/verified_icons/9.svg" alt="">
+            </h1>
+        </div> <strong class="animated pulse" id="distanceFrom" *ngIf="annonce.distFrom && annonce.distFrom != 'NaN'">{{annonce.distFrom}}km</strong><strong class="animated pulse" id="distanceFrom" *ngIf="annonce.distFrom && annonce.distFrom == 'NaN'">Distance pas disponible</strong>
+        <div id="rating" (click)="onEvent('onClick', annonce)">
+            <rating [(ngModel)]="annonce.webbupointfinder_review_rating" readOnly="true" max="5" nullable="true"></rating>
+
+        </div>
+        <div *ngIf="annonce.location != undefined && annonce.location != '';else no_location" id="addresse" (click)="onEvent('onClick', annonce)">
+            <h2>{{annonce?.location}}</h2>
+            <h6>{{annonce?.webbupointfinder_items_address}}</h6>
+        </div>
+        <ng-template #no_location>
+            <div id="addresse" (click)="onEvent('onClick', annonce)">
+                <h2>{{'annonce.no_location' | translate}}</h2>
+                <h6>{{'annonce.no_addresse' | translate}}</h6>
+            </div>
+        </ng-template>
+        <!-- <ion-grid>
+            <ion-row>
+                <ion-col col-9>
+                    <div (click)="onEvent('onClick', annonce)" id="imgs" *ngIf="annonce.webbupointfinder_item_images!==undefined && annonce.webbupointfinder_item_images.length!=0;else no_image">
+                   
+                        <span class="animated fadeIn" *ngFor="let img of annonce.webbupointfinder_item_images | slice:0:3"><op-lazy-img [source]="img" [defaultImage]="defaultImage"></op-lazy-img></span>
+                    </div>
+                    <ng-template #no_image>
+                        <div>
+                            <span class="animated fadeIn" *ngFor="let img of defaultImagesList"> <img [src]="img" alt=""> </span>
+                        </div>
+                    </ng-template>
+                </ion-col>
+            </ion-row>
+        </ion-grid> -->
+
+    </ion-card-content>
+</ion-card>
+
+<!-- New Component  End-->

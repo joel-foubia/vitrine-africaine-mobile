@@ -1,0 +1,34 @@
+page-actu-details {
+    #post-title {
+        p {
+            margin: 0 0 2px;
+            font-size: 1.5rem;
+            line-height: 1.4;
+            text-align: left !important;
+        }
+    }
+
+    h2 {
+        font-size: 20px;
+        text-align: left !important;
+        // color: color($colors, graySpite);
+    }
+
+    .container {
+        height: 250px;
+        object-fit: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    // #share {
+    //     font-size: 20px;
+    // }
+
+    #date {
+        color: color($colors, primary);
+        margin: -20px 0px 0px -250px;
+    }
+
+}

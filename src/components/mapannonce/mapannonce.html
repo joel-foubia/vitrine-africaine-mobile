@@ -1,0 +1,72 @@
+<!-- New Component -->
+
+<ion-card>
+
+    <div *ngIf="annonce.distFrom != undefined && annonce.distFrom > 1" id="dist">
+        {{annonce.distFrom}}km
+    </div>
+    <div *ngIf="annonce.distFrom != undefined && annonce.distFrom < 1" id="dist">
+        {{annonce.distFrom * 1000}}m
+    </div>
+    <div (click)="onEvent('onAddToFav', annonce)" id="fav">
+        <ion-icon [ngClass]="{'liked':annonce.like == true,'disliked':annonce.like == false,'disliked':!annonce.like}" name="heart"></ion-icon>
+    </div>
+    <div (click)="onEvent('onClick', annonce)" id="chat">
+        <ion-icon name="ios-chatbubbles"></ion-icon>
+        <span *ngIf="annonce._embedded.replies && annonce._embedded.replies[0].length < 9" id="chatNum">
+                            {{annonce?._embedded?.replies[0]?.length}}
+                        </span>
+        <span *ngIf="!annonce._embedded.replies" id="chatNum">0</span>
+        <span *ngIf="annonce._embedded.replies && annonce._embedded.replies[0].length > 9" id="chatNum">9+</span>
+    </div>
+
+    <ion-card-content>
+        <div id="title" (click)="onEvent('onClick', annonce)">
+            <h3 [innerHTML]="annonce?.title?.rendered"> <img *ngIf="annonce.webbupointfinder_item_verified != ''" id="v_icon" src="assets/verified_icons/7.svg" alt=""></h3>
+        </div>
+        <ion-grid no-padding>
+            <ion-row no-padding>
+                <ion-col col-7 no-padding>
+                    <div id="rating" (click)="onEvent('onClick', annonce)">
+                        <rating [(ngModel)]="annonce.webbupointfinder_review_rating" readOnly="true" max="5" nullable="true"></rating>
+
+                    </div>
+                    <div *ngIf="annonce.location != undefined && annonce.location != '';else no_location" id="addresse" (click)="onEvent('onClick', annonce)">
+                        <h2>{{annonce?.location}}
+                            <span id="state">
+                            <ion-icon *ngIf="annonce.ping_status == 'open'" name="ios-lock"></ion-icon>
+                            <ion-icon *ngIf="annonce.ping_status == 'closed'" name="ios-unlock"></ion-icon>
+                        </span>
+                        </h2>
+                        <h6>{{annonce?.webbupointfinder_items_address}}</h6>
+                    </div>
+                    <ng-template #no_location>
+                        <div id="addresse" (click)="onEvent('onClick', annonce)">
+                            <h2>{{'annonce.no_location' | translate}}</h2>
+                            <h6>{{'annonce.no_addresse' | translate}}</h6>
+                        </div>
+                    </ng-template>
+                </ion-col>
+                <ion-col col-5 no-padding>
+                    <div (click)="onEvent('onClick', annonce)" id="imgs" *ngIf="annonce.webbupointfinder_item_images!==undefined && annonce.webbupointfinder_item_images.length!=0;else no_image">
+                        <span class="animated fadeIn" *ngFor="let img of annonce.webbupointfinder_item_images | slice:0:1"><op-lazy-img [source]="img" [defaultImage]="defaultImg"></op-lazy-img></span>
+                    </div>
+                    <ng-template #no_image>
+                        <div id="imgs">
+                            <span class="animated fadeIn" *ngFor="let img of defaultImagesList | slice:0:1 "> <img [src]="img" alt=" "> </span>
+                        </div>
+                    </ng-template>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-grid *ngIf="annonce.bookable">
+            <ion-row>
+                <ion-col>
+                    <button ion-button outline block>{{'annonce.prendre_rdv' | translate}}</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card-content>
+</ion-card>
+
+<!-- New Component  End-->

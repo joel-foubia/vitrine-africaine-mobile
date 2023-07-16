@@ -1,0 +1,18 @@
+page-faq {
+    .scroll-content{
+        background-color: color($colors, lightest);
+    }
+
+    ion-item {
+        background-color: transparent !important;
+    }
+
+    ion-item ion-icon {
+        color: color($colors, primary);
+    }
+
+    h3{
+        font-size: 1.2em;
+        color: color($colors, gris);
+    }
+}

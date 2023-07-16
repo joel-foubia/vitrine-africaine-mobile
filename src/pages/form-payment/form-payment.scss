@@ -1,0 +1,23 @@
+page-form-payment {
+
+    .scroll-content{
+        background-color: color($colors, lightest);
+    }
+
+    .toolbar{
+        .bar-button, .back-button-icon, .toolbar-title{
+            color: color($colors, light) !important;
+        }
+    }
+
+    .toolbar .toolbar-background{
+        background: none !important;
+        background-color: color($colors, dark) !important;
+    }
+
+    .bloc-form{
+        ion-item{
+            background-color: transparent;
+        }
+    }
+}

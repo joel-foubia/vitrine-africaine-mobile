@@ -1,0 +1,91 @@
+page-last {
+    .scroll-content {
+        background-color: color($colors, grislight);
+    }
+    $key: random( length($couleurs));
+    $nth: nth( $couleurs, $key);
+    $main-color: $nth !default;
+    @mixin backgrounds($c, $y) {
+        // background: $c;
+        @for $i from 1 through $y {
+            ion-col:nth-child(#{length($couleurs)}n+#{$i}) ion-item ion-icon {
+                color: darken(nth($couleurs, random(length($couleurs))), 20%) !important;
+            }
+        }
+    }
+    input.searchbar-input {
+        border-radius: 10px !important;
+        font-weight: lighter !important;
+        font-size: 1.4rem !important;
+        line-height: 2.5rem !important;
+        color: black !important;
+    }
+    div.toolbar-title {
+        font-weight: lighter;
+    }
+    .custom-toolbar {
+        .toolbar-background {
+            background-image: none !important;
+            background-color: color($colors, dark);
+        }
+    }
+    ion-grid {
+        h6 {
+            color: color($colors, gris);
+            margin-left: 10px;
+            font-size: 1.1em;
+        }
+    }
+    .custom-card,
+    .card-location {
+        background-image: url("../assets/images/bg_card.jpg");
+        background-repeat: no-repeat;
+        background-position: right top;
+        ion-item {
+            background-color: rgba($color: #fff, $alpha: 0.7);
+        }
+    }
+    .bloc-categories {
+        @include backgrounds($main-color,
+        11);
+    }
+    .txtFeatured {
+        background-color: color($colors, primary);
+        background-image: url("../assets/images/bg_title.png");
+        background-repeat: no-repeat;
+        background-position: left top;
+        color: color($colors, light);
+        text-transform: uppercase;
+        font-family: "Open-Sans-Bold";
+        font-size: 1.3em;
+    }
+    .horizontal-categories {
+        background-color: color($colors, grislight);
+        border-bottom: 1px solid white;
+        padding-bottom: 20px;
+        margin-bottom: 10px;
+        box-shadow: inset 5px -7px 9px -7px rgba(0, 0, 0, 0.4) !important;
+        // @include element-shadow();
+    }
+    .swiper-pagination-bullet {
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .swiper-pagination-bullet-active {
+        background: color($colors, dark);
+    }
+    .swiper-pagination-bullet {
+        height: 4px;
+        width: 18px;
+        border-radius: none;
+    }
+    .bloc-annonces {
+        ion-item-divider {
+            background-color: color($colors, dark);
+            color: color($colors, light);
+            text-transform: uppercase;
+        }
+    }
+    .horizontal-item {
+        text-align: left !important
+    }
+}

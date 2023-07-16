@@ -1,0 +1,294 @@
+<!--
+  Generated template for the FormAnnoncePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title *ngIf="type == 'create'">{{'form_annonce.title' | translate}}</ion-title>
+        <ion-title *ngIf="type == 'edit'">{{'form_annonce.edit_title' | translate}}</ion-title>
+        <ion-buttons end>
+            <button (click)="openMenu()" ion-button icon-only>
+        <ion-icon name="more"></ion-icon>
+      </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar class="custom-toolbar" no-border-top>
+        <ion-segment [(ngModel)]="segment" color="primary" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="0">
+                {{'form_annonce.category' | translate}}
+            </ion-segment-button>
+            <ion-segment-button value="1">
+                {{'form_annonce.informations' | translate}}
+            </ion-segment-button>
+            <ion-segment-button value="2">
+                {{'form_annonce.locat_address' | translate}}
+
+            </ion-segment-button>
+            <ion-segment-button value="3">
+                {{'form_annonce.imgs_files' | translate}}
+
+            </ion-segment-button>
+            <ion-segment-button value="4">
+                {{'form_annonce.opening_hours' | translate}}
+
+            </ion-segment-button>
+
+            <ion-segment-button value="5">
+                {{'form_annonce.features' | translate}}
+
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+    <div [ngSwitch]="segment">
+
+        <div text-center *ngSwitchCase="'0'">
+            <h5>{{'form_annonce.select_cat' | translate}}: <br> (*) {{'form_annonce.compulsory_text' | translate}}</h5>
+            <ion-item-divider class="animated fadeIn" text-left>{{'form_annonce.categories' | translate}} *</ion-item-divider>
+
+            <form class="animated fadeIn" *ngIf="categories.length > 0" [formGroup]="radioCategForm">
+                <ion-list class="checkbox-tags rounded-tags" formControlName="selected_catego" radio-group>
+                    <ion-item *ngFor="let item of categories" class="checkbox-tag">
+                        <ion-label [innerHTML]="item.name"></ion-label>
+                        <ion-radio (ionSelect)="loadSubCats(item)" value="{{item.id}}"></ion-radio>
+
+                    </ion-item>
+                </ion-list>
+            </form>
+            <div *ngIf="categories.length == 0">
+                <h5>{{'form_annonce.categories' | translate}} {{'form_annonce.not_available' | translate}}</h5>
+                <button ion-button outline>{{'form_annonce.sync' | translate}}</button>
+            </div>
+            <button (click)="viewAll('categories', $event, item)" *ngIf="categories.length > 0" ion-button outline round>{{'form_annonce.view_all' | translate}}</button>
+            <ion-item-divider class="animated fadeIn" *ngIf="subcat.length > 0" text-left>{{'form_annonce.sub_cat' | translate}}</ion-item-divider>
+
+            <form class="animated fadeIn" *ngIf="subcat.length > 0" [formGroup]="radioSubCat">
+                <ion-list class="checkbox-tags rounded-tags" formControlName="selected_subcat" radio-group>
+                    <ion-item *ngFor="let item of subcat" class="checkbox-tag">
+                        <ion-label [innerHTML]="item.name"></ion-label>
+                        <ion-radio value="{{item.id}}"></ion-radio>
+                    </ion-item>
+                </ion-list>
+            </form>
+            <button (click)="viewAll('sub-categories', $event)" *ngIf="subcat.length > 0" ion-button outline round>{{'form_annonce.view_all' | translate}}</button>
+        </div>
+        <div text-center padding *ngSwitchCase="'1'">
+
+            <h5>{{'form_annonce.select_title' | translate}}: <br> (*) {{'form_annonce.compulsory_text' | translate}}</h5>
+
+            <form [formGroup]="info_form">
+
+                <ion-item class="mytitle">
+                    <ion-label color="primary" stacked>{{'form_annonce.title_annonce' | translate}} *</ion-label>
+                    <ion-input formControlName="title" type="text" placeholder="EX: Ona-Holdings"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validation_messages.title">
+                        <div class="error-message" *ngIf="info_form.get('title').hasError(validation.type) && (info_form.get('title').dirty || info_form.get('title').touched)">
+                            {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                <ion-item>
+                    <ion-textarea formControlName="description" placeholder="{{'form_annonce.desc_placeholder' | translate}} *"></ion-textarea>
+                </ion-item>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validation_messages.description">
+                        <div class="error-message" *ngIf="info_form.get('description').hasError(validation.type) && (info_form.get('description').dirty || info_form.get('description').touched)">
+                            {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+            </form>
+            <!--  <ion-item class="mytitle video">
+                <ion-label color="primary" stacked>{{'form_annonce.video_url' | translate}}</ion-label>
+                <ion-input type="text" placeholder="Paste video URL here"></ion-input>
+            </ion-item> -->
+        </div>
+        <div text-center padding *ngSwitchCase="'2'">
+            <h5>{{'form_annonce.select_loc' | translate}}: <br> (*) {{'form_annonce.compulsory_text' | translate}}</h5>
+
+            <ion-searchbar class="search-places-bar" placeholder="Rechercher un Pays ou ville *" [(ngModel)]="location_query" (ionInput)="searchLoaction(location_query, $event)" (ionClear)="clearSearch()"></ion-searchbar>
+            <ion-list [hidden]="locations_results.length == 0" class="search-options-list">
+                <ion-item *ngFor="let place of locations_results" tappable (click)="selectLocation(place)">
+                    {{ place.name }}
+                </ion-item>
+            </ion-list>
+            <div text-center *ngIf="location_query.length < 2 && location_query.length > 0 && locations_results.length == 0">{{'form_annonce.continue_typing' | translate}}</div>
+            <div text-center *ngIf="location_query.length >= 2 && locations_results.length == 0 && place_found != true && type == 'create'">{{'form_annonce.no_res_found' | translate}} <strong>{{location_query}}</strong></div>
+            <ion-row *ngIf="located_user == false">
+                <ion-col>
+                    {{'form_annonce.btn_click' | translate}}
+                    <ion-icon color="primary" name="locate"></ion-icon> {{'form_annonce.ret_pos' | translate}}
+                </ion-col>
+            </ion-row>
+            <ion-grid>
+                <ion-row>
+                    <ion-col no-padding>
+                        <ion-searchbar class="search-places-bar" placeholder="Addresse *. EX: Yaounde, Cameroon" [(ngModel)]="search_query" (ionInput)="searchPlacesPredictions(search_query)" (ionClear)="clearSearch()"></ion-searchbar>
+                        <ion-list [hidden]="search_places_predictions.length == 0" class="search-options-list">
+                            <ion-item *ngFor="let place of search_places_predictions" tappable (click)="selectSearchResult(place)">
+                                {{ place.description }}
+                            </ion-item>
+                        </ion-list>
+                    </ion-col>
+                </ion-row>
+
+
+                <ion-row>
+                    <ion-col no-padding>
+                        <button (click)="locateMe()" id="locate-me" ion-button clear icon-only>
+                                <ion-icon name="locate"></ion-icon>
+                        </button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+
+        </div>
+        <div class="img-div" text-center padding *ngSwitchCase="'3'">
+            <h5>{{'form_annonce.add_images' | translate}}. <br> (*) {{'form_annonce.compulsory_text' | translate}}</h5>
+
+            <ion-item-divider text-left>{{'form_annonce.imgs' | translate}} *</ion-item-divider>
+
+            <div (click)="addFeatImage()" *ngIf="imageUrl == ''" class="img_placeholder">
+                <img src="assets/images/icons/photo.svg" alt="">
+
+                <p>{{'form_annonce.click_add_images' | translate}}</p>
+            </div>
+
+            <div *ngIf="imageUrl != ''">
+                <ion-scroll class="horizontal-scroll" scrollX="true">
+                    <!-- <img *ngFor="let item of imagesList" [src]="item" alt=""> -->
+                    <img [src]="imageUrl" alt="">
+
+
+                    <img (click)="addFeatImage()" src="assets/images/icons/photo.svg" alt="">
+                </ion-scroll>
+            </div>
+            <!-- <ion-item-divider text-left>{{'form_annonce.files' | translate}} *</ion-item-divider>
+
+            <div class="files-div">
+                <button ion-button>{{'form_annonce.add_files' | translate}} *</button> <br>
+                <div class="added-files">
+                    <span>file1 <ion-icon name="close"></ion-icon></span>
+                    <span>file2 <ion-icon name="close"></ion-icon></span>
+                    <span>file3 <ion-icon name="close"></ion-icon></span>
+                    <span>file4 <ion-icon name="close"></ion-icon></span>
+                </div>
+            </div>
+ -->
+        </div>
+        <div text-center padding *ngSwitchCase="'4'">
+            <h5> {{'form_annonce.add_hours1' | translate}} <strong>{{'form_annonce.add_hours2' | translate}}</strong></h5>
+
+            <div *ngFor="let item of opening_days">
+                <ion-item-divider text-left>{{item}}</ion-item-divider>
+
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-5>
+                            <ion-item class="mytitle">
+                                <ion-label color="primary">{{'form_annonce.opens' | translate}}</ion-label>
+                                <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm"></ion-datetime>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col id="to-col" col-2>
+                            -
+                        </ion-col>
+                        <ion-col col-5>
+                            <ion-item class="mytitle">
+                                <ion-label color="primary">{{'form_annonce.closes' | translate}}</ion-label>
+                                <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm"></ion-datetime>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+
+        </div>
+
+        <div padding *ngSwitchCase="'5'">
+            <ion-item-divider class="animated fadeIn" text-left>{{'form_annonce.visibility' | translate}}</ion-item-divider>
+            <ion-item no-lines>
+                <ion-label>{{'form_annonce.feat' | translate}} <span id="feat-price" color="primary"> <strong>(10€)</strong></span></ion-label>
+                <ion-checkbox color="primary"></ion-checkbox>
+            </ion-item>
+
+
+            <!-- <ion-item-divider class="animated fadeIn" text-left>{{'form_annonce.conditioning' | translate}}</ion-item-divider>
+
+
+            <form class="animated fadeIn" *ngIf="conditions.length > 0" [formGroup]="radioCondition">
+                <ion-list class="checkbox-tags rounded-tags" formControlName="selected_condition" radio-group>
+                    <ion-item *ngFor="let item of conditions" class="checkbox-tag">
+                        <ion-label [innerHTML]="item.name"></ion-label>
+                        <ion-radio value="{{item.id}}"></ion-radio>
+                    </ion-item>
+                </ion-list>
+            </form>
+            <div *ngIf="conditions.length == 0">
+                <h5>{{'form_annonce.condition_empty' | translate}}</h5>
+                <button ion-button outline>{{'form_annonce.sync' | translate}}</button>
+            </div> -->
+            <ion-item-divider class="animated fadeIn" text-left>{{'form_annonce.features' | translate}}</ion-item-divider>
+            <form class="animated fadeIn" *ngIf="locations.length > 0" [formGroup]="checkboxFeaturesForm">
+                <ion-list class="checkbox-tags rounded-tags">
+                    <ion-item *ngFor="let item of locations" class="checkbox-tag">
+                        <ion-label [innerHTML]="item.name"></ion-label>
+                        <ion-checkbox formControlName="{{item.id}}"></ion-checkbox>
+                    </ion-item>
+                </ion-list>
+            </form>
+
+
+            <div *ngIf="locations.length == 0">
+                <h5>{{'form_annonce.location_empty' | translate}}</h5>
+                <button ion-button outline>{{'form_annonce.sync' | translate}}</button>
+            </div>
+            <button (click)="viewAll('features', $event)" *ngIf="locations.length > 0" ion-button outline round>{{'form_annonce.view_all' | translate}}</button>
+
+
+
+        </div>
+    </div>
+</ion-content>
+
+<ion-footer text-center transparent>
+    <!-- <button ion-button (click)="onAddAnnonce()" block>POST Announcement</button> -->
+    <ion-grid *ngIf="type == 'create'">
+        <ion-row>
+            <ion-col text-left>
+                <button color="dark" (click)="prevSegment()" outline round *ngIf="segment != '0'" ion-button>
+                    <!-- <ion-icon name="ios-arrow-back"></ion-icon> -->
+                    {{'form_annonce.prev' | translate}}
+                </button>
+                <!-- <button color="danger" ion-button clear icon-only (click)="annuler()"> <ion-icon name="ios-close-circle-outline"></ion-icon> </button> -->
+            </ion-col>
+            <ion-col text-right>
+                <button color="dark" *ngIf="segment != '5'" (click)="nextSegment()" ion-button outline round>
+                    <!-- <ion-icon name="ios-arrow-forward"></ion-icon> -->
+                    {{'form_annonce.next' | translate}}
+                </button>
+                <button clear (click)="onAddAnnonce()" [disabled]="!info_form.valid" *ngIf="segment == '5'" color="vert" ion-button icon-left>
+                    <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+                    {{'form_annonce.create' | translate}}
+                </button>
+
+                <!-- <button *ngIf="segment == '5'" color="vert" ion-button clear [disabled]="!info_form.valid" icon-only (click)="onAddAnnonce()"> <ion-icon name="ios-checkmark-circle-outline"> Create</ion-icon> </button> -->
+                <!-- <button color="vert" ion-button clear [disabled]="!info_form.valid" icon-only (click)="onAddAnnonce()"> <ion-icon name="ios-checkmark-circle-outline"></ion-icon> </button> -->
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <button clear (click)="onEdit()" [disabled]="!info_form.valid" *ngIf="type == 'edit'" color="vert" ion-button icon-left>
+        <ion-icon name="ios-create-outline"></ion-icon>
+        {{'form_annonce.edit' | translate}}
+    </button>
+</ion-footer>

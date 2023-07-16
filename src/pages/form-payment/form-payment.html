@@ -1,0 +1,44 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Paiement</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>
+      </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <p text-center class="titre">Pour continuer votre achat des billets pour l'événement, nous avons besoin des informations suivantes afin de pouvoir générer une facture</p>
+  
+  <ion-list class="bloc-form">
+      <ion-item>
+          <ion-label floating>Votre Nom*</ion-label>
+          <ion-input  type="text" [(ngModel)]="infos.user_display_name"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Votre Prénom</ion-label>
+          <ion-input  type="text" [(ngModel)]="infos.last_name"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Adresse*</ion-label>
+          <ion-input type="text" [(ngModel)]="infos.address"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Email*</ion-label>
+          <ion-input type="email" [(ngModel)]="infos.user_email"></ion-input>
+      </ion-item> 
+      <ion-item>
+          <ion-label floating>Ville</ion-label>
+          <ion-input type="text" [(ngModel)]="infos.city"></ion-input>
+      </ion-item>
+  </ion-list>
+</ion-content>
+<ion-fab #fab bottom right>
+  <button color="vert" button-ion-fab ion-fab (click)="onAdd()">
+    <ion-icon name="checkmark"></ion-icon>
+  </button>
+</ion-fab> 

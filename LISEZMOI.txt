@@ -1,0 +1,535 @@
+VITRINE AFRICAINE MOBILE
+-----------------------------
+Annuaire des professionels et entreprises en tant que diaspora africaine dans le monde
+
+Installation 
+création du projet Ionic 3
+Plugins
+Templates
+Executer l'application via le navigateur
+
+-------------------------------------
+INSTALLATION ET CONFIGURATION IONIC 3
+-------------------------------------
+Environnement de développement
+L'application sera développé sous le framework Ionic 3.
+version 3.9+
+Cordova platform : cordova-android 6.3.0
+
+Création du projet Ionic
+------------------------
+Duplication du projet 237 Guide Pro
+
+
+-------
+Plugins
+-------
+- Device
+---------
+Il s'agira de savoir quels sont les features du Smartphone 
+qui seront utilisé par l'appareil.
+- Telephone : 
+	ionic cordova plugin add call-number
+	npm install --save @ionic-native/call-number
+
+- Push Notification:
+	ionic cordova plugin add phonegap-plugin-push --variable SENDER_ID=XXXXXXXXX
+	npm install --save @ionic-native/push
+	
+	NB / Il faut créer un compte Firebase Cloud Messaging (il est associé au compte Google)
+	https://firebase.google.com/support/guides/google-android#migrate_your_console_project
+	
+- SMS
+	ionic cordova plugin add cordova-sms-plugin
+	npm install --save @ionic-native/sms
+
+- Social Network
+	ionic cordova plugin add cordova-plugin-x-socialsharing
+	npm install --save @ionic-native/social-sharing
+
+- Email
+	ionic cordova plugin add cordova-plugin-email-composer
+	npm install --save @ionic-native/email-composer
+
+- Firebase (video tutorial https://www.youtube.com/watch?v=Q7BNG5EnXCs)
+	$ npm install angularfire2@4.0.0-rc0 firebase@3.6.6 --save
+	
+- Lazy loader pour les images
+	$ npm install ng-lazyload-image --save
+
+- Ajout du plugin Angular Google Map
+   $ npm install angular2-google-maps  --save (ancienne - deprecated)
+   $ npm install @agm/core (recommendé)
+   NB : Obtenir une API Key => https://developers.google.com/maps/documentation/embed/get-api-key
+
+- Ajour SweetAlert
+	$ npm install sweetalert --save
+	inclure : import swal from 'sweetalert';
+	Exemple: swal("Good job!", "You clicked the button!", "success");
+
+- Plugin Input Tags
+	$ npm install ionic-tags-input --save (manuelle)
+	$ npm install angular2-tag-input --save (recommendé)
+
+- Plugin SOcial sharing
+	$ ionic cordova plugin add cordova-plugin-x-socialsharing
+	$ npm install --save @ionic-native/social-sharing
+
+- Plugin Speech Recognition
+	$ ionic cordova plugin add cordova-plugin-speechrecognition
+	$ npm install --save @ionic-native/speech-recognition
+
+- Plugin QR Code
+	$ ionic cordova plugin add phonegap-plugin-barcodescanner
+	$ npm install --save @ionic-native/barcode-scanner
+	
+- Plugin INTL
+	$ npm install ionic2-calendar moment intl --save
+	
+- Plugin Image Picker
+	$ ionic cordova plugin add cordova-plugin-telerik-imagepicker --variable PHOTO_LIBRARY_USAGE_DESCRIPTION="your usage message"
+	$ npm install --save @ionic-native/image-picker
+
+- Plugin Crop Image
+	$ ionic cordova plugin add cordova-plugin-crop
+	$ npm install --save @ionic-native/crop
+
+- Plugin Camera
+	$ ionic cordova plugin add cordova-plugin-camera
+	$ npm install --save @ionic-native/camera
+
+- Plugin Ionic Rating
+	$ npm install --save ionic2-rating
+
+- Plugin Ionic Calendar
+	$ ionic cordova plugin add cordova-plugin-calendar
+	$ npm install --save @ionic-native/calendar
+
+- Plugin ng Dragula
+	$ npm install ng2-dragula --save
+	
+- Plugin Network Information
+	$ ionic cordova plugin add cordova-plugin-network-information
+	$ npm install --save @ionic-native/network
+	
+- Plugin Local Notification 
+	$ ionic cordova plugin add cordova-plugin-local-notification
+	$ npm install --save @ionic-native/local-notifications
+	
+--------------------------
+TEMPLATES
+--------------------------
+Le template qui sera utilisé sera basé sur celui du 237 Guide Pro
+1/ Dupliquer le projet 237 guide Pro
+2/ Configuration du projet Vitrine africaine en fonction de sa structure : elle garde sensiblement la meme structure (ref. guide pro) et de sa charte graphique
+
+
+
+-----------------
+RUNNING
+-----------------
+- Après avoir dupliqué le projet <vitrine-africaine>
+Ouvrir l'invite de commande:
+	cd vitrine-africaine
+	ionic serve (execute sur le browser)
+	ionic serve -l (visualisation Android, iOS)
+	
+	|-------------------------------------|
+	|Pour les tests, procéder avant d'executer
+	|-------------------------------------
+	|Utiliser le naviguateur Chrome
+	|AJouter l'extension "Allow Cross Origin"
+	|
+
+--
+BUILD APPLICATION
+-------------------------------------
+- Création du fichier apk
+  *
+  (le fichier sera stocké à la racine du projet)
+  * Ajout de la plateforme android
+	$ ionic cordova platform add android
+	$ ionic cordova build android --prod --release
+  * Déplacer le fichier apk (créée)==> (voir fichier DEPLOIEMENT APP MOBILE)
+
+--
+GENERATE APK FILE
+-----------------------
+  Signer le fichier apk
+  ---------------------
+  * Créer une clé privée
+  keytool -genkey -v -keystore my-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-alias
+	- alias = onaitconsulting
+	- mot de passe:onaitconsulting17
+  
+	Mot de passe pour alias onaitconsulting (pwd:onaitconsulting17)
+  
+  * Signer le fichier apk non signé
+  ---------------------------------
+  jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore onaitconsulting.keystore android-release-unsigned.apk onaitconsulting
+  
+  * Optimiser le fichier apk
+  --------------------------
+  C:/Users/Home/AppData/Local/Android/Sdk/build-tools/26.0.2/zipalign -v 4 android-release-unsigned.apk vitrine-africaine.apk
+   (zipalign =>android_sdk/build-tools/VERSION/zipalign
+ 
+  *Verify that app is signed (seulement pour les versions ionic < 2
+  --------------------------
+  C:/Users/Home/AppData/Local/Android/Sdk/build-tools/26.0.2/apksigner verify vitrine-africaine.apk
+
+
+--------------------
+CHANGELOG
+--------------------
+19/10/2018
+1. Configuration du compte Paypal
+- création du nom de l'app Vitrine AFRICAINE
+- génération des crédentials pour communiquer avec les APIs Paypal 
+- les crédentials et paramètres ont été stockés 
+
+
+Scénarii
+- l'utilisateur choisit le type de billet (standart) et la quantité en cliquant sur le bouton ACHETER
+- un menu contextuel apparait lui demandant de payer soit par Paypal ou payconiq 
+- Une fois qu'il a effectué sa sélection, un pop up de confirmation de l'achat est affiché à l'écran (tablette ou mobile)
+- Lorsque ce dernier a cliqué sur le bouton VALIDER, il lui est demandé d'effectué le paiement en fonction du mode paiement choisit.
+- Lorsque le paiement effectué a été conclut (success), alors un bouton  IMPRIMER MON TICKET, est affiché à l'écran indiquant à l'utilisateur qu'il peut Imprimer son ticket
+- Impression du ticket peut aussi être par pdf
+
+
+- Définition et mise en place du service permettant de génerer la facture et de l'envoyer dans la boite Email de l'utilisateur.
+
+
+18/10/2018
+Module Evénements : 
+Objectif : Enregistrement de la commande sur Woocommerce et Génération de la facture client liée à Woocommerce
+
+Description :
+Etant donné que la gestion des tickets est basé sur woocommerce. Ceci revient à dire que les tickets, sont enregistrés comme des produits
+
+- Implémentation de la méthode permettant de récupérer et comparer les produits Woocommerce aux tickets
+- Définition et implémentation des méthodes permettant de :
+	-- récupérer la liste des produits 
+	-- filtrer la liste des produits relatifs à la liste des tickets liées à un événement
+	-- définition des paramètres de configurations woocommerce sur firebase	https://console.firebase.google.com/project/besat-mobile/database/besat-mobile/data/vitrine_africaine/woocommerce
+	-- définition et implémentation de la méthode qui permet de créer ou de mettre à jour une commande sur woocommerce.
+	
+
+
+
+17/10/2018
+Module Evénements : Achats des billets 
+Objectif : Finalisation de l'achat des billets via Payconiq ou Paypal
+Payconiq
+Ici, permettre à l'utilisateur d'ajouter des billets de ventes liés à un événement. Pour ce faire, il s'agit de créer un service Payconiq permettant à tout utilisateur de payer via l'app Payconiq
+
+Scénarii: 
+- lorsque l'utilisateur clique sur le bouton Payer par payconiq, une boite de dialogue s'ouvre lui demandant de confirmer son paiement.
+- quand il clique sur le bouton confirmer, l'utilisateur est redirigé sur l'application Payconiq afin de terminer le processus de transaction.
+- Une fois le processus terminé, il redirigé ver l'application vitrine africaine et informé que le paiement a été effectué.
+
+
+- Définition des paramètres de configurations de l'api (url), de l'environnement test
+https://console.firebase.google.com/project/besat-mobile/database/besat-mobile/data/vitrine_africaine/payconiq
+- Définition et implémentation de la méthode permettant de communiquer avec l'api Payconiq
+- Définition d'un composant qui va permettre à l'utilisateur de confirmer et de payer son billet via une boite de dialogue
+
+travaux 
+- src/pages/confirm-payconiq/
+- src/providers/payment/payment.ts
+
+
+
+
+16/10/18
+Module Evénéments
+1. Formulaire d'édition d'un événement 
+- Mise en forme du formulaire de création d'un événement : il s'agissait de définir une présentation afin que l'utilisateur ait cette facilité à remplir les données 
+- Correction des bugs sur les widgets Ajouter un tag et ajouter une catégorie
+
+2. Formulaire d'édition d'un Lieu d'événement
+- Mise en forme du formulaire du lieu d'événement : définition d'une présentation des champs du formulaire
+- correction des bugs sur la traduction des expressions francaise
+- Lorsqu'un lieu n'existe pas, celui ci est automatiquement renseigné dans le formulaire
+
+3. Formulaire de création d'un organisateur
+- Mise en forme du formulaire de création d'un organisateur
+
+
+15/10/2018
+Module Evénements
+1. Objectif: Création d'un lieu d'événement.
+Pour créer un événement, l'utilisateur doit mentionnéer le nom du lieu de l'événement. La déclaration d'un lieu d'événement requiert certaines informations (le nom du lieu, l'adresse, le numéro de téléphone, le site web, le pays, la ville, la région, etc)
+- Définition du formulaire de création d'un lieu d'événement : mise en place des champs de saisies pour la création d'un lieu d'événement
+- Définition des controles des champs de saisis. Ici, il y a un controle sur la saisie des informations fournies par l'utilisateur.
+- Mise en forme du formulaire de Création d'un lieu d'événement 
+
+Implémentation
+le modèle wordpress utilisé est : venues 
+l'api permettant d'effectuer la création d'un lieu d'événement
+https://v2018-ona.vitrineafricaine.com/tribe/events/v1/venues
+
+Travaux 
+- src/pages/form-location/form-location.ts 
+- src/pages/form-location/form.validators.ts 
+- Implémentation de la méthode faisant appel à l'api de création d'un lieu d'événement
+
+
+2. Objectif: Création du formulaire d'ajout d'un organisateur
+L'utilisateur a la possiblité d'ajouter un organisateur à partir de la liste des organisateurs existant ou de créer un nouvel organisateur.
+- Définition d'un formulaire d'édition d'un organisateur
+- Mise en place et définition des controles de du formulaire de saisies 
+- Définition de la méthode permettant de faire appel l'api permettant d'insérer un organisateur dans la base de données 
+- Traduction des expressions du formulaire 
+https://v2018-ona.vitrineafricaine.com/tribe/events/v1/organizers
+
+
+
+3. Objectif: Création du formulaire d'un événement  (suite)
+- Définition de la section :  Contacts => où l'utilisateur devra fournir les informations sur le lieu et l'organisateur de l'événement 
+	-- Mise en place des éléments du formulaire dans la section Lieu. L'utilisateur aura la possibilité de rechercher un lieu existant avant de l'ajouté.
+	-- définition des controles sur l'élément choix d'un lieu
+	-- mise en place du widget Organisateur : ce widget permettra à l'utilisateur d'insérer ou supprimer un organisateur depuis le formulaire 
+
+
+12/10/2018
+Module Evénements
+Objectif : Mise en place du formulaire de création d'un événement 
+L'api qui sera utiliser pour la création d'un événement
+https://v2018-ona.vitrineafricaine.com/?rest_route=/tribe/events/v1/
+méthode POST
+
+1. Identification des champs du formulaire
+-- Information
+	* le titre => title 
+	* la description => (description and excerpt)
+	* Heure et date de l'événement 
+		timezone
+		all_day
+		start_date
+		end_date
+
+-- Lieu de l'événement 
+	* champ => venue (id)
+	
+-- Organisateur
+	* champ => organizer (identifiant organisateur)
+	
+-- BILLET (ticket)
+	* ajout/modification des billets lié à l'événement
+	
+	
+-- OTHERS
+	* Etiquettes => tags (ids des tags)
+	* Catégories => categories (ids des categories)
+	* Site web => champ website
+	* Ajouter une image à l'événement => champ utilisé image : id ou url de l'image
+		
+
+2. Définition d'un composant permettant de rechercher les lieux et organisateurs déjà existants
+	- Définition et Mise en forme de la vue permettant d'effectuer la recherche d'un organisateur ou d'un lieu
+	- Définition et implémentation des contrôles qui sont disponible sur la vue.
+	- Définition et implémentation des méthodes permettant de définir la présentation de la vue 
+	- Récupération des enregistrements sur les modèles :
+		-- venues => Lieux d'événements 
+		-- organizer => Organisateur
+		
+	Travaux :
+	- src/pages/helper/helper.html
+	- src/pages/helper/helper.ts
+
+3. Définition d'un formulaire imbriquée permettant à l'utilisateur de créer un lieu d'événement
+	- Les champs à exploiter : lieu, adresse, ville, Pays, Etat/Province, Code postal, téléphone, site web 
+	- Mise en page du formulaire de création d'un Lieu d'événement : définition des champs de saisis liées au modèle venues (lieu d'événement)
+	- Définition et implémentation des fonctions permettant de controler la saisie des champs par l'utilisateur
+	
+	Travaux :
+	- src/pages/form-location/form-location.html 
+	- src/pages/form-location/form-location.ts
+
+4. Définition du formulaire de création d'un événement. Ce formulaire jouera le rôle d'interface où l'utilisateur pourra créer un événement.
+	- Conception et mise en page du formulaire d'édition d'un événement : intégration des sections 
+		* Information
+		* Lieu détaillée
+		* Organisateur
+		Pour chaque section, intégration des champs de saisies correspondant aux différentes sections 
+		
+	
+
+11/10/2018
+Module Evénements
+- Définition d'un écran d'accueil pour la rubrique événements pour une présentation.
+Sur cette page, l'utilisateur pourra comprendre de quoi il est question dans la rubrique événement. Notamment :
+	-- la consultation des événements
+	-- la création d'un événement 
+	-- la consultation des catégories d'un événement
+	
+Implémentation
+- Définition et Mise en page de la page d'accueil de la rubrique Evénement 
+- Mise en forme de la vue pour une meilleure présentation
+- Définition et implémentation des controles sur la vue 
+- Récupération de la liste des catégories des événements
+
+travaux
+- src/pages/start-event/
+
+=====
+Page Accueil de l'application
+- Rédéfinition et amélioration de la page d'accueil 
+- Intégration de la navigation sous forme de "tabs"
+	-- Définition et mise en page des menus devant figurer dans le tabs 
+	-- Mise en forme du tabs pour une meilleure présentation
+- Intégration du widget Voix - texte qui permettra à l'utilisateur s'il le souhaite, faire une recherche en utilisant la voix
+- Définition du composant permettant de controller et de gérer la sélection du texte par la voix.
+- Implémentation de la fonction permettant de faire appel à la fonctionnalité "Voice to text" : lorsque l'utilisateur va cliquer sur le bouton "mic", un pop up va s'afficher l'invitant à effectuer une recherche par la voix 
+
+travaux
+-------
+- src/pages/speech-text/
+- src/pages/mainmenu/mainmenu.ts
+
+
+=====
+Module Evénements 
+- Formulaire Création/Edition d'un événement 
+Le formulaire d'événement est divisé en plusieurs sections :
+-- Information: il va regrouper les infos sur :
+	* le titre 
+	* la description 
+	* Heure et date de l'événement (+ événement sur toute une journée)
+
+-- Lieu, détails du lieu pour l'événement (model venue)
+	* Définition du lieu de l'événement 
+	* Au cas le lieu n'existe pas, permettre à l'utilisateur de le créer 
+	
+-- Organisateur, détails sur l'organisation (model organizer)
+	* Sélection d'un ou plusieurs organisateurs
+	* ou Possibilité de créer un nouvelle organisateur 
+	
+-- BILLET (ticket)
+	* ajout/modification des billets lié à l'événement
+	
+	
+-- OTHERS
+	* Etiquettes, permettre d'assiocer une ou plusieurs étiquettes (tags)
+	* Catégories, associer une catégorie ou plusieurs (categories)
+	* Site web de l'événement
+	* Ajouter une image à l'événement 
+
+
+
+11/09/2018
+Module Events :
+- La rubrique événement sera affiché sous forme d'un Agenda, ceci va permette
+
+
+07/09/2018
+L'application mobile Vitrine Africaine contient les rubriques suivantes :
+- La page Guide Africain 
+- La page Login
+- La page Favoris
+- L'acces des annonces relatives à une catégorie
+- L'acces à la vue détaillée d'une annonce 
+- La vue Liste des commentaires
+- La liste des features
+
+
+
+
+06/09/2018
+Menu Principal
+1. Définition des liens entre les rubriques qui figurent dans le menu contextuel et la vue liste des Annonces 
+
+
+
+05/09/2018
+Vue Filtre
+Sur la vue Recherche, il y a un bouton "filtre" sur la barre titre.
+En cliquant sur ce bouton, il va ouvrir la vue filtre 
+Objectif : définition de la vue Filtre. Mise en place du page permettant de choisir les critères de sélection.
+
+les critères suivants :
+- La distance : le périmètre dans lequel se trouvera les annonces 
+- A proximité: les annonces se trouvant proche de nous 
+- Filtre par tags : l'utilisateur a la possibilité de sélectionner plusieurs tags 
+- filtre fiabilité : Ce filtre va permettre Récupérer la liste des filtres les plus vues et la disponibilité
+
+Implémentation
+- Mise en page de la vue Filtre => src/pages/filter/filter.html
+- Mise en forme de la vue filtre => src/pages/filter/filter.scss (définition d'un design agréable à l'oeil de l'utilisateur)
+- Implémentation et définition des controles de sélection de critères du formulaire (src/pages/filter/filter.ts)
+
+
+04/09/2018
+Page Recherche
+Finalisation de l'implémentation sur les fonctionnalités permettant d'effectuer la recherche est les classer dans les sections Annonces, Catégories, et Lieux.
+- Implémentation des fonctionnalités et controles de saisies permettant de filtrer la liste des résultats de la recherche.
+- Mise en page de la vue Recherche pour structurer les résultats de la recherche dans la vue.
+- Mise en forme des dits données en définissant une forme pour une meilleure présentation
+- Ajout de la section tag dans la vue Recherche permettant à l'utilisateur d'effectuer la recherche par tags 
+
+
+Implémentation
+Les travaux ont été effectués sur les vues :
+src/pages/search/search.html
+src/pages/search/search.ts
+src/pages/mainmenu/mainmenu.ts (mainmenu.html)
+
+
+03/09/2018
+- Défintion de la page Recherche
+La page recherche sera définit par 2 blocs dynamiques :
+
+1. Le premier bloc
+il va afficher les informations comme la liste des catégories, la listes des annonces à la Une (dans un Grid). Ce bloc est visible lorsque l'utilisateur n'a pas encore saisi sa recherche
+
+2. Le second bloc 
+A partir d'un champ (recherche), l'utilisateur a la possibilité de rechercher une annonce, une catégorie, un lieu(location). Le résultat de la recherche sera regroupé dans un segment où chaque section sera décrit comme suit:
+- Section 1: Annonces => va afficher la liste des annonces relatives à la recherche de l'utilisateur
+- Section 2: Catégories => va afficher la liste des catégories relatives à la recherche de l'utilisateur. En cliquant sur la catégorie, l'utilisateur ouvre la vue Annonces liées à cette catégorie
+- Section 3: Location (lieux) => va afficher la liste des lieux liées à la recherche de l'utilisateur. En cliquant sur un lieu, ceci va ouvrir la liste des annonces liées à ce lieu 
+
+- Définition de la page des filtres
+La page des filtres permettra à l'utilisateur de choisir les critères de filtre sur sa recherche.
+
+
+
+
+01/09/2018
+- Définition de l'en tête des vues de l'application
+	* Il s'agit d'effectuer un design sur l'en tete des diférentes vues de l'application
+	* Création d'une entete pour les différentes vues (choix et confection d'une image)
+
+
+
+30/08/2018
+Page Principal
+- Définition du menu contextuel lorsque l'utilisateur effectue un slide up
+Les menus suivants ont été définies (en pièce jointe)
+
+
+Menu Gauche
+Objectif : définition de la vue Menu gauche + En tete de l'application
+Le menu gauche est acessible depuis la vue principal ou à partir des autres pages de l'application via le bouton (menu).
+* Mise en page du menu gauche de l'application en définissant les éléments devant figurer sur la vue.
+* Mise en forme de la vue Menu gauche et intégration du logo en bas de page
+* Définition et implémentation des controles de la vue du menu gauche 
+
+
+28/08/2018
+Définition du Menu Principal
+- Sur la page Menu principal, mise en forme de la vue afin de définir une nouvelle présentation du menu principal => src/pages/mainmenu.html et mainmenu.scss
+
+- Définition d'un menu contextuel permettant d'afficher les catégories populaires et 2 blocs supplémentaires : une pour afficher la liste de toutes les catégories et l'autre pour rechercher les éléments à proximité.
+Les menus ont été définis sur firebase => https://console.firebase.google.com/project/besat-mobile/database/besat-mobile/data/vitrine_africaine/mainmenu
+
+- Intégration des menus stockés sur Firebase dans la vue du menu contextuel. Ensuite implémentation des menus et les actions qui vont conduire à l'ouverture de la vue Annonces.
+
+
+17/08/2018
+Configuration du projet Vitrine Africaine 
+	- fichier config.xml
+	- fichier package.json
+	- fichier ionic.config.json
+	
+git@github.com:onaconsulting/vitrine-africaine-mobile.git

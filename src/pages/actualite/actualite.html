@@ -1,0 +1,71 @@
+<!-- <ion-navbar color="secondary">
+    <button ion-button menuToggle start>
+      <ion-icon name="md-menu"></ion-icon>
+    </button>
+  </ion-navbar> -->
+  <ion-slides *ngIf="sortedArray?.length" #idSlide pager="true" direction="horizontal" paginationType="bullets" autoplay="5000" loop="true" speed="3000" class="pagination">
+    <ion-slide *ngFor="let a of sortedArray" (click)="details(a)">
+      <img *ngIf="a.better_featured_image == null || a.better_featured_image == undefinded" src="assets/images/logo.png">
+      <!-- <op-lazy-img  *ngIf="a.better_featured_image == null || a.better_featured_image == undefinded" src="assets/images/logo.png"></op-lazy-img> -->
+      <op-lazy-img  *ngIf="a.better_featured_image" [source]="a.better_featured_image.source_url" [defaultImage]="defaultImg"></op-lazy-img>
+      <!-- <img *ngIf="a.better_featured_image" [src]="a.better_featured_image.source_url" alt="Test Image"> -->
+      <div class="card-title">
+        <h3 *ngIf="a.title.rendered.length > 60">{{a.title.rendered | slice : 0 :60}}...</h3>
+        <h3 *ngIf="a.title.rendered.length < 60">{{a.title.rendered }}</h3>
+          <p text-left>{{a.date | date:'mediumDate':'':current_lang}}</p>
+      </div>  
+    </ion-slide>
+  </ion-slides>
+  <ion-header no-border>
+    <ion-navbar>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="openLeftMenu()">
+          <ion-icon name="md-more"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content>
+    <!-- <p objSpinner text-center *ngIf="objLoader">
+        <ion-spinner name="dots"></ion-spinner>
+    </p> -->
+  <div *ngIf="finalObject.length!=0">
+
+  </div>
+  <div bloc-empty *ngIf="finalObject.length==0">
+      <img src="assets/images/icons/search.svg" alt="search" />
+      <h3>{{'actualite.synchro' | translate}}</h3>
+      <button ion-button clear block color="primary" *ngIf="!objLoader" (click)="syncOffOnline()">{{'actualite.button' | translate}}</button>
+  </div>
+  <div id="segment_container">
+    <ion-segment class="forms-examples-segment" [(ngModel)]="segment" color="primary">
+      <ion-segment-button *ngFor="let f of finalObject" (click)="segmentChanged(f, $event)" [value]="f.id">
+        {{f.name}}
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div text-center [ngSwitch]="segment">
+    <div *ngFor="let item of finalObject">
+
+      <ion-grid *ngSwitchCase="item.id">
+        <ion-row class="animated zoomIn details-menu">
+          <ion-col col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 *ngFor="let art of item.article">
+            <ion-item (click)="details(art)">
+              <ion-thumbnail item-end>
+                <img *ngIf="art.better_featured_image != null" [lazyLoad]="art.better_featured_image.source_url">
+                <img *ngIf="art.better_featured_image == null" src="assets/images/logo.png">
+              </ion-thumbnail>
+              <h2 text-wrap class="animated fadeIn delay-1s" [innerHtml]="art.title.rendered |slice : 0 :43"></h2>
+              <p>{{art.date | date:'mediumDate':'':current_lang}}</p>
+            </ion-item>
+              <div (click)="onAddToFav(art)" id="fav">
+                 <ion-icon [ngClass]="{'liked animated jello':art.like == true,'disliked':art.like == false,'disliked':!art.like}" name="heart"></ion-icon>
+              </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

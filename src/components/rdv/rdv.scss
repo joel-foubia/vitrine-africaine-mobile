@@ -1,0 +1,62 @@
+rdv {
+    ion-card {
+        border-radius: 10px
+    }
+    .passed {
+        border-left: 6px solid color($colors, danger);
+        border-top-left-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+    }
+    .almost {
+        border-left: 6px solid color($colors, orlight);
+        border-top-left-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+    }
+    .tocome {
+        border-left: 6px solid color($colors, vert);
+        border-top-left-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+    }
+    ion-icon {
+        margin-top: 3px;
+        line-height: 1em;
+        margin-right: 5px;
+        font-size: 2em;
+    }
+    ion-card-header {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        div {
+            position: absolute !important;
+            top: 10px;
+            right: 10px;
+            width: 80px !important;
+            height: 40px !important;
+            border-bottom-left-radius: 150px !important;
+        }
+    }
+    h3 {
+        color: color($colors, grayColor) !important;
+        margin-left: 5px !important;
+        /* width: 250px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important; */
+    }
+    .passedflag {
+        background-color: color($colors, danger) !important;
+    }
+    .almostflag {
+        background-color: color($colors, orlight) !important;
+    }
+    .tocomeflag {
+        background-color: color($colors, vert) !important;
+    }
+    h2 {
+        margin-top: 10px !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 84%;
+    }
+}

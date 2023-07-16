@@ -1,0 +1,102 @@
+page-login {
+    .content {
+        background-color: color($colors, dark);
+        // filter: blur(5px) !important;
+        // background-image: url(../../assets/images/welcome.jpg) !important;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    h6 {
+        color: white !important;
+    }
+    .login-content {
+        .alt-options {
+            .button {
+                margin: 0px;
+                padding: 0px;
+                font-size: 1.4rem;
+            }
+            .forgot-button {
+                color: white;
+                .button-inner {
+                    justify-content: flex-start;
+                }
+            }
+            .signup-button {
+                font-weight: 500;
+                color: color($colors, secondary) !important;
+                .button-inner {
+                    justify-content: flex-end;
+                }
+            }
+        }
+    }
+    ion-item {
+        background-color: transparent !important;
+        margin-top: 20px !important;
+        ion-input {
+            background-color: color($colors, grislight) !important;
+            border: 1px solid color($colors, gris);
+            padding: 4px;
+            border-radius: 0.2em;
+        }
+    }
+    div.item-inner {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+        padding: 0px !important
+    }
+    .bloc-info {
+        background-color: color($colors, dark);
+        color: color($colors, primary);
+        padding: 5px;
+        border-radius: 0.2em;
+    }
+    .auth-divider,
+    .forgot-button {
+        color: grey !important;
+    }
+    ion-item {
+        // padding-left: 0px;
+        padding: 0px !important
+    }
+    button {
+        // border-radius: 10px !important
+    }
+    .facebook-auth-button {
+        margin-bottom: 20px !important
+    }
+    .auth-action-button {
+        margin-top: 30px !important;
+        // width: 377px !important;
+        width: 100% !important;
+        height: 53px !important
+    }
+    .toolbar .toolbar-title {
+        text-align: left;
+    }
+    .login-form {
+        // margin-top: 120px !important
+    }
+    h1 {
+        margin-top: 50px !important;
+        margin-bottom: 20px !important;
+        color: color($colors, lightest);
+        font-family: 'Cinzel-Regular', sans-serif !important;
+        font-size: 2.2em !important
+    }
+    .text-input::-moz-placeholder {
+        color: black !important;
+        font-weight: 800 !important
+    }
+    .text-input:-ms-input-placeholder {
+        color: black !important;
+        font-weight: 800 !important
+    }
+    .text-input::-webkit-input-placeholder {
+        text-indent: 0 !important;
+        color: black !important;
+        font-weight: 800 !important
+    }
+}

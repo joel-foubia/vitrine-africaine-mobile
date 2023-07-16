@@ -1,0 +1,69 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{'pub_form.title' | translate}}</ion-title>
+    <!-- <ion-title *ngIf="modif">Publicite</ion-title> -->
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openLeftMenu()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+
+</ion-header>
+
+<ion-content text-center>
+  
+    <div class="bloc-form">
+          <h5 text-center>{{'pub_form.entete' | translate}}</h5>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating>{{'pub_form.nom' | translate}}</ion-label>
+              <ion-input *ngIf="!credentials" type="text" [(ngModel)]="company.nom" name="nom"></ion-input>
+              <ion-input *ngIf="credentials" type="text" [(ngModel)]="credentials.user_display_name" name="nom"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label floating>{{'pub_form.prenom' | translate}}</ion-label>
+              <ion-input type="text" [(ngModel)]="company.prenom" name="prenom"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      
+        <ion-item>
+          <ion-label floating>{{'pub_form.company' | translate}}</ion-label>
+          <ion-input type="text" [(ngModel)]="company.societe" name="societe"></ion-input>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label floating>{{'pub_form.telephone' | translate}}</ion-label>
+          <ion-input [(ngModel)]="company.telephone" name="telephone" type="tel"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>{{'pub_form.email' | translate}}</ion-label>
+          <ion-input *ngIf="!credentials" [(ngModel)]="company.email" name="email" type="email"></ion-input>
+          <ion-input *ngIf="credentials" type="email" [(ngModel)]="credentials.user_email" name="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>{{'pub_form.nombre' | translate}}</ion-label>
+          <ion-input [(ngModel)]="company.nombre" placeholder="Laisser vide si aucune idée" name="nombre" type="number"></ion-input>
+        </ion-item>
+        <ion-item transparet>
+          <ion-label stacked>{{'pub_form.date' | translate}}</ion-label>
+          <ion-input [(ngModel)]="company.date" name="date" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item transparent>
+          <ion-label stacked>{{'pub_form.message' | translate}}</ion-label>
+          <ion-textarea autosize [(ngModel)]="company.message" name="message" placeholder="{{'report.assist_ph' | translate}}"></ion-textarea>
+      </ion-item>
+    </div>
+  
+  </ion-content>
+  
+<ion-footer padding text-center>
+  <button ion-button type="submit" (click)="submit()">{{'report.assist_btnTxt' | translate}}</button>
+</ion-footer>

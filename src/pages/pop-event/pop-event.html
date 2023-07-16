@@ -1,0 +1,21 @@
+
+<ion-content>
+  <div class="img">
+      <op-lazy-img [source]="objEvent.agenda.image.sizes.medium.url" [defaultImage]="defaultImg"></op-lazy-img>
+  </div>
+  <div padding class="bloc-content">
+    <h3>{{objEvent.title}}</h3>
+    <h5>{{objEvent.startTime | date:'medium':'':lang}} - {{objEvent.endTime | date:'medium':'':lang}}</h5>
+    <p class="address">
+        <ion-icon name="ios-pin"></ion-icon>
+        {{objEvent.agenda.venue.address}}, {{objEvent.agenda.venue.city}} - {{objEvent.agenda.venue.country}}<br><br>
+        <span class="prix">{{objEvent.agenda.cost_details.values[0] | currency:'EUR':'symbol':'':lang}}</span>
+    </p>
+
+    <!-- <ion-item [innerHTML]="objEvent.agenda.description"></ion-item>   -->
+    <p class="bloc-footer" text-right>
+      <button ion-button clear color="noir" (click)="openDetails()"> {{'pop.more' | translate}}</button>
+    </p>
+  </div>
+
+</ion-content>

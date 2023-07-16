@@ -1,0 +1,66 @@
+page-list-events {
+
+    .scroll-content{
+        background-color: color($colors, lightest);
+    }
+
+    ion-slides{
+        height: 158px;
+    }
+    
+    ion-slide{
+        padding-bottom: 20px;
+    }
+
+    .addtop {
+        margin-top: 40px !important;
+    }
+
+    .filter .toolbar-background{
+        background: none;
+        background-color: color($colors, noir) !important;
+        box-shadow: none;
+    }
+
+    .filter .toolbar-title{
+        font-size: 0.9em;
+    }
+
+    .count_btn {
+        font-size: 1.3em !important;
+        color: color($colors, orlight) !important;
+        background-color: color($colors, dark);
+        width: 35px;
+        border-radius: 5px;
+    }
+
+    .horizontal-categories {
+        background-color: color($colors, grislight);
+        border-bottom: 1px solid white;
+        // padding-bottom: 20px;
+        margin-bottom: 10px;
+        box-shadow: inset 5px -7px 9px -7px rgba(0, 0, 0, 0.4) !important;
+        // @include element-shadow();
+    }
+
+    input.searchbar-input {
+        border-radius: 10px !important;
+        // font-weight: lighter !important;
+        font-size: 1.6rem !important;
+        line-height: 2.5rem !important;
+        color: color($colors, light) !important;
+        background-color: color($colors, dark) !important;
+    }
+    
+    .searchbar-search-icon{
+        color: color($colors, primary) !important;
+    }
+
+    [bloc-empty]{
+        h4{
+            color: color($colors, noir);
+        }
+    }
+
+   
+}

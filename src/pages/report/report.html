@@ -1,0 +1,100 @@
+<ion-header text-center no-border class="header_off">
+
+    <ion-navbar>
+        <ion-title style="font-weight: lighter !important" *ngIf="type.label == 'report'">{{'report.bug_report' |
+            translate}}</ion-title>
+        <ion-title style="font-weight: lighter !important" *ngIf="type.label != 'report'">{{'report.assist_title' |
+            translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="close()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar class="custom-toolbar" no-border-top>
+        <ion-segment [(ngModel)]="segment" color="primary" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="first">
+                {{'report.segment_1' | translate}}
+                <!-- Formulaire 1 -->
+            </ion-segment-button>
+            <ion-segment-button value="second">
+                {{'report.segment_2' | translate}}
+                <!-- Formulaire 2 -->
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <div [ngSwitch]="segment">
+        <div text-center *ngSwitchCase="'first'">
+            <div *ngIf="type.label=='report'" class="bloc-form">
+                <ion-item transparent>
+                    <ion-label style="font-weight: lighter" stacked>{{'report.observ' | translate}}</ion-label>
+                    <ion-textarea autosize [(ngModel)]="report" name="report" placeholder="{{'bug_ph' |translate}}"></ion-textarea>
+                </ion-item>
+                <button block ion-button color="guidepro" (click)="sendReport()">{{'send' | translate}}</button>
+            </div>
+            <div *ngIf="type.label=='assistance'" class="bloc-form">
+                <h5 style="font-weight: lighter" text-center>{{'report.entete' | translate}}</h5>
+                <p></p>
+                <ion-list>
+                    <ion-item transparent>
+                        <ion-label floating>{{'report.name' | translate}}</ion-label>
+                        <ion-input *ngIf="!credentials" type="text" [(ngModel)]="aide.name" name="name"></ion-input>
+                        <ion-input *ngIf="credentials" type="text" [(ngModel)]="credentials.user_display_name" name="nom"></ion-input>
+                    </ion-item>
+
+                    <ion-item transparent>
+                        <ion-label floating>{{'report.prenom' | translate}}</ion-label>
+                        <ion-input type="text" [(ngModel)]="aide.prenom" name="prenom"></ion-input>
+                    </ion-item>
+                    <ion-item transparent>
+                        <ion-label floating>{{'report.email' | translate}}</ion-label>
+                        <ion-input *ngIf="!credentials" type="email" [(ngModel)]="aide.email" name="email"></ion-input>
+                        <ion-input *ngIf="credentials" type="email" [(ngModel)]="credentials.user_email" name="email"></ion-input>
+                    </ion-item>
+
+                    <ion-item transparent>
+                        <ion-label floating>{{'report.societe' | translate}}</ion-label>
+                        <ion-input type="text" [(ngModel)]="aide.company" name="company"></ion-input>
+                    </ion-item>
+                    <ion-item transparent>
+                        <ion-label floating>{{'report.phone' | translate}}</ion-label>
+                        <ion-input type="number" [(ngModel)]="aide.phonenumber" name="phonenumber"></ion-input>
+                    </ion-item>
+                    <!-- <h5 style="font-weight: lighter" text-center>{{'report.indication' | translate}}</h5> -->
+
+                </ion-list>
+            </div>
+        </div>
+        <div text-center *ngSwitchCase="'second'">
+            <div text-center>
+                <ion-list>
+                    <ion-item transparent>
+                        <ion-label floating>{{'report.secteur' | translate}}</ion-label>
+                        <ion-input type="text" [(ngModel)]="aide.activite" name="activite"></ion-input>
+                    </ion-item>
+
+                    <ion-item transparent>
+                        <ion-label floating>{{'report.taille' | translate}}</ion-label>
+                        <ion-select [(ngModel)]="aide.taille" name="taille">
+                            <ion-option *ngFor="let h of hieght" value="{{h}}">{{h}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item transparent>
+                        <ion-label stacked>{{'report.message' | translate}}</ion-label>
+                        <ion-textarea autosize [(ngModel)]="aide.message" name="message" placeholder="{{'report.assist_ph' | translate}}"></ion-textarea>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<ion-footer text-center>
+    <button ion-button round (click)="suivant()" *ngIf="actif == false">{{'report.next' | translate}}</button>
+    <button ion-button round *ngIf="actif == true" (click)="back()" >{{'nos_service.back' | translate}}</button>
+    <button ion-button round color="guidepro" (click)="sendReport()" *ngIf="actif == true">{{'report.assist_btnTxt' |
+        translate}}</button>
+</ion-footer>

@@ -1,0 +1,59 @@
+page-filter {
+    ion-item-divider {
+        background-color: color($colors, dark) !important;
+        // background-image: url("../assets/images/bg_card.jpg");
+        // background-repeat: no-repeat;
+        // background-position: right top;
+        color: color($colors, primary) !important;
+        border: none !important;
+    }
+    .range-list {
+        @include range-item-styles($white-d, $black-d, color($colors, dark));
+    }
+    .checkbox-list {
+        padding-left: 15px;
+        background-color: $white;
+        @include element-shadow();
+        @include checkbox-item-styles($white-d, $white, $theme-color-1);
+    }
+    @include checkbox-tags-styles($white, $white-d, color($colors, primary), $white);
+    .rounded-tags {
+        background-color: $white;
+        padding: 15px;
+        @include element-shadow();
+        .checkbox-tag {
+            .item-inner {
+                border-radius: 2.2rem;
+                background-color: $white-b;
+                color: $white;
+            }
+        }
+    }
+    .bloc-montant {
+        padding: 5px;
+        background-color: color($colors, grislight);
+        text-align: center;
+        margin-top: 0;
+        font-size: 1.1em;
+        font-style: italic;
+    }
+    ion-searchbar.search-places-bar {
+        .searchbar-input {
+            background-color: color($colors, light);
+        }
+    }
+    ion-searchbar.search-places-bar {
+        background: transparent;
+        padding: 10px 0px;
+        padding-left: 5px;
+        border: none;
+        .searchbar-input {
+            border-radius: 5px;
+            color: color($colors, orlight);
+            background-color: color($colors, grislight);
+        }
+        .searchbar-search-icon {
+            // @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $theme-color-2);
+        }
+    }
+}

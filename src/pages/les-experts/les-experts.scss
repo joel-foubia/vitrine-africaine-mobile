@@ -1,0 +1,30 @@
+page-les-experts {
+    .scroll-content {
+        background-color: color($colors, lightest) !important;
+        // margin-top: 20px !important;
+    }
+    ion-item {
+
+        ion-thumbnail {
+            img {
+                width: 90px !important;
+                height: 90px !important;
+                object-fit: cover;
+            }
+        }
+
+        p {
+            color: color($colors, primary) !important;
+        }
+
+        img {
+            transition: opacity 1s;
+            opacity: 0;
+            border-radius: 5px;
+        }
+
+        img.ng-lazyloaded {
+            opacity: 1;
+        }
+    }
+}

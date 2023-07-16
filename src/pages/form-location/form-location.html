@@ -1,0 +1,88 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Enregistrer un Lieu</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="close()"> <ion-icon name="md-close"></ion-icon> </button>
+    </ion-buttons>
+  </ion-navbar>
+  
+</ion-header>
+
+<ion-content padding>
+  <p text-center *ngIf="objLoader"><ion-spinner name="dots"></ion-spinner></p>
+    <form *ngIf="!objLoader" class="sample-form post-form" [formGroup]="venue_form" (ngSubmit)="createPost(venue_form.value)">
+        <section class="form-section">
+          <ion-item>
+            <ion-label floating>{{'events.f_lieu' | translate}} *</ion-label>
+            <ion-input type="text" formControlName="venue"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.venue">
+              <div class="error-message" *ngIf="venue_form.get('venue').hasError(validation.type) && (venue_form.get('venue').dirty || venue_form.get('venue').touched)">
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+
+          <ion-item>
+            <ion-label floating>{{'events.f_adress' | translate}}</ion-label>
+            <ion-input type="text" formControlName="address"></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label floating>{{'events.f_town' | translate}}</ion-label>
+            <ion-input type="text" formControlName="city"></ion-input>
+          </ion-item>
+
+          <div formGroupName="country_phone">
+            <ion-item class="country" (click)="selectPartner($event, 'country')">
+              <p>{{'events.f_country' | translate}}</p>
+              <h3>{{pays?.name}}</h3>
+              <ion-icon name="ios-arrow-down-outline" item-end></ion-icon>
+            </ion-item>
+            <ion-item>
+              <ion-label>{{'events.f_phone' | translate}}</ion-label>
+              <ion-input [textMask]="{mask: venue_form?.value.country_phone.country.phone_mask}" placeholder="{{ venue_form?.value.country_phone.country.sample_phone }}" type="tel" formControlName="phone"></ion-input>
+            </ion-item>
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validation_messages.phone">
+                <div class="error-message" *ngIf="venue_form?.get('country_phone')?.get('phone').hasError(validation.type) && (venue_form?.get('country_phone')?.get('phone').dirty || venue_form?.get('country_phone')?.get('phone').touched)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+
+          </div>
+          
+
+          <ion-grid>
+            <ion-row>
+              <ion-col col-8>
+                <ion-item>
+                  <ion-label floating>{{'events.f_stateprovince' | translate}}</ion-label>
+                  <ion-input type="text" formControlName="stateprovince"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col col-4>
+                <ion-item>
+                  <ion-label floating>{{'events.f_zip' | translate}}</ion-label>
+                  <ion-input type="text" formControlName="zip"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          
+          <ion-item>
+            <ion-label>{{'events.f_website' | translate}}</ion-label>
+            <ion-input type="url" formControlName="website"></ion-input>
+          </ion-item>
+
+        </section>
+
+        <p text-right class="form-button">
+          <button ion-button class="form-action-button create-post-button" type="submit" [disabled]="!venue_form.valid">{{'btns.save' | translate}}</button>
+        </p>
+    </form>
+</ion-content>

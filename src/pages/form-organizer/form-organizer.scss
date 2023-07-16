@@ -1,0 +1,27 @@
+page-form-organizer {
+
+    .scroll-content{
+        background-color: color($colors, lightest);
+    }
+
+    .error-message{
+        color: color($colors, danger);
+        text-align: center;
+        font-size: 0.8em;
+    }
+
+    ion-item{
+        background-color: transparent !important;
+        .item-inner{
+          border-bottom: none !important;
+        }
+  
+        ion-input{
+            height: 45px;
+            padding: 9px;
+            border-radius: 0.45em;
+            background-color: color($colors, grislight);
+            border:1px solid color($colors, grislight);
+        }
+    }
+}

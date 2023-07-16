@@ -1,0 +1,53 @@
+page-company {
+    .content {
+        background-color: color($colors, lightest)
+    }
+    /* .fxn-bloc {
+        margin-top: 10px !important;
+        background-color: color($colors, primary) !important;
+        width: 100% !important;
+        img {
+            width: 30% !important;
+            margin-top: 10px !important;
+        }
+        h6 {
+            color: white !important;
+            padding-bottom: 10px !important
+        }
+        border-radius: 10px !important;
+    } */
+    .card-background-page {
+        ion-card {
+            position: relative;
+            text-align: center;
+            border-radius: 2px !important;
+            background-color: color($colors, dark);
+            img{
+                opacity: 0.5;
+            }
+        }
+        .card-title {
+            position: absolute;
+            top: 36%;
+            font-size: 1.3em;
+            width: 100%;
+            font-weight: bold;
+            color: #fff;
+            /* -webkit-text-stroke-width: 0.1px;
+            -webkit-text-stroke-color: color($colors, gris); */
+        }
+        .card-subtitle {
+            font-size: 1.0em;
+            position: absolute;
+            top: 52%;
+            width: 100%;
+            color: #fff;
+        }
+    }
+    ion-card {
+        img {
+            height: 150px !important;
+            object-fit: cover !important
+        }
+    }
+}

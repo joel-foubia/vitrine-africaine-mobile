@@ -1,0 +1,331 @@
+// http://ionicframework.com/docs/theming/
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+// Include Bourbon
+// @import "_bourbon";
+@import "../theme/common";
+// $app-direction: multi;
+@font-face {
+    font-family: 'Open-Sans';
+    src: url('../assets/fontello/OpenSans-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open-Sans-Regular';
+    src: url('../assets/fontello/OpenSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open-Sans-bold';
+    src: url('../assets/fontello/OpenSans-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cinzel-Black';
+    src: url('../assets/fontello/Cinzel-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cinzel-Bold';
+    src: url('../assets/fontello/Cinzel-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cinzel-Regular';
+    src: url('../assets/fontello/Cinzel-Regular.ttf') format('truetype');
+    font-weight: lighter;
+    font-style: normal;
+}
+
+
+
+.scroll-content {
+    font-family: 'Open-Sans';
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'Open-Sans-Regular', sans-serif;
+}
+
+.toolbar {
+    min-height: 65px;
+    padding: 15px 4px;
+    align-items: flex-start;
+    // border-bottom: 1px solid color($colors, orlight);
+    .toolbar-background {
+        background-color: color($colors, primary);
+        @extend %cover;
+        background-image: url(../assets/images/head-img.jpg);
+        color: color($colors, dark);
+    }
+    .toolbar-title {
+        font-weight: normal;
+    }
+    ion-title {
+        margin-top: 5px;
+    }
+    .bar-button-menutoggle {
+        margin-left: 0;
+        color: color($colors, dark);
+    }
+    .back-button-icon {
+        padding-top: 7px;
+        color: color($colors, dark);
+        // font-size: 2rem;
+    }
+    .bar-button {
+        color: color($colors, dark);
+    }
+}
+
+div.toolbar-title {
+    color: color($colors, dark) !important;
+}
+
+[bloc-empty] {
+    img {
+        height: 190px;
+        width: 190px;
+    }
+    h3,h6 {
+        color: color($colors, gris) !important;
+        opacity: 0.8 !important;
+        font-size: 1.2em !important;
+    }
+}
+
+[objSpinner] {
+    ion-spinner * {
+        width: 28px;
+        height: 28px;
+        stroke: #444 !important;
+        fill: #222 !important;
+    }
+}
+
+.tabbar {
+    background: color($colors, dark) !important;
+    height: 63px;
+    .tab-button,
+    ion-icon {
+        color: color($colors, light) !important;
+    }
+    .tab-button .tab-button-text {
+        font-size: 0.8em;
+    }
+    .tab-button[aria-selected=true] .tab-button-text {
+        color: color($colors, primary);
+    }
+    ion-icon {
+        &[class*="custom-"] {
+            // Instead of using the font-based icons
+            // We're applying SVG masks
+            mask-size: contain;
+            mask-position: 50% 50%;
+            mask-repeat: no-repeat;
+            background: currentColor;
+            width: 1em;
+            height: 1em;
+        }
+        // custom icons
+        &[class*="custom-africa"] {
+            mask-image: url(../assets/icon/favourites.svg);
+        }
+        &[class*="custom-home"] {
+            mask-image: url(../assets/icon/search.svg);
+        }
+        &[class*="custom-planning"] {
+            mask-image: url(../assets/icon/events.svg);
+        }
+        &[class*="custom-news"] {
+            mask-image: url(../assets/icon/historic.svg);
+        }
+        &[class*="custom-plus"] {
+            mask-image: url(../assets/icon/three-dots-more-indicator.svg);
+        }
+    }
+}
+
+.search-bar::-webkit-input-placeholder {
+    text-indent: 0;
+    color: black;
+}
+
+searchbar-md .searchbar-input::-webkit-input-placeholder {
+    color: black;
+}
+
+.custom-action-sheetMain {
+    .action-sheet-container .action-sheet-group {
+        border-top: 5px solid color($colors, primary);
+        background-color: black;
+    }
+}
+
+.custom-action-sheetEvent {
+    .action-sheet-container {
+        text-align: center;
+
+        .btn-paypal {
+            background-image: url("../assets/images/paypal.png") !important;
+            background-repeat: no-repeat !important;
+            background-size: 45px;
+            background-position: center !important;
+            // padding-left: 70px !important;
+        }
+        .btn-payconiq {
+            background-image: url("../assets/images/payconiq.png") !important;
+            background-repeat: no-repeat !important;
+            background-size: 45px;
+            background-position: center !important;
+            // padding-left: 70px !important;
+        }
+        .action-sheet-title {
+            color: color($colors, noir);
+            text-align: center;
+        }
+        button {
+            width: 90px !important;
+            height: 100px !important;
+            margin-left: 0 !important;
+            padding-left: 0 !important;
+            .action-sheet-icon,
+            .button-inner {
+                display: block !important;
+            }
+            .button-inner {
+                font-size: 0.7em;
+                padding-top: 80px !important;
+                width: 90px !important;
+                // height: 90px !important;
+                text-align: center;
+                color: color($colors, dark) !important;
+            }
+            .action-sheet-icon {
+                // font-size: 4.0em !important;
+                padding-left: 15px;
+                margin-left: 0;
+            }
+            .icon-ios {
+                font-size: 3.0em !important;
+                padding-left: 10px;
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+.custom-popaudio {
+    ion-backdrop {
+        opacity: 0.4;
+    }
+}
+
+.custom-popavis .popover-content {
+    width: 300px !important;
+    left: 52px !important;
+}
+
+.custom-popavis {
+    ion-backdrop {
+        opacity: 0.4;
+    }
+}
+
+.custom-popover .popover-content {
+    left: 35px !important;
+    width: 350px !important;
+    top: 150px !important;
+    max-height: 100% !important
+}
+
+.custom-agenda .popover-content {
+    // width: 60% !important;
+    max-height: 350px !important;
+    border-radius: 0.50em !important;
+}
+
+.custom-popaudio .popover-content {
+    // width: 85% !important;
+    height: 330px !important;
+    border-radius: 0.45em !important;
+}
+
+
+/* STYLE SCSS TOAST */
+
+.toast-info {
+    // padding: 4px;
+    div.toast-wrapper {
+        width: 95%;
+        margin-top: 10px;
+        border-radius: 1em;
+        background: #cbe4ff;
+        // border: 1px solid lightblue
+    }
+    .toast-container {
+        .toast-message,
+        button {
+            color: #004085;
+        }
+    }
+}
+
+.toast-error {
+    // padding: 4px;
+    div.toast-wrapper {
+        width: 95%;
+        margin-top: 10px;
+        border-radius: 1em;
+        background: #f8d6d9;
+        // border: 1px solid lightcoral
+    }
+    .toast-container {
+        .toast-message,
+        button {
+            color: #9b1b24;
+        }
+    }
+}
+
+.toast-success {
+    // padding: 4px;
+    div.toast-wrapper {
+        width: 95%;
+        margin-top: 10px;
+        border-radius: 1em;
+        background: #d4edda;
+        // border: 1px solid lightgreen
+    }
+    .toast-container {
+        .toast-message,
+        button {
+            color: color($colors, vert);
+        }
+    }
+}

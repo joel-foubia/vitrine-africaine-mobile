@@ -1,0 +1,69 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title text-left [innerHTML]="category.name" *ngIf="category !== undefined"></ion-title>
+        <ion-title text-left [innerHTML]="location.name" *ngIf="location !== undefined"></ion-title>
+        <ion-buttons end>
+            <button id="count_btn" ion-button *ngIf="category !== undefined && lazyAnnonce.length<=999" icon-only>{{lazyAnnonce.length}}</button>
+            <button id="count_btn" ion-button *ngIf="category !== undefined && lazyAnnonce.length>999" icon-only>999+</button>
+            <button id="count_btn" ion-button *ngIf="location !== undefined && location.count<=999" icon-only>{{location.count}}</button>
+            <button id="count_btn" ion-button *ngIf="location !== undefined && location.count>999" icon-only>999+</button>
+            <button ion-button icon-only (click)="onFilter($event)"><ion-icon name="md-funnel"></ion-icon></button>
+            <button ion-button icon-only (click)="showOnMap()"><ion-icon name="ios-map-outline"></ion-icon></button>
+            <!-- <button ion-button>{{clients.length}}</button> -->
+            <button ion-button icon-only (click)="openLeftMenu()"><ion-icon name="md-more"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar id="search_toolbar">
+        <ion-searchbar *ngIf="category !== undefined" class="animated zoomIn" debounce="500" [showCancelButton]=true (ionCancel)="onCancel($event)" (ionClear)="onClear($event)" id="offerSearch" (ionInput)="launchSearch($event)" [(ngModel)]="search_term" placeholder="{{category.name}} ...."></ion-searchbar>
+        <ion-searchbar *ngIf="location !== undefined" class="animated zoomIn" debounce="500" [showCancelButton]=true (ionCancel)="onCancel($event)" (ionClear)="onClear($event)" id="offerSearch" (ionInput)="launchSearch($event)" [(ngModel)]="search_term" placeholder="{{location.name}} ...."></ion-searchbar>
+        <!-- {{'favorites.search_text' | translate}} {{'favorites.for' | translate}} -->
+    </ion-toolbar>
+
+
+</ion-header>
+
+
+<ion-content>
+    <p objSpinner text-center *ngIf="objLoader">
+        <ion-spinner name="dots"></ion-spinner>
+    </p>
+
+    <ion-grid *ngIf="!objLoader">
+
+        <!-- <ion-item-divider class="txtFeatured" *ngIf="featured.length > 0">
+            {{'message.featured' | translate}}
+            <button *ngIf="featured.length>10" ion-buton clear (click)="showMoreFeatures()" item-end> {{'pop.more' | translate}}</button>
+        </ion-item-divider> -->
+
+        <ion-slides text-left *ngIf="featured.length > 0" pager="true" [slidesPerView]="vuesToDisplay" autoplay="3000" speed="700" class="horizontal-categories">
+            <ion-slide class="categories-row" *ngFor="let feat of featured | slice:0:maxFeatured">
+                <ion-col col-1></ion-col>
+                <ion-col col-10 class="horizontal-item animated zoomIn">
+                    <feat-template [annonce]="feat" [events]="events"></feat-template>
+                </ion-col>
+                <ion-col col-1></ion-col>
+            </ion-slide>
+        </ion-slides>
+
+        <ion-row class="bloc-annonces">
+
+            <ion-col class="parent" *ngFor="let item of lazyAnnonce | slice:0:max" col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 no-padding>
+                <annonce [annonce]="item" [events]="events"></annonce>
+            </ion-col>
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </ion-row>
+
+        <!-- La liste des annonces est vide ou aucun filtre ne correspond à cette annonce -->
+        <div bloc-empty class="animated zoomIn" text-center *ngIf="!objLoader && lazyAnnonce.length == 0">
+            <img src="assets/images/icons/search.svg" alt="search" />
+            <h3 *ngIf="selectionName"> {{'message.empty_list' | translate:selectionName}}</h3>
+        </div>
+    </ion-grid>
+
+    <ion-fab bottom right>
+        <button (click)="onAdd()" ion-fab><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+</ion-content>

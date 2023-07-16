@@ -1,0 +1,164 @@
+page-events {
+
+    .scroll-content{
+		background-color: color($colors, noir);
+	}
+
+	ion-content.has-refresher > .scroll-content{
+        background-color: color($colors, primary);
+    }
+
+    ion-content.has-refresher > .scroll-content .content{
+        background-color: transparent !important;
+    }
+
+	ion-spinner *{
+	  fill: #ffffff !important;
+    }
+    
+    .header-calendar{
+        min-height: auto !important;
+    }
+
+	.header-calendar .toolbar-background{
+        background: none !important;
+        background-color: color($colors, primary) !important;
+	}
+
+	.dayview-allday-label{
+		color: color($colors, light);
+		width: 50px;
+	}
+
+	.weekview-allday-label{
+		color: color($colors, light);
+	}
+
+	.calendar-event, .weekAllday, .jrAllday, .calendar-event-inner{
+		background-color: color($colors, light);
+	}
+
+	.header-calendar .toolbar-title{
+        font-size: 1.0em;
+    }
+
+	.calendar td{
+		padding:11px !important;
+		color:color($colors, light);
+		border:none !important;
+		// font-family: 'Ope-Sans' !important;
+		font-size: 0.95em;
+		height: 51px;
+		padding-top: 15px !important;
+		margin:2px;
+	}
+
+	.calendar .monthview-current{
+		border-radius: 50%;
+		color:color($colors, primary);	
+	}
+
+	.calendar .monthview-primary-with-event, .calendar .monthview-secondary-with-event{
+        border-radius: 50%;
+        background-color: transparent;
+        // color: color($colors, secondary);
+        padding-top:8px !important;
+    }
+    
+    .calendar .monthview-primary-with-event::before, .calendar .monthview-secondary-with-event::before{
+            content:"";
+            width: 7px;
+            height: 7px;
+            display: block;
+            z-index: -1;
+            position: relative;
+            margin: 0 !important;
+            background: color($colors, primary);
+            left: 10px;
+            top: -3px;       
+            border-radius: 0.5em;
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.4);
+    }
+
+    .calendar .monthview-selected{
+		background-color: color($colors, secondary);
+		border-radius: 50%;
+	}
+
+	.calendar thead{
+		background-color: color($colors, primary);
+		color:color($colors, noir);
+		border:none;
+	}
+
+	.calendar table, .calendar thead th{
+		border:none !important;
+	}
+
+	.dayview-container{
+		margin-bottom: 80px;
+	}
+
+	.mois{
+		margin-bottom: 80px;
+		[ion-item]{
+			border-radius: 0.50em;
+			margin-bottom: 7px;
+			
+			.monthview-eventdetail{
+				font-size: 0.9em;
+				//font-family: 'PT-Sans';
+			}
+
+			.person{
+				color:color($colors, secondary);
+			}
+
+			ion-icon{
+				opacity: 0.5;
+			}
+		}
+
+		h3{
+			font-size: 1.0em;
+			//font-family: 'Open-Sans-bold';
+		}
+
+	}
+
+	.jrAllday h4, .jrStandart h4, .jrStandart span, .jrAllday span, .weekAllday h4, .weekAllday span{
+		color: color($colors, noir);
+	}
+
+	.jrAllday h4, .jrStandart h4{
+		font-size: 1.1em;
+		font-family: 'Open-Sans-bold';
+	}
+
+	.jrAllday h4, .weekAllday h4{
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	.weekview-allday-content-table{
+		.calendar-cell{
+			padding-top: 0 !important;
+			padding-bottom: 0 !important;
+        }
+        
+        .weekview-allday-label{
+            width: 33px !important;
+        }
+	}
+
+    .no_events{
+        background-color: transparent;
+        color: color($colors, light);
+        text-align: center;
+        font-size: 1.2em;
+    }
+
+	.custom-footer{
+		
+	}
+}

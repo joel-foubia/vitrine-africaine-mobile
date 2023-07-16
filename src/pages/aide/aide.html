@@ -1,0 +1,44 @@
+<ion-header text-center no-border class="header_off">
+
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title style="font-weight: lighter">{{'help' | translate}}</ion-title>
+        <!-- <ion-buttons end>
+            <button ion-button icon-only menuToggle>
+        <ion-icon name="more"></ion-icon>
+      </button>
+        </ion-buttons> -->
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <span style="display: block;" text-center>
+    <img src="assets/help.jpg" width="100%">
+  </span>
+    <ion-card>
+        <button ion-item (click)="openReport()">
+      <ion-icon name="ios-bug" item-start></ion-icon>
+      <!-- {{'parameters.title_bugs' | translate}} -->
+      Bugs
+    </button>
+        <button ion-item (click)="openAssistance()">
+      <ion-icon name="ios-help-buoy" item-start></ion-icon>
+      <!-- {{'parameters.assistance' | translate}} -->
+      Assistance
+    </button>
+        <button ion-item (click)="faq()">
+      <ion-icon name="md-help-circle" item-start></ion-icon>
+      <!-- {{'parameters.faq' | translate}} -->
+      FAQ
+    </button>
+        <button ion-item (click)="openDoc()">
+      <ion-icon name="md-document" item-start></ion-icon>
+      <!-- {{'parameters.doc' | translate}} -->
+      Documentation
+    </button>
+
+    </ion-card>
+</ion-content>

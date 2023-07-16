@@ -1,0 +1,181 @@
+<ion-header>
+
+    <ion-toolbar>
+        <ion-title text-center>{{'message.filter' | translate}}</ion-title>
+        <ion-buttons left>
+            <button ion-button icon-only (click)="close()"><ion-icon name="md-close"></ion-icon></button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="onSearch()"><ion-icon name="md-checkmark"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+    <ion-item-group class="filters-group">
+
+        <ion-item-divider text-uppercase>{{ 'message.location' | translate }}</ion-item-divider>
+        <div padding>
+            <ion-searchbar class="search-places-bar" placeholder="{{'form.filter' | translate}}" [(ngModel)]="location_query" (ionInput)="searchLoaction(location_query, $event)" (ionClear)="clearSearch()"></ion-searchbar>
+        </div>
+        <ion-list [hidden]="locations_results.length == 0" class="search-options-list">
+            <ion-item text-wrap *ngFor="let place of locations_results" tappable (click)="selectLocation(place)">
+                <span *ngIf="!model">{{ place.name }}</span>
+                <span *ngIf="model">{{ place.venue }}, {{ place.city }} - {{ place.country }}</span>
+            </ion-item>
+        </ion-list>
+        <ion-item-divider text-uppercase>{{ 'message.category' | translate }}</ion-item-divider>
+        <div padding>
+            <ion-searchbar class="search-places-bar" placeholder="{{'form.category' | translate}}" [(ngModel)]="category_query" (ionInput)="searchCategory(category_query, $event)" (ionClear)="clearSearchCategory()"></ion-searchbar>
+        </div>
+        <ion-list [hidden]="categories_results.length == 0" class="search-options-list">
+            <ion-item *ngFor="let place of categories_results" tappable (click)="selectCategory(place)">
+
+                <span>{{ place.name }}</span>
+            </ion-item>
+        </ion-list>
+        <ion-item-divider text-uppercase>{{ 'message.savetime' | translate }}</ion-item-divider>
+        <form [formGroup]="rangeForm">
+            <ion-list class="range-list">
+
+                <ion-item class="range-item single-range">
+                    <ion-label>
+                        <h2 class="range-label">{{ 'message.distance' | translate }}</h2>
+                        <h3 class="range-value">{{rangeForm.controls.single.value}}</h3>
+                    </ion-label>
+                    <ion-range formControlName="single" (ionChange)="rangeChange($event)" min="0" max="50" step="1" snaps="true" pin="false"></ion-range>
+                </ion-item>
+            </ion-list>
+        </form>
+
+        <form [formGroup]="rangeFormFeat">
+            <ion-list class="range-list">
+                <ion-item class="switcher-item">
+                    <ion-label *ngIf="!model">{{'pop.feat' | translate}}</ion-label>
+                    <ion-label *ngIf="model">{{'events.feat' | translate}}</ion-label>
+                    <ion-toggle formControlName="feat"></ion-toggle>
+                </ion-item>
+            </ion-list>
+        </form>
+        <form *ngIf="model" [formGroup]="rangeFormComing">
+            <ion-list class="range-list">
+                <ion-item class="switcher-item">
+                    <ion-label>{{'pop.coming' | translate}}</ion-label>
+                    <ion-toggle formControlName="coming"></ion-toggle>
+                </ion-item>
+            </ion-list>
+        </form>
+        <div *ngIf="model">
+            <ion-list radio-group [(ngModel)]="calendrier">
+                <ion-item>
+                    <ion-label>{{'pop.today' | translate}}</ion-label>
+                    <ion-radio value="today"></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>{{'pop.week' | translate}}</ion-label>
+                    <ion-radio value="week"></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>{{'pop.month' | translate}}</ion-label>
+                    <ion-radio value="month"></ion-radio>
+                </ion-item>
+            </ion-list>
+        </div>
+        <form *ngIf="!model" [formGroup]="rangeFormVerif">
+            <ion-list class="range-list">
+                <ion-item class="switcher-item">
+                    <ion-label>{{'pop.verif' | translate}}</ion-label>
+                    <ion-toggle formControlName="verif"></ion-toggle>
+                </ion-item>
+            </ion-list>
+        </form>
+
+        <form *ngIf="!model" [formGroup]="rangeFormDate">
+            <ion-list class="range-list">
+                <ion-item class="switcher-item">
+                    <ion-label>{{'pop.date' | translate}}</ion-label>
+                    <ion-toggle formControlName="date"></ion-toggle>
+                </ion-item>
+            </ion-list>
+        </form>
+        <form *ngIf="!model" [formGroup]="rangeFormPop">
+            <ion-list class="range-list">
+                <ion-item class="switcher-item">
+                    <ion-label>{{'pop.pop' | translate}}</ion-label>
+                    <ion-toggle formControlName="popular"></ion-toggle>
+                </ion-item>
+            </ion-list>
+        </form>
+        <form *ngIf="!model" [formGroup]="rangeFormComms">
+            <ion-list class="range-list">
+                <ion-item class="switcher-item">
+                    <ion-label>{{'pop.coms' | translate}}</ion-label>
+                    <ion-toggle formControlName="comments"></ion-toggle>
+                </ion-item>
+            </ion-list>
+        </form>
+        <div *ngIf="!model">
+            <ion-item-divider text-uppercase>{{ 'pop.tag' | translate }}</ion-item-divider>
+            <form *ngIf="tags.length!=0" [formGroup]="checkboxTagsForm">
+                <ion-list class="checkbox-tags">
+                    <ion-item *ngFor="let tag of tags" class="checkbox-tag">
+                        <ion-label>{{tag?.name}}</ion-label>
+                        <ion-checkbox formControlName="t_{{tag.id}}"></ion-checkbox>
+                    </ion-item>
+                </ion-list>
+            </form>
+        </div>
+
+        <!-- <ion-item-divider text-uppercase>{{ 'pop.features' | translate }}</ion-item-divider>
+    <form *ngIf="features.length!=0" [formGroup]="featuresForm">
+      <ion-list class="checkbox-tags rounded-tags">
+          <ion-item *ngFor="let obj of features" class="checkbox-tag">
+              <ion-label>{{obj?.name}}</ion-label>
+              <ion-checkbox formControlName="f_{{obj.id}}"></ion-checkbox>
+            </ion-item>
+      </ion-list>
+    </form> -->
+        <div *ngIf="!model">
+            <ion-item-divider text-uppercase>{{ 'message.reliability' | translate }}</ion-item-divider>
+            <form [formGroup]="switchersForm">
+                <ion-list class="switchers-list">
+                    <ion-item class="switcher-item">
+                        <ion-label>{{'message.views' | translate}}</ion-label>
+                        <ion-toggle formControlName="views"></ion-toggle>
+                    </ion-item>
+                    <!-- <ion-item class="switcher-item">
+                        <ion-label>{{'message.available' | translate}}</ion-label>
+                        <ion-toggle formControlName="dispos"></ion-toggle>
+                    </ion-item> -->
+                </ion-list>
+            </form>
+            <form [formGroup]="rangeFormAva">
+                <ion-list class="switchers-list">
+                    <ion-item class="switcher-item">
+                        <ion-label>{{'message.available' | translate}}</ion-label>
+                        <ion-toggle formControlName="dispos"></ion-toggle>
+                    </ion-item>
+                </ion-list>
+            </form>
+        </div>
+
+        <ion-item-divider text-uppercase>{{ 'pop.montant' | translate }}</ion-item-divider>
+        <p *ngIf="!model" class="bloc-montant">{{'message.txt_montant' | translate}}</p>
+        <!-- <p *ngIf="model" class="bloc-montant">{{'message.ev_montant' | translate}}</p> -->
+        <form [formGroup]="counterForm">
+            <ion-list class="range-list">
+                <ion-item class="range-item">
+                    <ion-label>
+                        <h3 class="range-value">{{counterForm.controls.dual.value.lower}}</h3>
+                        <h2 class="range-label">{{ 'message.montant' | translate:currency }}</h2>
+                        <h3 class="range-value">{{counterForm.controls.dual.value.upper}}</h3>
+                    </ion-label>
+                    <ion-range dualKnobs="true" formControlName="dual" (ionChange)="amountChange($event)" min="0" max="1000" step="3" snaps="true" pin="false"></ion-range>
+                </ion-item>
+            </ion-list>
+        </form>
+
+    </ion-item-group>
+</ion-content>

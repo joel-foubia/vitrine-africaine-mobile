@@ -1,0 +1,146 @@
+page-details-event {
+
+    .scroll-content{
+        background-color: color($colors, lightest);
+        padding-top: 90px;
+        // padding-bottom: 30px;
+    }
+
+    .toolbar{
+        .bar-button, .back-button-icon{
+            color: color($colors, light);
+        }
+    }
+
+    ion-spinner *{
+        fill: color($colors, light) !important;
+    }
+
+    .toolbar .toolbar-background{
+        // background: none !important;
+        background: linear-gradient(to bottom, rgba(7,7,7,1) 0%,rgba(255,255,255,0) 100%);
+        background-color: transparent !important;
+    }
+
+    .bloc-header{
+        position: absolute;
+        top:0;
+        z-index: 2;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        width: 100%;
+        height: 140px;
+    }
+
+    .titre{
+        margin-left: 10px;
+        margin-top:0;
+    }
+
+    .bloc-time{
+        // align-items: center;
+        ion-col{
+            text-align: left;
+        }
+
+        [col-3]{
+            color: color($colors, primary);
+        }
+
+        [col-9]{
+            font-weight: bold;
+        }
+
+        .price{
+            background-color: color($colors, noir);
+            color: color($colors, light);
+            text-align: center;
+            padding-top: 12px !important;
+            
+        }
+
+    }
+
+    .bloc-details{
+        ion-icon{
+            color: color($colors, primary);
+        }
+
+        .bloc-tag{
+            padding:5px;
+            border-top: 1px solid color($colors, lightest);
+            
+            h4{
+                color: color($colors, primary);
+            }
+
+            span{
+                font-size: 1.0em;
+            }
+        }
+    }
+
+    .bloc-organizer{
+
+        ion-item{
+            h3{
+                font-size: 1.1em;
+            }
+        }
+    }
+
+    .bloc-billet{
+        background-color: color($colors, noir);
+
+        ion-card-header{
+            font-size: 1.3em;
+            font-weight: bold;
+            color: color($colors, primary);
+        }
+
+        .counter-list{
+            margin-top:0 !important;
+            @include counter-item-styles(color($colors, primary), color($colors, primary), color($colors, noir));
+
+            ion-item{
+                background-color: transparent;
+                h4{
+                    color: color($colors, light);
+                    font-size: 0.95em;
+                }
+
+                span{
+                    color: color($colors, orlight);
+                    font-size: 0.9em;
+                }
+
+                .prix{
+                    color: color($colors, light);
+                    font-size: 1.1em;
+                }
+            }
+
+            .total{
+                //color: color($colors, light);
+                font-size: 1.3em;
+            }
+        }
+
+        ion-card-content h3{
+            color: color($colors, light);
+        }
+    }
+
+    .bloc-map{
+        p{
+            font-size: 1.07em;
+        }
+    }
+
+    .sebm-google-map-container {
+        width: 100%;
+	    height: 250px;
+	    transition: opacity 150ms ease-in;
+    }
+}

@@ -1,0 +1,23 @@
+
+<ion-header >
+
+    <ion-navbar>
+        <ion-title>{{'parameters.faq' | translate}}</ion-title>
+        <ion-buttons end>
+            <button (click)="close()" ion-button icon-only>
+              <ion-icon name="md-close"></ion-icon>
+            </button>
+          </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <h3 style="font-weight: lighter" text-center>{{'parameters.label_faq' | translate}}</h3>
+    <ion-list>
+        <ion-item *ngFor="let obj of faqs" text-wrap (click)="showAnswer(obj)" transparent>
+            <ion-icon name="ios-paper" item-start></ion-icon>
+            {{obj.q}}
+        </ion-item>
+    </ion-list>
+</ion-content>

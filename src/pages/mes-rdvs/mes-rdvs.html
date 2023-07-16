@@ -1,0 +1,43 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title text-left>{{'rdv.title' | translate}}</ion-title>
+        <ion-buttons end>
+            <button id="count_btn" ion-button icon-only>{{rdvList.length}}</button>
+
+            <button ion-button icon-only (click)="openLeftMenu()"><ion-icon name="md-more"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar *ngIf="rdvList.length!=0" id="search_toolbar">
+        <ion-searchbar class="animated zoomIn" debounce="500" [showCancelButton]=true (ionCancel)="onCancel($event)" (ionClear)="onClear($event)" id="offerSearch" (ionInput)="launchSearch($event)" [(ngModel)]="search_term" placeholder="{{'favorites.search_text' | translate}}"></ion-searchbar>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+    <p objSpinner text-center *ngIf="objLoader"><ion-spinner name="dots"></ion-spinner></p>
+
+    <ion-grid no-padding *ngIf="!objLoader">
+        <!-- La liste des annonces est vide ou aucun filtre ne correspond à cette annonce -->
+        <div bloc-empty class="animated zoomIn" text-center *ngIf="!objLoader && rdvList.length == 0">
+            <img src="assets/icon/calendar.svg" alt="">
+            <h5> {{'message.empty_rdv' | translate}}</h5>
+        </div>
+        <ion-row class="bloc-annonces">
+
+            <ion-col *ngFor="let item of rdvList | slice:0:max" col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 no-padding>
+                <rdv [rdv]="item" [events]="events"></rdv>
+            </ion-col>
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </ion-row>
+
+
+    </ion-grid>
+
+    <!--  <ion-fab bottom right>
+        <button (click)="onAdd()" ion-fab><ion-icon name="add"></ion-icon></button>
+    </ion-fab> -->
+</ion-content>

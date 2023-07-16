@@ -1,0 +1,76 @@
+page-favorites {
+    .content {
+        background-color: color($colors, lightest) !important;
+    }
+    
+    p {
+        color: color($colors, primary);
+        font-size: 12px;
+    }
+
+    #search_toolbar.toolbar {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        .toolbar-background {
+            background-image: none !important;
+            background-color: color($colors, dark);
+        }
+    }
+
+    ion-icon {
+        font-size: 2em !important
+    }
+
+    h6 {
+        color: black !important
+    }
+
+    .horizontal-item {
+        text-align: left !important
+    }
+       
+    .bloc-article{
+
+        ion-item {
+            background-color: transparent !important;
+            ion-thumbnail {
+                height: 70px !important;
+                width: 70px !important;
+                img {
+                    border-radius: 5px;
+                    object-fit: cover;
+                }
+            }
+            p {
+                color: color($colors, primary) !important;
+            }
+            img {
+                transition: opacity 1s;
+                opacity: 0;
+                border-radius: 5px;
+            }
+            img.ng-lazyloaded {
+                opacity: 1;
+            }
+
+            #fav {
+                position: absolute !important;
+                top: 65px !important;
+                right: 120px !important;
+                ion-icon {
+                    font-size: 2em !important;
+                    color: black;
+                    -webkit-text-stroke-width: 1px;
+                    -webkit-text-stroke-color: color($colors, gris);
+                }
+            }
+            .liked {
+                -webkit-text-fill-color: color($colors, likeColor) !important;
+            }
+            .disliked {
+                -webkit-text-fill-color: rgba(255, 255, 255, 0.616) !important;
+            }
+        }
+    }
+    
+}

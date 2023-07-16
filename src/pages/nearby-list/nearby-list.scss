@@ -1,0 +1,98 @@
+page-nearby-list {
+    .scroll-content {
+        background-color: color($colors, lightest);
+    }
+    .swiper-slide img {
+        width: 100%;
+    }
+    #empty_img {
+        width: 200px !important;
+        margin-top: 20px !important;
+    }
+    h5 {
+        margin-left: 8px !important;
+        color: grey;
+    }
+    // .txtFeatured {
+    //     background-color: color($colors, primary);
+    //     background-image: url("../assets/images/bg_title.png");
+    //     background-repeat: no-repeat;
+    //     background-position: left top;
+    //     color: color($colors, light);
+    //     text-transform: uppercase;
+    //     font-family: "Open-Sans-Bold";
+    //     font-size: 1.3em;
+    // }
+    .horizontal-categories {
+        background-color: color($colors, grislight);
+        border-bottom: 1px solid white;
+        // padding-bottom: 20px;
+        // margin-bottom: 10px;
+        box-shadow: inset 5px -7px 9px -7px rgba(0, 0, 0, 0.4) !important;
+        // @include element-shadow();
+    }
+    .swiper-pagination-bullet {
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .swiper-pagination-bullet-active {
+        background: color($colors, dark);
+    }
+    .swiper-pagination-bullet {
+        height: 4px;
+        width: 18px;
+        border-radius: none;
+    }
+    .bloc-annonces {
+        ion-item-divider {
+            background-color: color($colors, dark);
+            color: color($colors, light);
+            text-transform: uppercase;
+        }
+    }
+    #search_toolbar.toolbar {
+        // padding-top: 0px !important;
+        // padding-bottom: 0px !important;
+        .toolbar-background {
+            background-image: none !important;
+            background-color: color($colors, dark) !important;
+            box-shadow: none !important;
+        }
+    }
+    ion-header.header.header-md::after {
+        background-image: none !important;
+    }
+    // div.searchbar-input-container {
+    //     margin-top: 20px !important;
+    // }
+    input.searchbar-input {
+        border-radius: 10px !important;
+        background-color: color($colors, noir) !important;
+        color: color($colors, light) !important;
+    }
+    .searchbar-input-container {
+        .searchbar-input {
+            &::-webkit-input-placeholder {
+                /* Chrome/Opera/Safari */
+                color: color($colors, orlight) !important;
+            }
+        }
+    }
+    #count_btn {
+        font-size: 1.3em !important;
+        color: color($colors, orlight) !important;
+        background-color: color($colors, dark);
+        width: 35px;
+        border-radius: 5px;
+    }
+    button {
+        ion-icon {
+            font-size: 2em !important
+        }
+    }
+    ion-title {
+        font-size: 1.4em !important
+    }
+    .horizontal-item {
+        text-align: left !important
+    }
+}

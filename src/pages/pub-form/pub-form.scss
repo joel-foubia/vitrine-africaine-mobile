@@ -1,0 +1,46 @@
+page-pub-form {
+  
+
+.content {
+//   background-color: color($colors, lightest);
+  color: color($colors, dark);
+  font-weight: lighter !important;
+}
+    
+    .custom-toolbar {
+      .toolbar-background {
+          background-image: none !important;
+          background-color: color($colors, dark);
+      }
+      
+  }
+
+  .bloc-form{
+    ion-item{
+        background-color: transparent !important;
+        .item-inner{
+          border-bottom: none !important;
+        }
+  
+        ion-input{
+            height: 45px;
+            padding: 5px;
+            border-radius: 0.45em;
+            background-color: color($colors, lightest);
+            border:1px solid color($colors, grislight);
+        }
+    }
+
+    ion-textarea {
+        background-color: color($colors, lightest);
+          height: 175px !important;
+        //   margin-top: 40px !important;
+        //   border-radius: 10px !important;
+        }
+  }
+
+
+
+
+
+}

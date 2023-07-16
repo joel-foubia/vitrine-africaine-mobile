@@ -1,0 +1,92 @@
+<!--
+  Generated template for the NosServicesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{'nos_service.title' | translate}}</ion-title>
+    <ion-buttons end>
+      <button (click)="close()" ion-button icon-only>
+        <ion-icon name="md-close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar class="custom-toolbar">
+    <ion-segment [(ngModel)]="segment" color="primary" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="first">
+        {{'nos_service.segment_1' | translate}}
+      </ion-segment-button>
+      <ion-segment-button value="second">
+
+        {{'nos_service.segment_2' | translate}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content text-center>
+  <div [ngSwitch]="segment">
+    <div text-center *ngSwitchCase="'first'">
+      <div class="bloc-form">
+        <h5 style="font-weight: lighter" text-center>{{'nos_service.entete' | translate}}</h5>
+        <ion-list *ngIf="nosService">
+          <ion-item *ngFor="let n of nosService">
+            <ion-label>{{n}}</ion-label>
+            <ion-checkbox (ionChange)="onChange(n, $event.checked)" value="n" checked="false"></ion-checkbox>
+          </ion-item>
+          <!-- <h5 style="font-weight: lighter" text-center>{{'nos_service.indication' | translate}}</h5> -->
+          
+
+        </ion-list>
+
+      </div>
+    </div>
+    <div text-center *ngSwitchCase="'second'">
+      <ion-list>
+        <h5 style="font-weight: lighter" text-center>{{'nos_service.entete_2' | translate}}</h5>
+        <ion-item>
+          <ion-label floating>{{'nos_service.nom' | translate}}</ion-label>
+          <ion-input *ngIf="!credentials" type="text" [(ngModel)]="company.nom" name="nom"></ion-input>
+          <ion-input *ngIf="credentials" type="text" [(ngModel)]="credentials.user_display_name" name="nom"></ion-input>
+          </ion-item>
+        <ion-item>
+          <ion-label floating>{{'nos_service.prenom' | translate}}</ion-label>
+          <ion-input [(ngModel)]="company.prenom" name="prenom"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>{{'nos_service.company' | translate}}</ion-label>
+          <ion-input [(ngModel)]="company.societe" name="societe"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>{{'nos_service.telephone' | translate}}</ion-label>
+          <ion-input [(ngModel)]="company.telephone" name="telephone" type="number"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>{{'nos_service.email' | translate}}</ion-label>
+          <ion-input *ngIf="!credentials" [(ngModel)]="company.email" name="email" type="email"></ion-input>
+          <ion-input *ngIf="credentials" type="email" [(ngModel)]="credentials.user_email" name="email"></ion-input>
+        </ion-item>
+        <ion-item transparet>
+          <ion-label stacked>{{'nos_service.date' | translate}}</ion-label>
+          <ion-input [(ngModel)]="company.date" name="date" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item transparent>
+          <ion-label stacked>{{'nos_service.message' | translate}}</ion-label>
+          <ion-textarea autosize [(ngModel)]="company.message" name="message" placeholder="{{'report.assist_ph' | translate}}"></ion-textarea>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
+<ion-footer text-center>
+  <button ion-button  round (click)="next()" *ngIf="actif == false">{{'nos_service.next' | translate}}</button>
+  <button ion-button  round *ngIf="actif == true" (click)="back()" >{{'nos_service.back' | translate}}</button>
+    <button ion-button round type="submit" (click)="submit()" *ngIf="actif == true">{{'nos_service.send' | translate}}</button>
+</ion-footer>
